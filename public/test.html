@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Connexion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .success {
+            background: #10b981;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0 0 20px 0;
+            font-size: 36px;
+        }
+        p {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .btn {
+            display: inline-block;
+            background: #8AFD81;
+            color: #1e293b;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="success">
+        <h1>✅ Connexion Réussie !</h1>
+        <p>🎉 Félicitations ! Vous êtes connecté au serveur.</p>
+        <p id="time"></p>
+    </div>
+    
+    <div class="info">
+        <h2>📊 Informations de Connexion</h2>
+        <p><strong>Serveur :</strong> Dashboard Hearst Qatar</p>
+        <p><strong>Port :</strong> 1111</p>
+        <p><strong>Status :</strong> <span style="color: #10b981;">● En ligne</span></p>
+        <p><strong>Votre IP :</strong> <span id="clientIP">Détection...</span></p>
+        
+        <a href="/" class="btn">🚀 Accéder au Dashboard</a>
+    </div>
+    
+    <script>
+        // Afficher l'heure
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('time').textContent = 
+                'Connecté à ' + now.toLocaleTimeString('fr-FR');
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // Détecter l'IP du client
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('clientIP').textContent = data.ip;
+            })
+            .catch(() => {
+                document.getElementById('clientIP').textContent = 'Non disponible';
+            });
+    </script>
+</body>
+</html>
+

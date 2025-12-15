@@ -1,0 +1,72 @@
+═══════════════════════════════════════════════════════════
+    🔥 SOLUTION - PROBLÈME DE CONNEXION RÉSEAU
+═══════════════════════════════════════════════════════════
+
+LE SERVEUR FONCTIONNE ! ✅
+
+Le problème vient probablement du PARE-FEU de votre Mac.
+
+
+🔧 SOLUTION SIMPLE (2 minutes) :
+
+1. Ouvrez "Préférences Système" (icône Pomme en haut à gauche)
+
+2. Cliquez sur "Sécurité et confidentialité"
+
+3. Allez dans l'onglet "Pare-feu"
+
+4. Cliquez sur le cadenas 🔒 en bas à gauche
+   (Entrez votre mot de passe Mac)
+
+5. Cliquez sur "Options du pare-feu..."
+
+6. DÉCOCHEZ "Bloquer toutes les connexions entrantes"
+
+7. Cliquez sur "OK"
+
+8. Testez depuis l'autre appareil : http://192.168.1.65:1111
+
+
+═══════════════════════════════════════════════════════════
+
+📱 TEST RAPIDE :
+
+Depuis l'autre ordinateur/téléphone (même WiFi) :
+
+1. Ouvrez un navigateur
+2. Tapez : http://192.168.1.65:1111/test.html
+3. Vous devriez voir "✅ Connexion Réussie !"
+
+
+═══════════════════════════════════════════════════════════
+
+🆘 SI ÇA NE MARCHE TOUJOURS PAS :
+
+Option 1 - Désactiver temporairement le pare-feu :
+   Préférences Système > Sécurité > Pare-feu
+   → Cliquez sur "Désactiver le pare-feu"
+   → Testez la connexion
+   → Réactivez-le après
+
+Option 2 - Vérifier le réseau :
+   Les deux appareils doivent être sur le MÊME WiFi
+
+Option 3 - Consulter le guide complet :
+   Ouvrez le fichier : DEPANNAGE.md
+
+
+═══════════════════════════════════════════════════════════
+
+✅ VÉRIFICATIONS :
+
+• Serveur démarré : ✓ OUI (npm run dev)
+• Port 1111 actif : ✓ OUI
+• Configuration OK : ✓ OUI (0.0.0.0)
+• Répond localement : ✓ OUI (http://localhost:1111)
+• Répond via IP : ✓ OUI (http://192.168.1.65:1111)
+
+→ Le problème est donc le PARE-FEU ou le RÉSEAU
+
+
+═══════════════════════════════════════════════════════════
+

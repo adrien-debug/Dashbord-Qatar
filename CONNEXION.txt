@@ -1,0 +1,38 @@
+═══════════════════════════════════════════════════════════
+    🌐  DASHBOARD HEARST QATAR - ACCÈS RÉSEAU LOCAL
+═══════════════════════════════════════════════════════════
+
+📍 ADRESSE DE CONNEXION :
+
+    http://192.168.1.65:1111
+
+
+📱 INSTRUCTIONS RAPIDES :
+
+1. Connectez-vous au même réseau WiFi
+2. Ouvrez un navigateur web
+3. Tapez l'adresse ci-dessus
+
+
+🔄 SI L'ADRESSE IP CHANGE :
+
+Exécutez ce script pour mettre à jour automatiquement :
+    ./update-ip.sh
+
+
+📄 FICHIERS UTILES :
+
+• CONNEXION_RAPIDE.html  → Page avec QR code pour mobile
+• show-network-info.sh   → Afficher les infos réseau
+• update-ip.sh           → Mettre à jour l'IP automatiquement
+
+
+✅ VÉRIFICATION :
+
+Le serveur est accessible depuis :
+• Cet ordinateur : http://localhost:1111
+• Réseau local    : http://192.168.1.65:1111
+
+
+═══════════════════════════════════════════════════════════
+
