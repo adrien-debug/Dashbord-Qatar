@@ -4,14 +4,15 @@
  * EXTENDED VERSION - 90 days historical data
  */
 
-import { BitcoinKPIs, StrategicReserve, HardwareStatus, PerformanceMetrics } from '../types/mining';
+import { BitcoinKPIs, StrategicReserve, HardwareStatus } from '../types/mining';
 
 export const mockBitcoinKPIs: BitcoinKPIs = {
   totalHashrate: 1020, // PH/s (1.02 EH/s)
   dailyProduction: 2.45, // BTC/day
-  monthlyRevenue: 7350000, // $7.35M USD (2.45 BTC * 30 days * $100k)
   efficiency: 23.5, // J/TH (très efficace)
   uptime: 99.2, // %
+  networkDifficulty: 72000000000000,
+  btcPrice: 100000,
 };
 
 export const mockStrategicReserve: StrategicReserve = {
@@ -32,13 +33,6 @@ export const mockHardwareStatus: HardwareStatus = {
     active: 47, // 97.92% actifs
     maintenance: 1, // 2.08% en maintenance
   },
-};
-
-export const mockPerformanceMetrics: PerformanceMetrics = {
-  avgHashratePerMiner: 177, // TH/s (Antminer S19 XP Hydro)
-  avgPowerConsumption: 4175, // W par miner
-  avgEfficiency: 23.5, // J/TH
-  totalPowerDraw: 96.5, // MW (5712 miners * 4175W / 1000000)
 };
 
 // ============================================================================
