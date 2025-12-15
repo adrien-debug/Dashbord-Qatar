@@ -1,0 +1,11 @@
+node_modules
+.next
+.cursor
+*.log
+test-server.js
+diagnostic-reseau.sh
+update-ip.sh
+show-network-info.sh
+test-connexion.sh
+.DS_Store
+
