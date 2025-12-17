@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 interface SidebarProps {
@@ -49,21 +50,32 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       }`}
     >
       {/* Header */}
-      <div className="h-20 flex items-center justify-between px-4 border-b border-slate-700">
+      <div className={`flex items-center justify-center px-4 border-b border-slate-700 bg-slate-900/50 transition-all duration-300 ${
+        isCollapsed ? 'h-20' : 'h-32'
+      }`}>
         {!isCollapsed && (
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#8AFD81] rounded-lg flex items-center justify-center">
-              <span className="text-slate-900 font-bold text-lg">Q</span>
+          <div className="flex flex-col items-center justify-center w-full">
+            <div className="relative w-52 h-16">
+              <Image
+                src="/hearst-full.png"
+                alt="Hearst Qatar"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
-            <div>
-              <div className="text-white font-bold text-sm">QATAR</div>
-              <div className="text-slate-400 text-xs">Hearst Corp.</div>
-            </div>
+            <span className="text-white font-bold text-sm tracking-[0.4em] -mt-1 ml-1">QATAR</span>
           </div>
         )}
         {isCollapsed && (
-          <div className="w-10 h-10 bg-[#8AFD81] rounded-lg flex items-center justify-center mx-auto">
-            <span className="text-slate-900 font-bold text-lg">Q</span>
+          <div className="relative w-10 h-10">
+            <Image
+              src="/hearst-icon.png"
+              alt="H"
+              fill
+              className="object-contain"
+              priority
+            />
           </div>
         )}
       </div>
@@ -71,7 +83,9 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       {/* Toggle Button */}
       <button
         onClick={onToggle}
-        className="absolute -right-3 top-24 w-6 h-6 bg-slate-700 hover:bg-[#8AFD81] rounded-full flex items-center justify-center transition-all duration-200 border-2 border-slate-800 group"
+        className={`absolute -right-3 w-6 h-6 bg-slate-700 hover:bg-[#8AFD81] rounded-full flex items-center justify-center transition-all duration-300 border-2 border-slate-800 group z-50 ${
+          isCollapsed ? 'top-24' : 'top-36'
+        }`}
         aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
       >
         <svg
