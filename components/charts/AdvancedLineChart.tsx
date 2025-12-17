@@ -153,7 +153,7 @@ export const AdvancedLineChart: React.FC<AdvancedLineChartProps> = ({
               stroke={line.color}
               strokeWidth={line.strokeWidth || 3}
               dot={line.dot !== undefined ? line.dot : false}
-              activeDot={{ r: 6, strokeWidth: 0, fill: line.color, shadow: `0 0 10px ${line.color}` }}
+              activeDot={{ r: 6, strokeWidth: 0, fill: line.color }}
               animationDuration={2000}
               animationEasing="ease-out"
             />
