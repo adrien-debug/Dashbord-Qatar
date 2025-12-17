@@ -125,7 +125,7 @@ export const AdvancedAreaChart: React.FC<AdvancedAreaChartProps> = ({
             animationDuration={2000}
             animationEasing="ease-out"
             dot={false}
-            activeDot={{ r: 6, strokeWidth: 0, fill: area.color, shadow: `0 0 10px ${area.color}` }}
+            activeDot={{ r: 6, strokeWidth: 0, fill: area.color }}
           />
         ))}
       </AreaChart>
