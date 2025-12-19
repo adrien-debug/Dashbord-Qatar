@@ -107,7 +107,7 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-[#8AFD81] text-slate-900 rounded-lg hover:bg-[#7aed6f] transition-all duration-200 text-sm font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(138,253,129,0.3)] hover:shadow-[0_0_30px_rgba(138,253,129,0.5)]"
+        className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-200 text-xs font-semibold"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -135,9 +135,9 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
                   type="checkbox"
                   checked={saveLocal}
                   onChange={(e) => setSaveLocal(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-300 text-[#8AFD81] focus:ring-[#8AFD81] focus:ring-2 cursor-pointer"
+                  className="w-4 h-4 rounded border-slate-300 text-[#22C55E] focus:ring-[#22C55E] focus:ring-2 cursor-pointer"
                 />
-                <span className="text-xs font-bold text-slate-700 uppercase tracking-wide group-hover:text-[#8AFD81] transition-colors">
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wide group-hover:text-[#22C55E] transition-colors">
                   Sauvegarder localement
                 </span>
               </label>
@@ -149,14 +149,14 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
                 <button
                   key={format}
                   onClick={() => handleExport(format)}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-[#8AFD81]/10 hover:text-slate-900 transition-all duration-200 group"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-[#22C55E]/10 hover:text-slate-900 transition-all duration-200 group"
                 >
-                  <span className={`${format === 'unreal-4k' || format === 'blender' ? 'text-[#8AFD81]' : 'text-slate-600'} group-hover:text-[#8AFD81] transition-colors`}>
+                  <span className={`${format === 'unreal-4k' || format === 'blender' ? 'text-[#22C55E]' : 'text-slate-600'} group-hover:text-[#22C55E] transition-colors`}>
                     {ICONS[format]}
                   </span>
                   <span className="font-medium">{LABELS[format]}</span>
                   {(format === 'unreal-4k' || format === 'blender') && (
-                    <span className="ml-auto px-2 py-0.5 bg-[#8AFD81]/20 text-[#8AFD81] text-[10px] font-bold rounded-full uppercase tracking-wide">
+                    <span className="ml-auto px-2 py-0.5 bg-[#22C55E]/20 text-[#22C55E] text-[10px] font-bold rounded-full uppercase tracking-wide">
                       Hearst
                     </span>
                   )}

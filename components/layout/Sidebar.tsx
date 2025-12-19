@@ -92,7 +92,7 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       {/* Toggle Button */}
       <button
         onClick={onToggle}
-        className={`absolute -right-3 w-6 h-6 bg-slate-700 hover:bg-[#8AFD81] rounded-full flex items-center justify-center transition-all duration-300 border-2 border-slate-800 group z-50 ${
+        className={`absolute -right-3 w-6 h-6 bg-slate-700 hover:bg-emerald-500 rounded-full flex items-center justify-center transition-all duration-300 border-2 border-slate-800 group z-50 ${
           isCollapsed ? 'top-24' : 'top-36'
         }`}
         aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
@@ -120,11 +120,11 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                 href={item.href}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group ${
                   isActive(item.href)
-                    ? 'bg-[#8AFD81] text-slate-900'
+                    ? 'bg-emerald-500 text-white'
                     : 'text-slate-300 hover:bg-slate-700/50 hover:text-white'
                 }`}
               >
-                <span className={isActive(item.href) ? 'text-slate-900' : 'text-slate-400 group-hover:text-white'}>
+                <span className={isActive(item.href) ? 'text-white' : 'text-slate-400 group-hover:text-white'}>
                   {item.icon}
                 </span>
                 {!isCollapsed && (
@@ -144,7 +144,7 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           <div className="bg-slate-700/30 rounded-lg p-3">
             <div className="text-slate-400 text-xs mb-1">Facility Status</div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-[#8AFD81] rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
               <span className="text-white text-sm font-medium">Operational</span>
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
 
       {isCollapsed && (
         <div className="absolute bottom-4 left-0 right-0 flex justify-center">
-          <div className="w-2 h-2 bg-[#8AFD81] rounded-full animate-pulse"></div>
+          <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
         </div>
       )}
     </div>
