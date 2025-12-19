@@ -106,7 +106,7 @@ export default function Monitoring() {
 
   // Power history for area chart
   const powerChartData = mockPowerHistory.slice(-90).map(d => ({
-    date: new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    date: new Date(d.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }),
     mw: d.mw,
     target: d.target,
   }));
@@ -394,7 +394,7 @@ export default function Monitoring() {
                             <p className="text-xs text-slate-500 truncate">{log.details}</p>
                           )}
                           <span className="text-[10px] text-slate-400">
-                            {new Date(log.timestamp).toLocaleString()}
+                            {new Date(log.timestamp).toLocaleString('fr-FR')}
                           </span>
                         </div>
                       </div>
