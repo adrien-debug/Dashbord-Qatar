@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  ReferenceLine,
 } from 'recharts';
 
 interface DataPoint {
@@ -32,6 +33,8 @@ interface AdvancedAreaChartProps {
   stacked?: boolean;
   yAxisLabel?: string;
   tooltipFormatter?: (value: number) => string;
+  showReferenceLine?: boolean;
+  referenceValue?: number;
 }
 
 export const AdvancedAreaChart: React.FC<AdvancedAreaChartProps> = ({
@@ -44,69 +47,154 @@ export const AdvancedAreaChart: React.FC<AdvancedAreaChartProps> = ({
   stacked = false,
   yAxisLabel,
   tooltipFormatter,
+  showReferenceLine = false,
+  referenceValue,
 }) => {
+  // Calculate average for reference line
+  const avgValue = referenceValue ?? (data.length > 0 && areas.length > 0
+    ? data.reduce((sum, d) => sum + (Number(d[areas[0].dataKey]) || 0), 0) / data.length
+    : 0);
+
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white/95 backdrop-blur-xl border border-[#d2d2d7]/50 rounded-xl shadow-lg p-3">
-          <p className="text-[12px] font-medium text-[#86868b] mb-2">{label}</p>
-          {payload.reverse().map((entry: any, index: number) => (
-            <div key={index} className="flex items-center gap-2 text-[13px]">
-              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
-              <span className="text-[#86868b]">{entry.name}:</span>
-              <span className="font-semibold text-[#1d1d1f]">
-                {tooltipFormatter ? tooltipFormatter(entry.value) : 
-                  typeof entry.value === 'number' ? 
-                    entry.value.toLocaleString() : entry.value
-                }
-              </span>
+        <div className="relative">
+          {/* Glassmorphism tooltip */}
+          <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl p-4 min-w-[160px]">
+            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-slate-700/50">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <p className="text-xs font-bold text-white uppercase tracking-wider">{label}</p>
             </div>
-          ))}
+            {payload.map((entry: any, index: number) => (
+              <div key={index} className="flex items-center justify-between gap-6">
+                <span className="text-xs text-slate-400">{entry.name}</span>
+                <span className="text-base font-bold text-white tabular-nums">
+                  {tooltipFormatter ? tooltipFormatter(entry.value) : 
+                    typeof entry.value === 'number' ? 
+                      entry.value.toFixed(3) : 
+                      entry.value
+                  }
+                  <span className="text-xs text-slate-500 ml-1">BTC</span>
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       );
     }
     return null;
   };
 
+  // Custom dot component for active state
+  const CustomActiveDot = (props: any) => {
+    const { cx, cy, fill } = props;
+    return (
+      <g>
+        {/* Outer ring */}
+        <circle cx={cx} cy={cy} r={12} fill={fill} fillOpacity={0.15} />
+        {/* Middle ring */}
+        <circle cx={cx} cy={cy} r={8} fill={fill} fillOpacity={0.3} />
+        {/* Inner dot */}
+        <circle cx={cx} cy={cy} r={4} fill={fill} stroke="#fff" strokeWidth={2} />
+      </g>
+    );
+  };
+
   return (
     <ResponsiveContainer width="100%" height={height}>
-      <AreaChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+      <AreaChart data={data} margin={{ top: 20, right: 20, left: 0, bottom: 10 }}>
         <defs>
           {areas.map((area) => (
-            <linearGradient key={area.dataKey} id={`gradient-${area.dataKey}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={area.color} stopOpacity={0.4} />
-              <stop offset="95%" stopColor={area.color} stopOpacity={0.0} />
-            </linearGradient>
+            <React.Fragment key={area.dataKey}>
+              {/* Main gradient */}
+              <linearGradient id={`gradient-${area.dataKey}`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={area.color} stopOpacity={0.4} />
+                <stop offset="50%" stopColor={area.color} stopOpacity={0.15} />
+                <stop offset="100%" stopColor={area.color} stopOpacity={0.02} />
+              </linearGradient>
+              {/* Stroke gradient for premium effect */}
+              <linearGradient id={`stroke-gradient-${area.dataKey}`} x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor={area.color} stopOpacity={0.6} />
+                <stop offset="50%" stopColor={area.color} stopOpacity={1} />
+                <stop offset="100%" stopColor={area.color} stopOpacity={0.6} />
+              </linearGradient>
+            </React.Fragment>
           ))}
+          {/* Grid pattern */}
+          <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" strokeWidth="0.5" opacity="0.5"/>
+          </pattern>
         </defs>
+        
         {showGrid && (
-          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.1} vertical={false} />
-        )}
-        <XAxis
-          dataKey={xAxisKey}
-          stroke="#94a3b8"
-          fontSize={11}
-          tickLine={false}
-          axisLine={false}
-          tick={{ fill: '#94a3b8' }}
-          dy={10}
-        />
-        <YAxis
-          stroke="#94a3b8"
-          fontSize={11}
-          tickLine={false}
-          axisLine={false}
-          tick={{ fill: '#94a3b8' }}
-          label={yAxisLabel ? { value: yAxisLabel, angle: -90, position: 'insideLeft', fill: '#94a3b8' } : undefined}
-        />
-        <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#94a3b8', strokeWidth: 1, strokeDasharray: '4 4' }} />
-        {showLegend && (
-          <Legend
-            wrapperStyle={{ paddingTop: '20px' }}
-            iconType="circle"
-            formatter={(value) => <span className="text-sm font-medium text-slate-600">{value}</span>}
+          <CartesianGrid 
+            strokeDasharray="0" 
+            stroke="#cbd5e1" 
+            strokeOpacity={0.6}
+            vertical={false} 
+            horizontal={true}
           />
         )}
+        
+        <XAxis
+          dataKey={xAxisKey}
+          stroke="transparent"
+          fontSize={10}
+          tickLine={false}
+          axisLine={{ stroke: '#e2e8f0', strokeWidth: 1 }}
+          tick={{ fill: '#64748b', fontWeight: 500 }}
+          dy={8}
+          interval="preserveStartEnd"
+          tickMargin={8}
+        />
+        
+        <YAxis
+          stroke="transparent"
+          fontSize={10}
+          tickLine={false}
+          axisLine={false}
+          tick={{ fill: '#64748b', fontWeight: 500 }}
+          dx={-5}
+          tickCount={5}
+          tickFormatter={(value) => value.toFixed(2)}
+          label={yAxisLabel ? { value: yAxisLabel, angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 } : undefined}
+        />
+        
+        {/* Average reference line */}
+        {showReferenceLine && avgValue > 0 && (
+          <ReferenceLine 
+            y={avgValue} 
+            stroke="#94a3b8" 
+            strokeDasharray="4 4"
+            strokeWidth={1}
+            label={{ 
+              value: `Avg: ${avgValue.toFixed(3)}`, 
+              fill: '#64748b', 
+              fontSize: 10,
+              position: 'right'
+            }}
+          />
+        )}
+        
+        <Tooltip 
+          content={<CustomTooltip />} 
+          cursor={{ 
+            stroke: '#10B981', 
+            strokeWidth: 1,
+            strokeDasharray: '4 4',
+            strokeOpacity: 0.5
+          }} 
+        />
+        
+        {showLegend && (
+          <Legend
+            wrapperStyle={{ paddingTop: '16px' }}
+            iconType="circle"
+            iconSize={8}
+            formatter={(value) => <span className="text-xs font-medium text-slate-600 ml-1">{value}</span>}
+          />
+        )}
+        
         {areas.map((area) => (
           <Area
             key={area.dataKey}
@@ -115,13 +203,13 @@ export const AdvancedAreaChart: React.FC<AdvancedAreaChartProps> = ({
             name={area.name}
             stackId={stacked ? 'stack' : area.stackId}
             stroke={area.color}
-            strokeWidth={3}
+            strokeWidth={2}
             fill={`url(#gradient-${area.dataKey})`}
             fillOpacity={1}
-            animationDuration={2000}
+            animationDuration={1800}
             animationEasing="ease-out"
             dot={false}
-            activeDot={{ r: 6, strokeWidth: 0, fill: area.color }}
+            activeDot={<CustomActiveDot fill={area.color} />}
           />
         ))}
       </AreaChart>

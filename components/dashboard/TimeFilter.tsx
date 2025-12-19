@@ -11,12 +11,12 @@ interface TimeFilterProps {
 const DEFAULT_OPTIONS: TimeRange[] = ['24h', '7d', '30d', '90d', '1y', 'all'];
 
 const LABELS: Record<TimeRange, string> = {
-  '24h': '24H',
-  '7d': '7D',
-  '30d': '30D',
-  '90d': '90D',
-  '1y': '1Y',
-  'all': 'All',
+  '24h': '24 Hours',
+  '7d': '7 Days',
+  '30d': '30 Days',
+  '90d': '90 Days',
+  '1y': '1 Year',
+  'all': 'All Time',
 };
 
 export const TimeFilter: React.FC<TimeFilterProps> = ({
@@ -25,17 +25,17 @@ export const TimeFilter: React.FC<TimeFilterProps> = ({
   options = DEFAULT_OPTIONS,
 }) => {
   return (
-    <div className="inline-flex items-center gap-0.5 bg-[#f5f5f7] rounded-xl p-1">
+    <div className="inline-flex items-center gap-1 bg-gray-100 rounded-lg p-1">
       {options.map((option) => (
         <button
           key={option}
           onClick={() => onChange(option)}
           className={`
-            px-3.5 py-1.5 rounded-lg text-[13px] font-medium transition-all
+            px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200
             ${
               selected === option
-                ? 'bg-white text-[#1d1d1f] shadow-sm'
-                : 'text-[#86868b] hover:text-[#1d1d1f]'
+                ? 'bg-[#0a0b0d] text-[#10B981] shadow-sm'
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
             }
           `}
         >

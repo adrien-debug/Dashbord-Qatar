@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface GaugeChartProps {
   value: number;
@@ -21,89 +21,115 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
   size = 200,
   showValue = true,
   color,
-  thresholds,
 }) => {
+  const [mounted, setMounted] = useState(false);
+  const [containerSize, setContainerSize] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element || typeof ResizeObserver === 'undefined') return;
+
+    const updateSize = () => {
+      const rect = element.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      const nextSize = height > 0 ? Math.min(width, height) : width;
+      setContainerSize(nextSize > 0 ? nextSize : null);
+    };
+
+    updateSize();
+
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [size]);
+
+  const computedSize = containerSize ?? size;
+
   const percentage = ((value - min) / (max - min)) * 100;
-  const angle = (percentage / 100) * 180 - 90;
+  const clampedPercentage = Math.min(100, Math.max(0, percentage));
+  
+  // Circle calculations
+  const strokeWidth = Math.max(12, computedSize * 0.08);
+  const radius = (computedSize / 2) - strokeWidth;
+  const circumference = 2 * Math.PI * radius;
 
-  const getColor = (): string => {
-    if (color) return color;
-    
-    if (thresholds) {
-      for (let i = thresholds.length - 1; i >= 0; i--) {
-        if (value >= thresholds[i].value) {
-          return thresholds[i].color;
-        }
-      }
-    }
-    
-    // Default color scheme - Premium palette
-    if (percentage >= 90) return '#64748B'; // Slate 500
-    if (percentage >= 75) return '#94A3B8'; // Slate 400
-    if (percentage >= 50) return '#10B981'; // Emerald 500
-    return '#10B981'; // Emerald 500
-  };
-
-  const gaugeColor = getColor();
-  const radius = size / 2 - 10;
-  const strokeWidth = 12;
+  // Generate unique ID for gradients
+  const uniqueId = `gauge-${label.replace(/\s+/g, '-').toLowerCase()}`;
 
   return (
-    <div className="flex flex-col items-center justify-center" style={{ width: size, height: size * 0.7 }}>
-      <svg width={size} height={size * 0.6} className="overflow-visible">
-        {/* Background arc */}
-        <path
-          d={`M ${size / 2 - radius} ${size / 2} A ${radius} ${radius} 0 0 1 ${size / 2 + radius} ${size / 2}`}
-          fill="none"
-          stroke="#e2e8f0"
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-        />
+    <div
+      ref={containerRef}
+      className="relative flex items-center justify-center"
+      style={{ width: '100%', height: '100%', minHeight: computedSize, minWidth: computedSize }}
+    >
+      {/* SVG Circle */}
+      <svg width={computedSize} height={computedSize} className="transform -rotate-90">
+        <defs>
+          {/* Full green gradient */}
+          <linearGradient id={`${uniqueId}-gradient`} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#8AFD81" stopOpacity={1} />
+            <stop offset="50%" stopColor="#b6ffb0" stopOpacity={1} />
+            <stop offset="100%" stopColor="#4ade80" stopOpacity={1} />
+          </linearGradient>
+          
+          {/* Drop shadow */}
+          <filter id={`${uniqueId}-shadow`}>
+            <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#8AFD81" floodOpacity="0.3"/>
+          </filter>
+        </defs>
         
-        {/* Value arc */}
-        <path
-          d={`M ${size / 2 - radius} ${size / 2} A ${radius} ${radius} 0 0 1 ${size / 2 + radius} ${size / 2}`}
-          fill="none"
-          stroke={gaugeColor}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeDasharray={`${(percentage / 100) * Math.PI * radius} ${Math.PI * radius}`}
-          style={{
-            transition: 'stroke-dasharray 1s ease-in-out',
-          }}
-        />
-        
-        {/* Needle */}
-        <line
-          x1={size / 2}
-          y1={size / 2}
-          x2={size / 2 + radius * 0.7 * Math.cos((angle * Math.PI) / 180)}
-          y2={size / 2 + radius * 0.7 * Math.sin((angle * Math.PI) / 180)}
-          stroke={gaugeColor}
-          strokeWidth={3}
-          strokeLinecap="round"
-          style={{
-            transition: 'all 1s ease-in-out',
-            transformOrigin: `${size / 2}px ${size / 2}px`,
-          }}
-        />
-        
-        {/* Center dot */}
+        {/* Full green circle - all around */}
         <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={6}
-          fill={gaugeColor}
+          cx={computedSize / 2}
+          cy={computedSize / 2}
+          r={radius}
+          fill="none"
+          stroke={`url(#${uniqueId}-gradient)`}
+          strokeWidth={strokeWidth}
+          filter={`url(#${uniqueId}-shadow)`}
         />
       </svg>
       
+      {/* Center content */}
       {showValue && (
-        <div className="text-center mt-2">
-          <div className="text-2xl font-bold" style={{ color: gaugeColor }}>
-            {value.toFixed(1)}{unit}
-          </div>
-          <div className="text-xs text-slate-500 uppercase tracking-wider mt-1 font-medium">
-            {label}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            {/* Value - Green */}
+            <div className="flex items-end justify-center gap-1 mb-1">
+              <span 
+                className="text-4xl font-bold leading-none tabular-nums text-[#8AFD81]"
+              >
+                {value.toFixed(1)}
+              </span>
+              <span className="text-base text-[#8AFD81] font-medium pb-0.5">{unit}</span>
+            </div>
+            
+            {/* Label */}
+            <div className="text-[9px] uppercase tracking-wider text-slate-500 font-bold mb-2.5">
+              {label}
+            </div>
+            
+            {/* Status badge - Green */}
+            <div 
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#8AFD81]/10 border border-[#8AFD81]/30"
+            >
+              <div 
+                className="w-1.5 h-1.5 rounded-full bg-[#8AFD81]"
+              />
+              <span 
+                className="text-[9px] font-bold uppercase tracking-wide text-[#8AFD81]"
+              >
+                {clampedPercentage >= 80 ? 'Optimal' : 'Normal'}
+              </span>
+            </div>
           </div>
         </div>
       )}

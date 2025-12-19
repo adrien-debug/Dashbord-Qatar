@@ -54,15 +54,25 @@ export const AdvancedBarChart: React.FC<AdvancedBarChartProps> = ({
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white/95 backdrop-blur-xl border border-[#d2d2d7]/50 rounded-xl shadow-lg p-3">
-          <p className="text-[12px] font-medium text-[#86868b] mb-2">{label}</p>
+        <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl p-4 min-w-[140px]">
+          <div className="flex items-center gap-2 mb-3 pb-2 border-b border-slate-700/50">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <p className="text-xs font-bold text-white uppercase tracking-wider">{label}</p>
+          </div>
           {payload.map((entry: any, index: number) => (
-            <div key={index} className="flex items-center gap-2 text-[13px]">
-              <div className="w-2 h-2 rounded" style={{ backgroundColor: entry.color }} />
-              <span className="text-[#86868b]">{entry.name}:</span>
-              <span className="font-semibold text-[#1d1d1f]">
+            <div key={index} className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-2 h-2 rounded-sm"
+                  style={{ backgroundColor: entry.color }}
+                />
+                <span className="text-xs text-slate-400">{entry.name}</span>
+              </div>
+              <span className="text-sm font-bold text-white tabular-nums">
                 {tooltipFormatter ? tooltipFormatter(entry.value) : 
-                  typeof entry.value === 'number' ? entry.value.toLocaleString() : entry.value
+                  typeof entry.value === 'number' ? 
+                    entry.value.toLocaleString() : 
+                    entry.value
                 }
               </span>
             </div>
@@ -89,65 +99,96 @@ export const AdvancedBarChart: React.FC<AdvancedBarChartProps> = ({
       <BarChart
         data={data}
         layout={horizontal ? 'vertical' : 'horizontal'}
-        margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
+        margin={{ top: 20, right: 20, left: 0, bottom: 10 }}
       >
+        <defs>
+          {bars.map((bar) => (
+            <linearGradient key={bar.dataKey} id={`bar-gradient-${bar.dataKey}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={bar.color} stopOpacity={1} />
+              <stop offset="100%" stopColor={bar.color} stopOpacity={0.7} />
+            </linearGradient>
+          ))}
+        </defs>
+        
         {showGrid && (
-          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.1} vertical={false} />
+          <CartesianGrid 
+            strokeDasharray="0" 
+            stroke="#e2e8f0" 
+            strokeOpacity={0.5}
+            vertical={false} 
+            horizontal={true}
+          />
         )}
+        
         {horizontal ? (
           <>
-            <XAxis type="number" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} tick={{ fill: '#94a3b8' }} />
+            <XAxis 
+              type="number" 
+              stroke="transparent" 
+              fontSize={10} 
+              tickLine={false} 
+              axisLine={false} 
+              tick={{ fill: '#64748b', fontWeight: 500 }} 
+            />
             <YAxis
               type="category"
               dataKey={xAxisKey}
-              stroke="#94a3b8"
-              fontSize={11}
+              stroke="transparent"
+              fontSize={10}
               tickLine={false}
               axisLine={false}
-              width={120}
-              tick={{ fill: '#94a3b8' }}
+              width={100}
+              tick={{ fill: '#64748b', fontWeight: 500 }}
             />
           </>
         ) : (
           <>
             <XAxis
               dataKey={xAxisKey}
-              stroke="#94a3b8"
-              fontSize={11}
+              stroke="transparent"
+              fontSize={10}
               tickLine={false}
-              axisLine={false}
-              tick={{ fill: '#94a3b8' }}
-              dy={10}
+              axisLine={{ stroke: '#e2e8f0', strokeWidth: 1 }}
+              tick={{ fill: '#64748b', fontWeight: 500 }}
+              dy={8}
             />
             <YAxis
-              stroke="#94a3b8"
-              fontSize={11}
+              stroke="transparent"
+              fontSize={10}
               tickLine={false}
               axisLine={false}
-              tick={{ fill: '#94a3b8' }}
-              label={yAxisLabel ? { value: yAxisLabel, angle: -90, position: 'insideLeft', fill: '#94a3b8' } : undefined}
+              tick={{ fill: '#64748b', fontWeight: 500 }}
+              label={yAxisLabel ? { value: yAxisLabel, angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 } : undefined}
             />
           </>
         )}
-        <Tooltip content={<CustomTooltip />} cursor={{ fill: '#f1f5f9', opacity: 0.4 }} />
+        
+        <Tooltip 
+          content={<CustomTooltip />} 
+          cursor={{ fill: '#f1f5f9', opacity: 0.6, radius: 4 }} 
+        />
+        
         {showLegend && (
           <Legend
-            wrapperStyle={{ paddingTop: '20px' }}
+            wrapperStyle={{ paddingTop: '16px' }}
             iconType="rect"
-            formatter={(value) => <span className="text-sm font-medium text-slate-600">{value}</span>}
+            iconSize={10}
+            formatter={(value) => <span className="text-xs font-medium text-slate-600 ml-1">{value}</span>}
           />
         )}
+        
         {bars.map((bar) => (
           <Bar
             key={bar.dataKey}
             dataKey={bar.dataKey}
             name={bar.name}
-            fill={bar.color}
+            fill={`url(#bar-gradient-${bar.dataKey})`}
             stackId={stacked ? 'stack' : bar.stackId}
-            radius={horizontal ? [0, 4, 4, 0] : [4, 4, 0, 0]}
-            animationDuration={2000}
+            radius={horizontal ? [0, 6, 6, 0] : [6, 6, 0, 0]}
+            animationDuration={1500}
             animationEasing="ease-out"
-            barSize={horizontal ? 20 : undefined}
+            barSize={horizontal ? 24 : undefined}
+            maxBarSize={50}
           >
             {colorByValue &&
               data.map((entry, index) => (

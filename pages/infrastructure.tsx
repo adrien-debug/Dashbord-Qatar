@@ -4,6 +4,7 @@ import { TimeFilter, TimeRange, ExportButton } from '../components/dashboard';
 import {
   AdvancedLineChart,
   AdvancedAreaChart,
+  GaugeChart,
 } from '../components/charts';
 import {
   mockPowerSystems,
@@ -36,34 +37,33 @@ export default function Infrastructure() {
   };
 
   const powerData = getPowerData().map(d => ({
-    time: 'date' in d ? new Date(d.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : d.hour,
+    time: 'date' in d ? new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : d.hour,
     total: d.total,
   }));
 
   const uptimeData = mockSystemUptime.map(d => ({
-    date: new Date(d.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }),
+    date: new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
     overall: d.overall,
   }));
 
   const efficiencyData = mockEfficiencyHistory.map(d => ({
-    date: new Date(d.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }),
+    date: new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
     avg: (d.pb1 + d.pb2 + d.pb3 + d.pb4) / 4,
   }));
 
   return (
     <>
       <Head>
-        <title>Infrastructure Monitoring</title>
+        <title>Infrastructure Monitoring - Hearst Qatar</title>
       </Head>
 
-      <div className="min-h-screen bg-[#f5f5f7] p-8">
-        <div className="max-w-[1200px] mx-auto">
-          
-          {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+      <div className="min-h-screen bg-slate-50 p-8">
+        <div className="max-w-[1600px] mx-auto">
+          {/* Header Simple */}
+          <div className="flex items-center justify-between mb-8 pb-6 border-b-2 border-slate-200">
             <div>
-              <h1 className="text-[32px] font-semibold text-[#1d1d1f] tracking-tight">Infrastructure</h1>
-              <p className="text-[15px] text-[#86868b] mt-1">Power & Cooling Systems</p>
+              <h1 className="text-3xl font-bold text-slate-900 mb-2">Infrastructure Monitoring</h1>
+              <p className="text-sm text-slate-600">Real-time power systems & cooling performance</p>
             </div>
             <div className="flex items-center gap-3">
               <TimeFilter selected={timeRange} onChange={setTimeRange} options={['24h', '7d', '30d']} />
@@ -71,88 +71,95 @@ export default function Infrastructure() {
             </div>
           </div>
 
-          {/* KPIs */}
-          <div className="grid grid-cols-4 gap-4 mb-5">
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <p className="text-[11px] text-[#86868b] uppercase tracking-wide mb-2">System Uptime</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-[28px] font-semibold text-[#1d1d1f] tracking-tight">{systemUptime}</span>
-                <span className="text-[15px] text-[#86868b]">%</span>
+          {/* KPIs - Grande Box Blanche avec Texte Foncé Lisible */}
+          <div className="bg-white rounded-2xl p-8 mb-8 border border-slate-200 shadow-lg">
+            <div className="grid grid-cols-4 gap-8">
+              <div>
+                <div className="text-slate-500 text-xs uppercase tracking-wider mb-3 font-semibold">System Uptime</div>
+                <div className="flex items-baseline gap-3">
+                  <div className="text-5xl font-bold text-slate-900">{systemUptime}</div>
+                  <div className="text-xl font-semibold text-slate-600">%</div>
+                </div>
+                <div className="mt-2 text-sm text-slate-500">Last 30 days</div>
               </div>
-              <p className="text-[13px] text-[#86868b] mt-2">Last 30 days</p>
-            </div>
-
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <p className="text-[11px] text-[#86868b] uppercase tracking-wide mb-2">Total Load</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-[28px] font-semibold text-[#1d1d1f] tracking-tight">{totalLoad.toFixed(1)}</span>
-                <span className="text-[15px] text-[#86868b]">MW</span>
+              <div>
+                <div className="text-slate-500 text-xs uppercase tracking-wider mb-3 font-semibold">Total Load</div>
+                <div className="flex items-baseline gap-3">
+                  <div className="text-5xl font-bold text-slate-900">{totalLoad.toFixed(1)}</div>
+                  <div className="text-xl font-semibold text-slate-600">MW</div>
+                </div>
+                <div className="mt-2 text-sm text-slate-500">of 100 MW capacity</div>
               </div>
-              <p className="text-[13px] text-[#86868b] mt-2">of 100 MW capacity</p>
-            </div>
-
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <p className="text-[11px] text-[#86868b] uppercase tracking-wide mb-2">Efficiency</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-[28px] font-semibold text-[#1d1d1f] tracking-tight">{avgEfficiency}</span>
-                <span className="text-[15px] text-[#86868b]">%</span>
+              <div>
+                <div className="text-slate-500 text-xs uppercase tracking-wider mb-3 font-semibold">Efficiency</div>
+                <div className="flex items-baseline gap-3">
+                  <div className="text-5xl font-bold text-slate-900">{avgEfficiency}</div>
+                  <div className="text-xl font-semibold text-slate-600">%</div>
+                </div>
+                <div className="mt-2 text-sm text-slate-500">Power systems</div>
               </div>
-              <p className="text-[13px] text-[#86868b] mt-2">Power systems</p>
-            </div>
-
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <p className="text-[11px] text-[#86868b] uppercase tracking-wide mb-2">Temperature</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-[28px] font-semibold text-[#1d1d1f] tracking-tight">{avgTemp}</span>
-                <span className="text-[15px] text-[#86868b]">°C</span>
+              <div>
+                <div className="text-slate-500 text-xs uppercase tracking-wider mb-3 font-semibold">Temperature</div>
+                <div className="flex items-baseline gap-3">
+                  <div className="text-5xl font-bold text-slate-900">{avgTemp}</div>
+                  <div className="text-xl font-semibold text-slate-600">°C</div>
+                </div>
+                <div className="mt-2 text-sm text-slate-500">Average</div>
               </div>
-              <p className="text-[13px] text-[#86868b] mt-2">Average</p>
             </div>
           </div>
 
-          {/* Power Chart */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm mb-5">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-[17px] font-semibold text-[#1d1d1f]">Power Load</h3>
-                <p className="text-[13px] text-[#86868b]">Real-time consumption</p>
-              </div>
+          {/* Power Monitoring - Grande Box */}
+          <div className="bg-white rounded-2xl p-8 mb-8 border border-slate-200 shadow-lg">
+            <div className="mb-6">
+              <h2 className="text-xl font-bold text-slate-900 mb-2">Power Load Monitoring</h2>
+              <p className="text-sm text-slate-600">Real-time power consumption across facility</p>
             </div>
             <AdvancedAreaChart
               data={powerData}
-              areas={[{ dataKey: 'total', name: 'Total Load (MW)', color: '#10B981' }]}
+              areas={[
+                { dataKey: 'total', name: 'Total Load (MW)', color: '#8AFD81' },
+              ]}
               xAxisKey="time"
-              height={240}
+              height={280}
               showGrid={true}
               showLegend={false}
               yAxisLabel="MW"
             />
           </div>
 
-          {/* Performance Charts */}
-          <div className="grid grid-cols-2 gap-5 mb-5">
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-[15px] font-semibold text-[#1d1d1f] mb-1">System Uptime</h3>
-              <p className="text-[13px] text-[#86868b] mb-4">30-day trend</p>
+          {/* System Performance - 2 Charts Côte à Côte */}
+          <div className="grid grid-cols-2 gap-6 mb-8">
+            <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg">
+              <div className="mb-6">
+                <h2 className="text-xl font-bold text-slate-900 mb-2">System Uptime</h2>
+                <p className="text-sm text-slate-600">Reliability trend (30 days)</p>
+              </div>
               <AdvancedLineChart
                 data={uptimeData}
-                lines={[{ dataKey: 'overall', name: 'Uptime', color: '#10B981', strokeWidth: 2 }]}
+                lines={[
+                  { dataKey: 'overall', name: 'Uptime', color: '#8AFD81', strokeWidth: 3 },
+                ]}
                 xAxisKey="date"
-                height={180}
+                height={240}
                 showGrid={true}
                 showLegend={false}
                 yAxisLabel="%"
               />
             </div>
 
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-[15px] font-semibold text-[#1d1d1f] mb-1">Operational Efficiency</h3>
-              <p className="text-[13px] text-[#86868b] mb-4">30-day trend</p>
+            <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg">
+              <div className="mb-6">
+                <h2 className="text-xl font-bold text-slate-900 mb-2">Operational Efficiency</h2>
+                <p className="text-sm text-slate-600">Performance trend (30 days)</p>
+              </div>
               <AdvancedLineChart
                 data={efficiencyData}
-                lines={[{ dataKey: 'avg', name: 'Efficiency', color: '#10B981', strokeWidth: 2 }]}
+                lines={[
+                  { dataKey: 'avg', name: 'Efficiency', color: '#8AFD81', strokeWidth: 3 },
+                ]}
                 xAxisKey="date"
-                height={180}
+                height={240}
                 showGrid={true}
                 showLegend={false}
                 yAxisLabel="%"
@@ -160,29 +167,28 @@ export default function Infrastructure() {
             </div>
           </div>
 
-          {/* Systems Status */}
-          <div className="grid grid-cols-2 gap-5">
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-[17px] font-semibold text-[#1d1d1f] mb-5">Power Systems</h3>
-              <div className="space-y-3">
+          {/* System Status - Liste Simple et Lisible */}
+          <div className="bg-slate-50 rounded-2xl p-8 border border-slate-200">
+            <h2 className="text-lg font-bold text-slate-900 mb-6">System Status Overview</h2>
+            
+            <div className="mb-6">
+              <div className="text-sm font-semibold text-slate-700 mb-4">Power Systems</div>
+              <div className="grid grid-cols-4 gap-4">
                 {powerSystems.map(system => (
-                  <div key={system.id} className="p-4 rounded-xl bg-[#f5f5f7]">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className={`w-2.5 h-2.5 rounded-full ${system.status === 'optimal' ? 'bg-[#10B981]' : system.status === 'warning' ? 'bg-[#FBBF24]' : 'bg-[#F87171]'}`} />
-                      <span className="text-[15px] font-medium text-[#1d1d1f]">{system.name}</span>
-                    </div>
-                    <div className="flex gap-6 text-[13px]">
-                      <div>
-                        <span className="text-[#86868b]">Load: </span>
-                        <span className="text-[#1d1d1f] font-medium">{system.currentLoad} MW</span>
+                  <div key={system.id} className="bg-white rounded-xl p-5 border border-slate-200">
+                    <div className="text-sm font-bold text-slate-900 mb-3">{system.name}</div>
+                    <div className="space-y-2 text-sm text-slate-700">
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">Load:</span>
+                        <span className="font-semibold">{system.currentLoad} MW</span>
                       </div>
-                      <div>
-                        <span className="text-[#86868b]">Eff: </span>
-                        <span className="text-[#1d1d1f] font-medium">{system.efficiency}%</span>
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">Efficiency:</span>
+                        <span className="font-semibold">{system.efficiency}%</span>
                       </div>
-                      <div>
-                        <span className="text-[#86868b]">Temp: </span>
-                        <span className="text-[#1d1d1f] font-medium">{system.temperature}°C</span>
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">Temp:</span>
+                        <span className="font-semibold">{system.temperature}°C</span>
                       </div>
                     </div>
                   </div>
@@ -190,27 +196,24 @@ export default function Infrastructure() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-[17px] font-semibold text-[#1d1d1f] mb-5">Cooling Systems</h3>
-              <div className="space-y-3">
+            <div>
+              <div className="text-sm font-semibold text-slate-700 mb-4">Cooling Systems</div>
+              <div className="grid grid-cols-4 gap-4">
                 {coolingSystems.map(system => (
-                  <div key={system.id} className="p-4 rounded-xl bg-[#f5f5f7]">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className={`w-2.5 h-2.5 rounded-full ${system.status === 'optimal' ? 'bg-[#10B981]' : system.status === 'warning' ? 'bg-[#FBBF24]' : 'bg-[#F87171]'}`} />
-                      <span className="text-[15px] font-medium text-[#1d1d1f]">{system.name}</span>
-                    </div>
-                    <div className="flex gap-6 text-[13px]">
-                      <div>
-                        <span className="text-[#86868b]">Flow: </span>
-                        <span className="text-[#1d1d1f] font-medium">{system.flowRate} L/m</span>
+                  <div key={system.id} className="bg-white rounded-xl p-5 border border-slate-200">
+                    <div className="text-sm font-bold text-slate-900 mb-3">{system.name}</div>
+                    <div className="space-y-2 text-sm text-slate-700">
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">Flow:</span>
+                        <span className="font-semibold">{system.flowRate} L/min</span>
                       </div>
-                      <div>
-                        <span className="text-[#86868b]">Delta: </span>
-                        <span className="text-[#1d1d1f] font-medium">{system.temperature.input - system.temperature.output}°C</span>
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">ΔT:</span>
+                        <span className="font-semibold">{system.temperature.input - system.temperature.output}°C</span>
                       </div>
-                      <div>
-                        <span className="text-[#86868b]">Eff: </span>
-                        <span className="text-[#1d1d1f] font-medium">{system.efficiency}%</span>
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">Efficiency:</span>
+                        <span className="font-semibold">{system.efficiency}%</span>
                       </div>
                     </div>
                   </div>
@@ -223,3 +226,4 @@ export default function Infrastructure() {
     </>
   );
 }
+
