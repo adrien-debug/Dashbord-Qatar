@@ -54,9 +54,9 @@ export default function Dashboard() {
               </div>
 
               {/* Content */}
-              <div className="absolute inset-0 z-20 flex">
-                {/* Left - Title and info */}
-                <div className="flex flex-col justify-center items-start p-8 lg:p-10 flex-1">
+              <div className="absolute inset-0 z-20 flex flex-col justify-between p-8 lg:p-10">
+                {/* Title and info */}
+                <div className="flex flex-col justify-center items-start flex-1">
                   <h1 className="text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight text-left">
                     Qatar Bitcoin<br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">Strategic Reserve</span>
@@ -76,8 +76,8 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                {/* Right - Badges column full height */}
-                <div className="flex flex-col justify-center items-end gap-3 p-8 lg:p-10">
+                {/* Badges - Bottom left, same line */}
+                <div className="flex items-center justify-start gap-3">
                   <span className="px-3 py-1.5 bg-[#8AFD81] text-slate-900 rounded-full text-[10px] font-bold uppercase tracking-widest">
                     Official Dashboard
                   </span>
@@ -89,7 +89,7 @@ export default function Dashboard() {
             </div>
 
             {/* 2. TOTAL BTC RESERVE - 6 cols */}
-            <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100">
+            <div className="col-span-12 lg:col-span-6 premium-card animate-fade-in-up delay-100">
               {/* Header - Dark background */}
               <div className="bg-slate-800 px-6 py-4">
                 <div className="flex items-center justify-between">
@@ -131,30 +131,30 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                {/* Single Chart */}
-                <div className="flex items-end gap-1.5 h-36 mb-3 pt-6 border-t border-slate-100">
-                  {[25, 40, 35, 50, 45, 60, 55, 70, 65, 80, 75, 90, 85, 95, 88].map((h, i) => (
+                {/* Single Chart - Centered */}
+                <div className="flex items-end justify-center gap-1 h-24 my-6 mx-auto max-w-[90%]">
+                  {[30, 45, 38, 55, 48, 62, 58, 72, 68, 82, 78, 88, 84, 92, 86].map((h, i) => (
                     <div 
                       key={i} 
-                      className="flex-1 bg-gradient-to-t from-[#8AFD81]/30 to-[#8AFD81] rounded-t-sm hover:from-[#8AFD81]/50 hover:to-[#b6ffb0] transition-all cursor-pointer" 
+                      className="flex-1 max-w-3 bg-gradient-to-t from-slate-200 to-[#8AFD81] rounded-full hover:from-[#8AFD81]/40 hover:to-[#8AFD81] transition-all duration-500 cursor-pointer hover:scale-110 origin-bottom" 
                       style={{ height: `${h}%` }} 
                     />
                   ))}
                 </div>
 
-                {/* Stats */}
-                <div className="flex items-center justify-center gap-10 pt-4">
-                  <div className="text-center">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Monthly</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
-                      +{mockStrategicReserve.monthlyAccumulation} <span className="text-slate-400 font-medium text-sm">BTC</span>
+                {/* Stats - Refined */}
+                <div className="flex items-center justify-center gap-12 pt-6 mt-2 border-t border-slate-100">
+                  <div className="text-center group cursor-default">
+                    <div className="text-slate-400 text-[10px] uppercase tracking-[0.15em] font-semibold mb-2">Monthly</div>
+                    <div className="text-xl font-bold text-slate-800 tabular-nums tracking-tight group-hover:text-[#8AFD81] transition-colors duration-300">
+                      +{mockStrategicReserve.monthlyAccumulation} <span className="text-slate-300 font-medium text-sm">BTC</span>
                     </div>
                   </div>
-                  <div className="w-px h-10 bg-slate-200"></div>
-                  <div className="text-center">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Year-End Target</div>
-                    <div className="text-lg font-bold text-hearst-primary tabular-nums tracking-tight">
-                      {formatNumber(mockStrategicReserve.projectedYearEnd)} <span className="text-hearst-primary/60 font-medium text-sm">BTC</span>
+                  <div className="w-px h-12 bg-gradient-to-b from-transparent via-slate-200 to-transparent"></div>
+                  <div className="text-center group cursor-default">
+                    <div className="text-slate-400 text-[10px] uppercase tracking-[0.15em] font-semibold mb-2">Year-End Target</div>
+                    <div className="text-xl font-bold text-[#8AFD81] tabular-nums tracking-tight">
+                      {formatNumber(mockStrategicReserve.projectedYearEnd)} <span className="text-[#8AFD81]/50 font-medium text-sm">BTC</span>
                     </div>
                   </div>
                 </div>
@@ -162,7 +162,7 @@ export default function Dashboard() {
             </div>
 
             {/* 3. PORTFOLIO VALUE - 6 cols */}
-            <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100">
+            <div className="col-span-12 lg:col-span-6 premium-card animate-fade-in-up delay-100">
               {/* Header - Dark */}
               <div className="bg-slate-800 px-6 py-4">
                 <div className="flex items-center justify-between">
@@ -204,32 +204,37 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                {/* Circular Gauges */}
-                <div className="flex items-center justify-between pt-6 border-t border-slate-100 pb-6">
+                {/* Circular Gauges - Refined */}
+                <div className="flex items-center justify-center gap-8 py-6 mt-4">
                   {[
                     { label: 'ROI', value: 85, id: 'gauge1' },
                     { label: 'Growth', value: 72, id: 'gauge2' },
                     { label: 'Target', value: 68, id: 'gauge3' }
                   ].map((item, i) => (
-                    <div key={i} className="flex flex-col items-center text-center">
-                      <div className="relative w-24 h-24 mb-2">
-                        <svg className="w-24 h-24 -rotate-90">
+                    <div key={i} className="flex flex-col items-center text-center group cursor-pointer">
+                      <div className="relative w-20 h-20 mb-3 transition-transform duration-500 group-hover:scale-105">
+                        <svg className="w-20 h-20 -rotate-90">
                           <defs>
                             <linearGradient id={item.id} x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" stopColor="#8AFD81" stopOpacity="0.3" />
+                              <stop offset="0%" stopColor="#8AFD81" stopOpacity="0.4" />
                               <stop offset="100%" stopColor="#8AFD81" stopOpacity="1" />
                             </linearGradient>
+                            <filter id={`shadow-${item.id}`}>
+                              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#8AFD81" floodOpacity="0.3"/>
+                            </filter>
                           </defs>
-                          <circle cx="48" cy="48" r="38" fill="none" stroke="#e2e8f0" strokeWidth="12" />
+                          <circle cx="40" cy="40" r="32" fill="none" stroke="#f1f5f9" strokeWidth="6" />
                           <circle 
-                            cx="48" cy="48" r="38" fill="none" 
-                            stroke={`url(#${item.id})`} strokeWidth="12" strokeLinecap="round"
-                            strokeDasharray={`${item.value * 2.39} 239`}
+                            cx="40" cy="40" r="32" fill="none" 
+                            stroke={`url(#${item.id})`} strokeWidth="6" strokeLinecap="round"
+                            strokeDasharray={`${item.value * 2.01} 201`}
+                            filter={`url(#shadow-${item.id})`}
+                            className="transition-all duration-700"
                           />
                         </svg>
-                        <span className="absolute inset-0 flex items-center justify-center text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">{item.value}%</span>
+                        <span className="absolute inset-0 flex items-center justify-center text-lg font-bold text-slate-800">{item.value}<span className="text-sm text-slate-400">%</span></span>
                       </div>
-                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{item.label}</span>
+                      <span className="text-[9px] text-slate-400 font-semibold uppercase tracking-[0.15em] group-hover:text-[#8AFD81] transition-colors duration-300">{item.label}</span>
                     </div>
                   ))}
                 </div>
@@ -237,7 +242,7 @@ export default function Dashboard() {
             </div>
 
             {/* 4. OPERATIONAL KPIs - Single line format */}
-            <div className="col-span-12 bg-gradient-to-r from-[#8AFD81]/80 via-[#b6ffb0]/80 to-[#4ade80]/80 rounded-[2rem] px-8 py-4 border border-[#8AFD81]/30 hover:border-[#8AFD81]/50 transition-all duration-300 animate-fade-in-up delay-200">
+            <div className="col-span-12 bg-gradient-to-r from-[#8AFD81]/15 via-[#b6ffb0]/20 to-[#4ade80]/15 rounded-[2rem] px-8 py-5 border border-[#8AFD81]/10 hover:border-[#8AFD81]/25 transition-all duration-500 animate-fade-in-up delay-200 backdrop-blur-sm hover:shadow-lg hover:shadow-[#8AFD81]/5">
               <div className="grid grid-cols-5 items-center">
                 {[
                   { label: 'Hashrate', value: formatNumber(mockBitcoinKPIs.totalHashrate), unit: 'PH/s', trend: 'up' },
@@ -266,7 +271,7 @@ export default function Dashboard() {
             </div>
 
             {/* 5. PRODUCTION CHART - 8 cols */}
-            <div className="col-span-12 lg:col-span-8 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+            <div className="col-span-12 lg:col-span-8 premium-card animate-fade-in-up delay-300">
               {/* Header - Dark */}
               <div className="bg-slate-800 px-6 py-4">
                 <div className="flex items-center justify-between">
@@ -307,7 +312,7 @@ export default function Dashboard() {
             </div>
 
             {/* 6. SYSTEM HEALTH - 4 cols */}
-            <div className="col-span-12 lg:col-span-4 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex flex-col animate-fade-in-up delay-300">
+            <div className="col-span-12 lg:col-span-4 premium-card flex flex-col animate-fade-in-up delay-300">
               {/* Header - Dark */}
               <div className="bg-slate-800 px-6 py-4">
                 <div className="flex items-center gap-3">
@@ -386,7 +391,7 @@ export default function Dashboard() {
 
             {/* 7. INFRASTRUCTURE LINK - 6 cols */}
             <Link href="/infrastructure" className="col-span-12 lg:col-span-6 group block animate-fade-in-up delay-300">
-              <div className="h-full bg-slate-800 rounded-[2rem] p-6 border border-slate-700 hover:border-[#8AFD81]/40 transition-all duration-300 hover:-translate-y-0.5">
+              <div className="h-full premium-card-dark link-card">
                 <div className="flex items-start justify-between mb-6">
                   <div>
                     <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">Infrastructure</h3>
@@ -417,7 +422,7 @@ export default function Dashboard() {
 
             {/* 8. MINING FLEET LINK - 6 cols */}
             <Link href="/mining-dashboard" className="col-span-12 lg:col-span-6 group block animate-fade-in-up delay-300">
-              <div className="h-full bg-white rounded-[2rem] p-6 border border-slate-200 hover:border-[#8AFD81]/40 transition-all duration-300 hover:-translate-y-0.5">
+              <div className="h-full premium-card link-card">
                 <div className="flex items-start justify-between mb-6">
                   <div>
                     <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-emerald-600 transition-colors">Mining Fleet</h3>
