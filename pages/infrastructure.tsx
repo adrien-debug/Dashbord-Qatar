@@ -52,10 +52,19 @@ export default function Infrastructure() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'optimal': return 'bg-[#10B981]';
-      case 'warning': return 'bg-slate-500';
-      case 'critical': return 'bg-slate-600';
-      default: return 'bg-slate-700';
+      case 'optimal': return 'bg-emerald-500';
+      case 'warning': return 'bg-amber-400';
+      case 'critical': return 'bg-red-400';
+      default: return 'bg-slate-300';
+    }
+  };
+
+  const getStatusBg = (status: string) => {
+    switch (status) {
+      case 'optimal': return 'bg-emerald-50 border-emerald-100';
+      case 'warning': return 'bg-amber-50 border-amber-100';
+      case 'critical': return 'bg-red-50 border-red-100';
+      default: return 'bg-slate-50 border-slate-100';
     }
   };
 
@@ -65,84 +74,84 @@ export default function Infrastructure() {
         <title>Infrastructure - Hearst Qatar</title>
       </Head>
 
-      <div className="min-h-screen bg-[#0F1419] p-4 lg:p-6">
-        <div className="max-w-[1440px] mx-auto space-y-4">
+      <div className="min-h-screen bg-slate-50 p-6">
+        <div className="max-w-[1400px] mx-auto space-y-6">
           
           {/* HEADER */}
-          <div className="flex items-center justify-between py-2">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <h1 className="text-xl font-semibold text-white tracking-tight">Infrastructure Monitoring</h1>
-              <div className="flex items-center gap-2 px-2.5 py-1 rounded bg-[#10B981]/10 border border-[#10B981]/20">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                <span className="text-[10px] font-medium text-[#10B981] uppercase tracking-wider">Online</span>
+              <h1 className="text-2xl font-semibold text-slate-800">Infrastructure Monitoring</h1>
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-xs font-medium text-emerald-700">Online</span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <TimeFilter selected={timeRange} onChange={setTimeRange} options={['24h', '7d', '30d']} />
               <ExportButton />
             </div>
           </div>
 
-          {/* KPIs ROW - 4 COLUMNS */}
+          {/* KPIs - 4 COLUMNS */}
           <div className="grid grid-cols-4 gap-4">
-            <div className="bg-[#1A1F2E] rounded-lg p-5 border border-[#2A3142]">
+            <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">System Uptime</span>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+                <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">System Uptime</span>
+                <div className="w-2 h-2 rounded-full bg-emerald-500" />
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-white">{systemUptime}</span>
-                <span className="text-sm text-slate-500">%</span>
+                <span className="text-3xl font-bold text-slate-800">{systemUptime}</span>
+                <span className="text-sm text-slate-400">%</span>
               </div>
-              <div className="text-[10px] text-slate-500 mt-1">Last 30 days</div>
+              <div className="text-xs text-slate-400 mt-1">Last 30 days</div>
             </div>
 
-            <div className="bg-[#1A1F2E] rounded-lg p-5 border border-[#2A3142]">
+            <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Total Load</span>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+                <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">Total Load</span>
+                <div className="w-2 h-2 rounded-full bg-emerald-500" />
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-white">{totalLoad.toFixed(1)}</span>
-                <span className="text-sm text-slate-500">MW</span>
+                <span className="text-3xl font-bold text-slate-800">{totalLoad.toFixed(1)}</span>
+                <span className="text-sm text-slate-400">MW</span>
               </div>
-              <div className="text-[10px] text-slate-500 mt-1">of 100 MW capacity</div>
+              <div className="text-xs text-slate-400 mt-1">of 100 MW capacity</div>
             </div>
 
-            <div className="bg-[#1A1F2E] rounded-lg p-5 border border-[#2A3142]">
+            <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Efficiency</span>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+                <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">Efficiency</span>
+                <div className="w-2 h-2 rounded-full bg-emerald-500" />
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-white">{avgEfficiency}</span>
-                <span className="text-sm text-slate-500">%</span>
+                <span className="text-3xl font-bold text-slate-800">{avgEfficiency}</span>
+                <span className="text-sm text-slate-400">%</span>
               </div>
-              <div className="text-[10px] text-slate-500 mt-1">Power systems</div>
+              <div className="text-xs text-slate-400 mt-1">Power systems</div>
             </div>
 
-            <div className="bg-[#1A1F2E] rounded-lg p-5 border border-[#2A3142]">
+            <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Temperature</span>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+                <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">Temperature</span>
+                <div className="w-2 h-2 rounded-full bg-emerald-500" />
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-white">{avgTemp}</span>
-                <span className="text-sm text-slate-500">°C</span>
+                <span className="text-3xl font-bold text-slate-800">{avgTemp}</span>
+                <span className="text-sm text-slate-400">°C</span>
               </div>
-              <div className="text-[10px] text-slate-500 mt-1">Average</div>
+              <div className="text-xs text-slate-400 mt-1">Average</div>
             </div>
           </div>
 
           {/* POWER CHART */}
-          <div className="bg-[#1A1F2E] rounded-lg p-5 border border-[#2A3142]">
-            <div className="flex items-center justify-between mb-4">
+          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-sm font-medium text-white">Power Load</h3>
-                <p className="text-[10px] text-slate-500 mt-0.5">Real-time consumption</p>
+                <h3 className="text-lg font-semibold text-slate-800">Power Load</h3>
+                <p className="text-sm text-slate-400 mt-1">Real-time consumption</p>
               </div>
-              <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-[#2A3142] text-[10px] text-slate-400">
-                <div className="w-2 h-2 rounded-full bg-[#10B981]" />
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 text-xs text-slate-500">
+                <div className="w-2 h-2 rounded-full bg-emerald-500" />
                 Total Load
               </div>
             </div>
@@ -150,7 +159,7 @@ export default function Infrastructure() {
               data={powerData}
               areas={[{ dataKey: 'total', name: 'Total Load (MW)', color: '#10B981' }]}
               xAxisKey="time"
-              height={220}
+              height={260}
               showGrid={true}
               showLegend={false}
               yAxisLabel="MW"
@@ -158,37 +167,37 @@ export default function Infrastructure() {
           </div>
 
           {/* PERFORMANCE CHARTS - 2 COLUMNS */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-[#1A1F2E] rounded-lg p-5 border border-[#2A3142]">
-              <div className="flex items-center justify-between mb-4">
+          <div className="grid grid-cols-2 gap-6">
+            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-xs font-medium text-white">System Uptime</h3>
-                  <p className="text-[10px] text-slate-500 mt-0.5">30-day trend</p>
+                  <h3 className="text-base font-semibold text-slate-700">System Uptime</h3>
+                  <p className="text-sm text-slate-400 mt-1">30-day trend</p>
                 </div>
               </div>
               <AdvancedLineChart
                 data={uptimeData}
                 lines={[{ dataKey: 'overall', name: 'Uptime', color: '#10B981', strokeWidth: 2 }]}
                 xAxisKey="date"
-                height={180}
+                height={200}
                 showGrid={true}
                 showLegend={false}
                 yAxisLabel="%"
               />
             </div>
 
-            <div className="bg-[#1A1F2E] rounded-lg p-5 border border-[#2A3142]">
-              <div className="flex items-center justify-between mb-4">
+            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-xs font-medium text-white">Operational Efficiency</h3>
-                  <p className="text-[10px] text-slate-500 mt-0.5">30-day trend</p>
+                  <h3 className="text-base font-semibold text-slate-700">Operational Efficiency</h3>
+                  <p className="text-sm text-slate-400 mt-1">30-day trend</p>
                 </div>
               </div>
               <AdvancedLineChart
                 data={efficiencyData}
                 lines={[{ dataKey: 'avg', name: 'Efficiency', color: '#10B981', strokeWidth: 2 }]}
                 xAxisKey="date"
-                height={180}
+                height={200}
                 showGrid={true}
                 showLegend={false}
                 yAxisLabel="%"
@@ -196,30 +205,30 @@ export default function Infrastructure() {
             </div>
           </div>
 
-          {/* SYSTEMS STATUS - 2 ROWS */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* SYSTEMS STATUS - 2 COLUMNS */}
+          <div className="grid grid-cols-2 gap-6">
             {/* Power Systems */}
-            <div className="bg-[#1A1F2E] rounded-lg p-5 border border-[#2A3142]">
-              <h3 className="text-xs font-medium text-white uppercase tracking-wide mb-4">Power Systems</h3>
-              <div className="grid grid-cols-2 gap-3">
+            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+              <h3 className="text-base font-semibold text-slate-700 mb-5">Power Systems</h3>
+              <div className="grid grid-cols-2 gap-4">
                 {powerSystems.map(system => (
-                  <div key={system.id} className="bg-[#2A3142]/30 rounded-lg p-3 border border-[#2A3142]">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className={`w-2 h-2 rounded-full ${getStatusColor(system.status)}`} />
-                      <span className="text-[11px] font-medium text-white">{system.name}</span>
+                  <div key={system.id} className={`rounded-xl p-4 border ${getStatusBg(system.status)}`}>
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className={`w-2.5 h-2.5 rounded-full ${getStatusColor(system.status)}`} />
+                      <span className="text-sm font-semibold text-slate-700">{system.name}</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-[10px]">
+                    <div className="grid grid-cols-3 gap-3">
                       <div>
-                        <div className="text-slate-500 mb-0.5">Load</div>
-                        <div className="font-medium text-white">{system.currentLoad} MW</div>
+                        <div className="text-xs text-slate-400 mb-1">Load</div>
+                        <div className="text-sm font-semibold text-slate-700">{system.currentLoad} MW</div>
                       </div>
                       <div>
-                        <div className="text-slate-500 mb-0.5">Eff.</div>
-                        <div className="font-medium text-white">{system.efficiency}%</div>
+                        <div className="text-xs text-slate-400 mb-1">Eff.</div>
+                        <div className="text-sm font-semibold text-slate-700">{system.efficiency}%</div>
                       </div>
                       <div>
-                        <div className="text-slate-500 mb-0.5">Temp</div>
-                        <div className="font-medium text-white">{system.temperature}°C</div>
+                        <div className="text-xs text-slate-400 mb-1">Temp</div>
+                        <div className="text-sm font-semibold text-slate-700">{system.temperature}°C</div>
                       </div>
                     </div>
                   </div>
@@ -228,27 +237,27 @@ export default function Infrastructure() {
             </div>
 
             {/* Cooling Systems */}
-            <div className="bg-[#1A1F2E] rounded-lg p-5 border border-[#2A3142]">
-              <h3 className="text-xs font-medium text-white uppercase tracking-wide mb-4">Cooling Systems</h3>
-              <div className="grid grid-cols-2 gap-3">
+            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+              <h3 className="text-base font-semibold text-slate-700 mb-5">Cooling Systems</h3>
+              <div className="grid grid-cols-2 gap-4">
                 {coolingSystems.map(system => (
-                  <div key={system.id} className="bg-[#2A3142]/30 rounded-lg p-3 border border-[#2A3142]">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className={`w-2 h-2 rounded-full ${getStatusColor(system.status)}`} />
-                      <span className="text-[11px] font-medium text-white">{system.name}</span>
+                  <div key={system.id} className={`rounded-xl p-4 border ${getStatusBg(system.status)}`}>
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className={`w-2.5 h-2.5 rounded-full ${getStatusColor(system.status)}`} />
+                      <span className="text-sm font-semibold text-slate-700">{system.name}</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-[10px]">
+                    <div className="grid grid-cols-3 gap-3">
                       <div>
-                        <div className="text-slate-500 mb-0.5">Flow</div>
-                        <div className="font-medium text-white">{system.flowRate} L/m</div>
+                        <div className="text-xs text-slate-400 mb-1">Flow</div>
+                        <div className="text-sm font-semibold text-slate-700">{system.flowRate} L/m</div>
                       </div>
                       <div>
-                        <div className="text-slate-500 mb-0.5">Delta</div>
-                        <div className="font-medium text-white">{system.temperature.input - system.temperature.output}°C</div>
+                        <div className="text-xs text-slate-400 mb-1">Delta</div>
+                        <div className="text-sm font-semibold text-slate-700">{system.temperature.input - system.temperature.output}°C</div>
                       </div>
                       <div>
-                        <div className="text-slate-500 mb-0.5">Eff.</div>
-                        <div className="font-medium text-white">{system.efficiency}%</div>
+                        <div className="text-xs text-slate-400 mb-1">Eff.</div>
+                        <div className="text-sm font-semibold text-slate-700">{system.efficiency}%</div>
                       </div>
                     </div>
                   </div>
