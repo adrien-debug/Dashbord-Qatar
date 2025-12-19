@@ -107,59 +107,38 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-200 text-xs font-semibold"
+        className="flex items-center gap-1.5 px-2.5 py-1 bg-[#10B981] text-white rounded-lg hover:bg-[#0EA572] transition-colors text-[11px] font-medium"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
         </svg>
         <span>Export</span>
-        <span className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>
-          ▼
-        </span>
       </button>
 
       {isOpen && (
         <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 z-10"
-            onClick={() => setIsOpen(false)}
-          />
-
-          {/* Dropdown */}
-          <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-slate-200 py-3 z-20 overflow-hidden">
-            {/* Checkbox pour sauvegarde locale */}
-            <div className="px-4 py-2 border-b border-slate-100">
-              <label className="flex items-center gap-2 cursor-pointer group">
+          <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
+          <div className="absolute right-0 mt-2 w-48 bg-[#1A1F2E] rounded-lg border border-[#2A3142] py-2 z-20">
+            <div className="px-3 py-2 border-b border-[#2A3142]">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={saveLocal}
                   onChange={(e) => setSaveLocal(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-300 text-[#10B981] focus:ring-[#10B981] focus:ring-2 cursor-pointer"
+                  className="w-3.5 h-3.5 rounded border-slate-600 bg-[#2A3142] text-[#10B981] focus:ring-[#10B981] focus:ring-1"
                 />
-                <span className="text-xs font-bold text-slate-700 uppercase tracking-wide group-hover:text-[#10B981] transition-colors">
-                  Sauvegarder localement
-                </span>
+                <span className="text-[10px] text-slate-400 uppercase tracking-wide">Save locally</span>
               </label>
             </div>
-
-            {/* Options d'export */}
             <div className="py-1">
               {formats.map((format) => (
                 <button
                   key={format}
                   onClick={() => handleExport(format)}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-[#10B981]/10 hover:text-slate-900 transition-all duration-200 group"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-[11px] text-slate-300 hover:bg-[#2A3142] hover:text-white transition-colors"
                 >
-                  <span className={`${format === 'unreal-4k' || format === 'blender' ? 'text-[#10B981]' : 'text-slate-600'} group-hover:text-[#10B981] transition-colors`}>
-                    {ICONS[format]}
-                  </span>
-                  <span className="font-medium">{LABELS[format]}</span>
-                  {(format === 'unreal-4k' || format === 'blender') && (
-                    <span className="ml-auto px-2 py-0.5 bg-[#10B981]/20 text-[#10B981] text-[10px] font-bold rounded-full uppercase tracking-wide">
-                      Hearst
-                    </span>
-                  )}
+                  <span className="text-slate-500">{ICONS[format]}</span>
+                  <span>{LABELS[format]}</span>
                 </button>
               ))}
             </div>
