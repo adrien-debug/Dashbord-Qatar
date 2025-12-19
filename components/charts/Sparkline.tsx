@@ -10,7 +10,7 @@ interface SparklineProps {
 
 export const Sparkline: React.FC<SparklineProps> = ({
   data,
-  color = '#8AFD81',
+  color = '#10B981',
   height = 40,
   showDot = false,
 }) => {

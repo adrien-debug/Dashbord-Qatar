@@ -61,8 +61,8 @@ export const AdvancedLineChart: React.FC<AdvancedLineChartProps> = ({
           {payload.map((entry: any, index: number) => (
             <div key={index} className="flex items-center gap-3 text-sm">
               <div
-                className="w-2 h-2 rounded-full shadow-[0_0_8px_currentColor]"
-                style={{ backgroundColor: entry.color, color: entry.color }}
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: entry.color }}
               />
               <span className="text-slate-400">{entry.name}:</span>
               <span className="font-bold text-white tabular-nums">

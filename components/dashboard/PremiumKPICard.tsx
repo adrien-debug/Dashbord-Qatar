@@ -32,13 +32,13 @@ export const PremiumKPICard: React.FC<PremiumKPICardProps> = ({
     if (color) return color;
     switch (status) {
       case 'optimal':
-        return '#8AFD81'; // Vert Hearst
+        return '#10B981'; // Vert Hearst
       case 'warning':
         return '#f59e0b'; // Amber
       case 'critical':
         return '#64748b'; // Gray - jamais de rouge
       default:
-        return '#8AFD81'; // Vert Hearst par défaut
+        return '#10B981'; // Vert Hearst par défaut
     }
   };
 
@@ -46,7 +46,7 @@ export const PremiumKPICard: React.FC<PremiumKPICardProps> = ({
 
   const getTrendColor = () => {
     if (trend?.isPositive === undefined) return '#64748b';
-    return trend.isPositive ? '#8AFD81' : '#94a3b8';
+    return trend.isPositive ? '#10B981' : '#94a3b8';
   };
 
   const getTrendIcon = () => {

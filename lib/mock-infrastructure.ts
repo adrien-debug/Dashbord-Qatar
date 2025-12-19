@@ -299,7 +299,7 @@ export const mockAlertTimeline = Array.from({ length: 7 }, (_, i) => {
 export const mockAlertDistribution = [
   { name: 'Critical', value: 1, color: '#64748b' }, // Gray - jamais de rouge
   { name: 'Warning', value: 2, color: '#f59e0b' }, // Amber
-  { name: 'Info', value: 2, color: '#8AFD81' }, // Vert Hearst
+  { name: 'Info', value: 2, color: '#10B981' }, // Vert Hearst
 ];
 
 // Alert Distribution by System

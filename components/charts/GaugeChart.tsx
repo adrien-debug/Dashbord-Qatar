@@ -40,8 +40,8 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
     // Default color scheme - Premium palette
     if (percentage >= 90) return '#64748B'; // Slate 500
     if (percentage >= 75) return '#94A3B8'; // Slate 400
-    if (percentage >= 50) return '#22C55E'; // Emerald 500
-    return '#22C55E'; // Emerald 500
+    if (percentage >= 50) return '#10B981'; // Emerald 500
+    return '#10B981'; // Emerald 500
   };
 
   const gaugeColor = getColor();

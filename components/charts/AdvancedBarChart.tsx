@@ -59,7 +59,7 @@ export const AdvancedBarChart: React.FC<AdvancedBarChartProps> = ({
           {payload.map((entry: any, index: number) => (
             <div key={index} className="flex items-center gap-3 text-sm">
               <div
-                className="w-2 h-2 rounded-sm shadow-[0_0_8px_currentColor]"
+                className="w-2 h-2 rounded-sm "
                 style={{ backgroundColor: entry.color, color: entry.color }}
               />
               <span className="text-slate-400">{entry.name}:</span>
@@ -79,14 +79,14 @@ export const AdvancedBarChart: React.FC<AdvancedBarChartProps> = ({
   };
 
   const getColorByValue = (value: number): string => {
-    if (!colorThresholds) return bars[0]?.color || '#8AFD81';
+    if (!colorThresholds) return bars[0]?.color || '#10B981';
     
     for (let i = colorThresholds.length - 1; i >= 0; i--) {
       if (value >= colorThresholds[i].value) {
         return colorThresholds[i].color;
       }
     }
-    return colorThresholds[0]?.color || '#8AFD81';
+    return colorThresholds[0]?.color || '#10B981';
   };
 
   return (

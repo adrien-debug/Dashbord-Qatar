@@ -135,9 +135,9 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
                   type="checkbox"
                   checked={saveLocal}
                   onChange={(e) => setSaveLocal(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-300 text-[#22C55E] focus:ring-[#22C55E] focus:ring-2 cursor-pointer"
+                  className="w-4 h-4 rounded border-slate-300 text-[#10B981] focus:ring-[#10B981] focus:ring-2 cursor-pointer"
                 />
-                <span className="text-xs font-bold text-slate-700 uppercase tracking-wide group-hover:text-[#22C55E] transition-colors">
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wide group-hover:text-[#10B981] transition-colors">
                   Sauvegarder localement
                 </span>
               </label>
@@ -149,14 +149,14 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
                 <button
                   key={format}
                   onClick={() => handleExport(format)}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-[#22C55E]/10 hover:text-slate-900 transition-all duration-200 group"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-[#10B981]/10 hover:text-slate-900 transition-all duration-200 group"
                 >
-                  <span className={`${format === 'unreal-4k' || format === 'blender' ? 'text-[#22C55E]' : 'text-slate-600'} group-hover:text-[#22C55E] transition-colors`}>
+                  <span className={`${format === 'unreal-4k' || format === 'blender' ? 'text-[#10B981]' : 'text-slate-600'} group-hover:text-[#10B981] transition-colors`}>
                     {ICONS[format]}
                   </span>
                   <span className="font-medium">{LABELS[format]}</span>
                   {(format === 'unreal-4k' || format === 'blender') && (
-                    <span className="ml-auto px-2 py-0.5 bg-[#22C55E]/20 text-[#22C55E] text-[10px] font-bold rounded-full uppercase tracking-wide">
+                    <span className="ml-auto px-2 py-0.5 bg-[#10B981]/20 text-[#10B981] text-[10px] font-bold rounded-full uppercase tracking-wide">
                       Hearst
                     </span>
                   )}

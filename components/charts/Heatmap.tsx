@@ -30,7 +30,7 @@ export const Heatmap: React.FC<HeatmapProps> = ({
   const getStatusColor = (status?: string): string => {
     switch (status) {
       case 'optimal':
-        return '#22C55E'; // Emerald 500 - premium green
+        return '#10B981'; // Emerald 500 - premium green
       case 'warning':
         return '#94A3B8'; // Slate 400
       case 'critical':
@@ -38,7 +38,7 @@ export const Heatmap: React.FC<HeatmapProps> = ({
       case 'offline':
         return '#E2E8F0'; // Slate 200
       default:
-        return '#22C55E';
+        return '#10B981';
     }
   };
 

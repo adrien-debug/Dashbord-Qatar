@@ -191,14 +191,14 @@ export const mockContainerPerformance = Array.from({ length: 48 }, (_, i) => {
 
 // Miner Distribution by Status
 export const mockMinerDistribution = [
-  { name: 'Active', value: 5712, color: '#8AFD81' }, // Vert Hearst
+  { name: 'Active', value: 5712, color: '#10B981' }, // Vert Hearst
   { name: 'Maintenance', value: 32, color: '#f59e0b' }, // Amber
   { name: 'Offline', value: 16, color: '#94a3b8' }, // Gray - jamais de rouge
 ];
 
 // Cost Breakdown - Variations de Vert Hearst
 export const mockCostBreakdown = [
-  { name: 'Electricity', value: 3500000, color: '#8AFD81' }, // Vert Hearst principal
+  { name: 'Electricity', value: 3500000, color: '#10B981' }, // Vert Hearst principal
   { name: 'Cooling', value: 450000, color: '#6ee066' }, // Vert foncé
   { name: 'Maintenance', value: 280000, color: '#a0ffa0' }, // Vert clair
   { name: 'Staff', value: 320000, color: '#5cd654' }, // Vert moyen

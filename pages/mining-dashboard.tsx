@@ -171,7 +171,7 @@ export default function MiningDashboard() {
             <AdvancedLineChart
               data={hashrateChartData}
               lines={[
-                { dataKey: 'total', name: 'Total Hashrate', color: '#22C55E', strokeWidth: 2 },
+                { dataKey: 'total', name: 'Total Hashrate', color: '#10B981', strokeWidth: 2 },
               ]}
               xAxisKey="date"
               height={260}
@@ -192,7 +192,7 @@ export default function MiningDashboard() {
                 </div>
                 <AdvancedAreaChart
                   data={reserveChartData}
-                  areas={[{ dataKey: 'btc', name: 'BTC', color: '#22C55E' }]}
+                  areas={[{ dataKey: 'btc', name: 'BTC', color: '#10B981' }]}
                   xAxisKey="date"
                   height={160}
                   showGrid={true}
@@ -207,7 +207,7 @@ export default function MiningDashboard() {
                 </div>
                 <AdvancedAreaChart
                   data={productionChartData}
-                  areas={[{ dataKey: 'btc', name: 'BTC', color: '#22C55E' }]}
+                  areas={[{ dataKey: 'btc', name: 'BTC', color: '#10B981' }]}
                   xAxisKey="date"
                   height={160}
                   showGrid={true}

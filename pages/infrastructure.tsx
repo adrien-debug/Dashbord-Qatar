@@ -130,7 +130,7 @@ export default function Infrastructure() {
             <AdvancedAreaChart
               data={powerData}
               areas={[
-                { dataKey: 'total', name: 'Total Load (MW)', color: '#22C55E' },
+                { dataKey: 'total', name: 'Total Load (MW)', color: '#10B981' },
               ]}
               xAxisKey="time"
               height={240}
@@ -150,7 +150,7 @@ export default function Infrastructure() {
               <AdvancedLineChart
                 data={uptimeData}
                 lines={[
-                  { dataKey: 'overall', name: 'Uptime', color: '#22C55E', strokeWidth: 2 },
+                  { dataKey: 'overall', name: 'Uptime', color: '#10B981', strokeWidth: 2 },
                 ]}
                 xAxisKey="date"
                 height={200}
@@ -168,7 +168,7 @@ export default function Infrastructure() {
               <AdvancedLineChart
                 data={efficiencyData}
                 lines={[
-                  { dataKey: 'avg', name: 'Efficiency', color: '#22C55E', strokeWidth: 2 },
+                  { dataKey: 'avg', name: 'Efficiency', color: '#10B981', strokeWidth: 2 },
                 ]}
                 xAxisKey="date"
                 height={200}

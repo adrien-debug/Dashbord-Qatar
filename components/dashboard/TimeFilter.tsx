@@ -34,7 +34,7 @@ export const TimeFilter: React.FC<TimeFilterProps> = ({
             px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200
             ${
               selected === option
-                ? 'bg-[#0a0b0d] text-[#8AFD81] shadow-sm'
+                ? 'bg-[#0a0b0d] text-[#10B981] shadow-sm'
                 : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
             }
           `}

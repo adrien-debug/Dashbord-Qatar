@@ -27,7 +27,7 @@ interface AdvancedPieChartProps {
 }
 
 const DEFAULT_COLORS = [
-  '#8AFD81',
+  '#10B981',
   '#3B82F6',
   '#F59E0B',
   '#EF4444',

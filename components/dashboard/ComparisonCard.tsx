@@ -25,7 +25,7 @@ export const ComparisonCard: React.FC<ComparisonCardProps> = ({
   const isPositive = difference > 0;
 
   return (
-    <div className="bg-white rounded-xl p-5 lg:p-6 border border-gray-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:shadow-lg">
+    <div className="bg-white rounded-xl p-5 lg:p-6 border border-gray-200 hover:border-[#10B981]/50 transition-all duration-300 hover:shadow-lg">
       {/* Title */}
       <h3 className="text-sm font-semibold text-[#0b1120] mb-4 uppercase tracking-wide">
         {title}
@@ -46,7 +46,7 @@ export const ComparisonCard: React.FC<ComparisonCardProps> = ({
               className="h-2.5 rounded-full transition-all duration-1000"
               style={{
                 width: '100%',
-                backgroundColor: current.color || '#8AFD81',
+                backgroundColor: current.color || '#10B981',
               }}
             />
           </div>

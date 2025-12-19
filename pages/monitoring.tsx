@@ -171,7 +171,7 @@ export default function Monitoring() {
                     label="Overall Progress"
                     unit="%"
                     size={140}
-                    color="#22C55E"
+                    color="#10B981"
                   />
                 </div>
 
@@ -277,7 +277,7 @@ export default function Monitoring() {
                     data={rampUpData}
                     bars={[
                       { dataKey: 'target', name: 'Target', color: '#e2e8f0' },
-                      { dataKey: 'actual', name: 'Actual', color: '#22C55E' },
+                      { dataKey: 'actual', name: 'Actual', color: '#10B981' },
                     ]}
                     xAxisKey="name"
                     height={180}
@@ -464,7 +464,7 @@ export default function Monitoring() {
                 <AdvancedAreaChart
                   data={powerChartData}
                   areas={[
-                    { dataKey: 'mw', name: 'Operational MW', color: '#22C55E' },
+                    { dataKey: 'mw', name: 'Operational MW', color: '#10B981' },
                   ]}
                   xAxisKey="date"
                   height={260}

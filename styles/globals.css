@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: #22C55E;
-  --color-primary-light: #4ADE80;
-  --color-primary-dark: #16A34A;
+  --color-primary: #10B981;
+  --color-primary-light: #34D399;
+  --color-primary-dark: #059669;
 }
 
 * {
@@ -57,9 +57,6 @@ a {
     @apply bg-slate-900/80 backdrop-blur-md border border-white/10 shadow-xl;
   }
   
-  .text-glow {
-    text-shadow: 0 0 20px rgba(138, 253, 129, 0.5);
-  }
 }
 
 @keyframes fadeInUp {
