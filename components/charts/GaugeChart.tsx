@@ -57,12 +57,14 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
   const clampedPercentage = Math.min(100, Math.max(0, percentage));
   
   // Circle calculations
-  const strokeWidth = Math.max(12, computedSize * 0.08);
+  const strokeWidth = Math.max(14, computedSize * 0.1);
   const radius = (computedSize / 2) - strokeWidth;
   const circumference = 2 * Math.PI * radius;
+  const strokeDasharray = circumference;
+  const strokeDashoffset = mounted ? circumference * (1 - clampedPercentage / 100) : circumference;
 
   // Generate unique ID for gradients
-  const uniqueId = `gauge-${label.replace(/\s+/g, '-').toLowerCase()}`;
+  const uniqueId = `gauge-${label.replace(/\s+/g, '-').toLowerCase()}-${Math.random().toString(36).substr(2, 9)}`;
 
   return (
     <div
@@ -73,20 +75,40 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
       {/* SVG Circle */}
       <svg width={computedSize} height={computedSize} className="transform -rotate-90">
         <defs>
-          {/* Full green gradient */}
+          {/* Premium gradient with multiple stops */}
           <linearGradient id={`${uniqueId}-gradient`} x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#8AFD81" stopOpacity={1} />
-            <stop offset="50%" stopColor="#b6ffb0" stopOpacity={1} />
-            <stop offset="100%" stopColor="#4ade80" stopOpacity={1} />
+            <stop offset="0%" stopColor="#8AFD81" stopOpacity={0.8} />
+            <stop offset="50%" stopColor="#8AFD81" stopOpacity={1} />
+            <stop offset="100%" stopColor="#b6ffb0" stopOpacity={1} />
           </linearGradient>
           
+          {/* Glow effect */}
+          <filter id={`${uniqueId}-glow`} x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          
           {/* Drop shadow */}
-          <filter id={`${uniqueId}-shadow`}>
-            <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#8AFD81" floodOpacity="0.3"/>
+          <filter id={`${uniqueId}-shadow`} x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#8AFD81" floodOpacity="0.5"/>
           </filter>
         </defs>
         
-        {/* Full green circle - all around */}
+        {/* Background track */}
+        <circle
+          cx={computedSize / 2}
+          cy={computedSize / 2}
+          r={radius}
+          fill="none"
+          stroke="#e2e8f0"
+          strokeWidth={strokeWidth}
+          strokeOpacity={0.5}
+        />
+        
+        {/* Animated progress arc */}
         <circle
           cx={computedSize / 2}
           cy={computedSize / 2}
@@ -94,7 +116,13 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
           fill="none"
           stroke={`url(#${uniqueId}-gradient)`}
           strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeDasharray={strokeDasharray}
+          strokeDashoffset={strokeDashoffset}
           filter={`url(#${uniqueId}-shadow)`}
+          style={{
+            transition: 'stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1)',
+          }}
         />
       </svg>
       
@@ -102,32 +130,34 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
       {showValue && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            {/* Value - Green */}
-            <div className="flex items-end justify-center gap-1 mb-1">
+            {/* Value with glow effect */}
+            <div className="flex items-end justify-center gap-1 mb-2">
               <span 
-                className="text-4xl font-bold leading-none tabular-nums text-[#8AFD81]"
+                className="text-4xl font-black leading-none tabular-nums bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] bg-clip-text text-transparent"
+                style={{ textShadow: '0 0 30px rgba(138, 253, 129, 0.3)' }}
               >
                 {value.toFixed(1)}
               </span>
-              <span className="text-base text-[#8AFD81] font-medium pb-0.5">{unit}</span>
+              <span className="text-lg text-[#8AFD81] font-bold pb-0.5">{unit}</span>
             </div>
             
             {/* Label */}
-            <div className="text-[9px] uppercase tracking-wider text-slate-500 font-bold mb-2.5">
+            <div className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold mb-3">
               {label}
             </div>
             
-            {/* Status badge - Green */}
+            {/* Premium status badge */}
             <div 
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#8AFD81]/10 border border-[#8AFD81]/30"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#8AFD81]/10 to-[#8AFD81]/5 border border-[#8AFD81]/30 shadow-[0_0_20px_rgba(138,253,129,0.1)]"
             >
-              <div 
-                className="w-1.5 h-1.5 rounded-full bg-[#8AFD81]"
-              />
+              <div className="relative">
+                <div className="w-2 h-2 rounded-full bg-[#8AFD81] shadow-[0_0_8px_#8AFD81]" />
+                <div className="absolute inset-0 w-2 h-2 rounded-full bg-[#8AFD81] animate-ping opacity-50" />
+              </div>
               <span 
-                className="text-[9px] font-bold uppercase tracking-wide text-[#8AFD81]"
+                className="text-[10px] font-bold uppercase tracking-wider text-[#8AFD81]"
               >
-                {clampedPercentage >= 80 ? 'Optimal' : 'Normal'}
+                {clampedPercentage >= 80 ? 'Optimal' : clampedPercentage >= 50 ? 'Normal' : 'Low'}
               </span>
             </div>
           </div>

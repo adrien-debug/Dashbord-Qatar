@@ -54,35 +54,36 @@ export default function Dashboard() {
               </div>
 
               {/* Content */}
-              <div className="absolute inset-0 z-20 flex flex-col justify-center items-start p-8 lg:p-10">
-                {/* Badges en haut à droite */}
-                <div className="absolute top-8 right-8 lg:top-10 lg:right-10 flex items-center gap-3">
+              <div className="absolute inset-0 z-20 flex">
+                {/* Left - Title and info */}
+                <div className="flex flex-col justify-center items-start p-8 lg:p-10 flex-1">
+                  <h1 className="text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight text-left">
+                    Qatar Bitcoin<br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">Strategic Reserve</span>
+                  </h1>
+
+                  <div className="mt-4 w-full">
+                    <div className="flex items-center justify-start gap-4 text-white">
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/50 backdrop-blur-sm">
+                        <div className="w-2 h-2 rounded-full bg-[#8AFD81] animate-pulse" />
+                        <span className="text-xs font-semibold tracking-wide uppercase text-[#8AFD81]">System Operational</span>
+                      </div>
+                      <div className="h-4 w-px bg-slate-600" />
+                      <p className="text-sm font-medium text-white tracking-wide">
+                        100MW Institutional Mining Facility
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right - Badges column full height */}
+                <div className="flex flex-col justify-center items-end gap-3 p-8 lg:p-10">
                   <span className="px-3 py-1.5 bg-[#8AFD81] text-slate-900 rounded-full text-[10px] font-bold uppercase tracking-widest">
                     Official Dashboard
                   </span>
                   <span className="px-3 py-1.5 bg-white/10 text-white/90 rounded-full text-[10px] font-medium backdrop-blur-md border border-white/10 uppercase tracking-widest">
                     Hearst Corporation
                   </span>
-                </div>
-
-                {/* Titre centré verticalement, aligné à gauche */}
-                <h1 className="text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight text-left">
-                  Qatar Bitcoin<br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">Strategic Reserve</span>
-                </h1>
-
-                {/* Info juste sous le titre */}
-                <div className="mt-4">
-                  <div className="flex items-center gap-4 text-white">
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/50 backdrop-blur-sm">
-                      <div className="w-2 h-2 rounded-full bg-[#8AFD81] animate-pulse" />
-                      <span className="text-xs font-semibold tracking-wide uppercase text-[#8AFD81]">System Operational</span>
-                    </div>
-                    <div className="h-4 w-px bg-slate-600" />
-                    <p className="text-sm font-medium text-white tracking-wide">
-                      100MW Institutional Mining Facility
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
