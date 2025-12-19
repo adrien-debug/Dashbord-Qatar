@@ -25,17 +25,17 @@ export const TimeFilter: React.FC<TimeFilterProps> = ({
   options = DEFAULT_OPTIONS,
 }) => {
   return (
-    <div className="inline-flex items-center gap-1 bg-white rounded-xl p-1.5 border border-slate-200 shadow-sm">
+    <div className="inline-flex items-center gap-0.5 bg-[#f5f5f7] rounded-xl p-1">
       {options.map((option) => (
         <button
           key={option}
           onClick={() => onChange(option)}
           className={`
-            px-3 py-1.5 rounded-lg text-xs font-medium transition-colors
+            px-3.5 py-1.5 rounded-lg text-[13px] font-medium transition-all
             ${
               selected === option
-                ? 'bg-emerald-500 text-white'
-                : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
+                ? 'bg-white text-[#1d1d1f] shadow-sm'
+                : 'text-[#86868b] hover:text-[#1d1d1f]'
             }
           `}
         >

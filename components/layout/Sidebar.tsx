@@ -53,17 +53,17 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
 
   return (
     <div
-      className={`fixed left-0 top-0 h-screen bg-white border-r border-slate-200 transition-all duration-300 z-50 shadow-sm ${
-        isCollapsed ? 'w-16' : 'w-56'
+      className={`fixed left-0 top-0 h-screen bg-white/80 backdrop-blur-xl border-r border-[#d2d2d7]/50 transition-all duration-300 z-50 ${
+        isCollapsed ? 'w-[72px]' : 'w-[240px]'
       }`}
     >
       {/* Header */}
-      <div className={`flex items-center justify-center px-4 border-b border-slate-100 transition-all duration-300 ${
-        isCollapsed ? 'h-16' : 'h-24'
+      <div className={`flex items-center justify-center px-5 border-b border-[#d2d2d7]/50 transition-all duration-300 ${
+        isCollapsed ? 'h-[72px]' : 'h-[100px]'
       }`}>
         {!isCollapsed && (
           <div className="flex flex-col items-center justify-center w-full">
-            <div className="relative w-36 h-10">
+            <div className="relative w-32 h-9">
               <Image
                 src="/hearst-full.png"
                 alt="Hearst Qatar"
@@ -72,7 +72,7 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                 priority
               />
             </div>
-            <span className="text-slate-400 font-medium text-[10px] tracking-[0.3em] mt-1">QATAR</span>
+            <span className="text-[#86868b] font-medium text-[10px] tracking-[0.25em] mt-1.5">QATAR</span>
           </div>
         )}
         {isCollapsed && (
@@ -88,13 +88,12 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
         )}
       </div>
 
-      {/* Toggle Button */}
+      {/* Toggle */}
       <button
         onClick={onToggle}
-        className={`absolute -right-3 w-6 h-6 bg-white hover:bg-emerald-500 rounded-full flex items-center justify-center transition-colors border border-slate-200 shadow-sm z-50 group ${
-          isCollapsed ? 'top-20' : 'top-28'
+        className={`absolute -right-3 w-6 h-6 bg-white rounded-full flex items-center justify-center transition-all border border-[#d2d2d7] shadow-sm hover:shadow-md z-50 group ${
+          isCollapsed ? 'top-[84px]' : 'top-[112px]'
         }`}
-        aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
       >
         <svg
           width="10"
@@ -102,31 +101,31 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          className={`text-slate-400 group-hover:text-white transition-all ${isCollapsed ? 'rotate-180' : ''}`}
+          className={`text-[#86868b] group-hover:text-[#1d1d1f] transition-all ${isCollapsed ? 'rotate-180' : ''}`}
           strokeWidth="2"
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
-      {/* Menu Items */}
+      {/* Menu */}
       <nav className="mt-6 px-3">
         <ul className="space-y-1">
           {menuItems.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${
                   isActive(item.href)
-                    ? 'bg-emerald-50 text-emerald-600'
-                    : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
+                    ? 'bg-[#10B981] text-white'
+                    : 'text-[#1d1d1f] hover:bg-[#f5f5f7]'
                 }`}
               >
-                <span className={isActive(item.href) ? 'text-emerald-600' : ''}>
+                <span className={isActive(item.href) ? 'text-white' : 'text-[#86868b]'}>
                   {item.icon}
                 </span>
                 {!isCollapsed && (
-                  <span className="font-medium text-sm">
+                  <span className="text-[14px] font-medium">
                     {item.name}
                   </span>
                 )}
@@ -138,20 +137,20 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
 
       {/* Footer */}
       {!isCollapsed && (
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-100">
-          <div className="bg-emerald-50 rounded-xl p-3 border border-emerald-100">
-            <div className="text-xs text-slate-400 uppercase tracking-wide mb-1">Status</div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-              <span className="text-emerald-600 text-sm font-medium">Operational</span>
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#d2d2d7]/50">
+          <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-[#f5f5f7]">
+            <div className="w-2.5 h-2.5 bg-[#10B981] rounded-full"></div>
+            <div>
+              <p className="text-[11px] text-[#86868b]">System Status</p>
+              <p className="text-[13px] font-medium text-[#1d1d1f]">Operational</p>
             </div>
           </div>
         </div>
       )}
 
       {isCollapsed && (
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center">
-          <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+        <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+          <div className="w-2.5 h-2.5 bg-[#10B981] rounded-full"></div>
         </div>
       )}
     </div>

@@ -63,37 +63,8 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
       onExport(format, saveLocal);
     } else {
       console.log(`Exporting as ${format}...`, { saveLocal });
-      
       if (format === 'print') {
         window.print();
-      } else if (format === 'unreal-4k') {
-        console.log('Exporting to Unreal Engine 4K format...');
-        if (saveLocal) {
-          const data = JSON.stringify({ format: 'unreal-4k', timestamp: new Date().toISOString() });
-          const blob = new Blob([data], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `unreal-export-4k-${Date.now()}.json`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }
-      } else if (format === 'blender') {
-        console.log('Exporting to Blender format...');
-        if (saveLocal) {
-          const data = JSON.stringify({ format: 'blender', timestamp: new Date().toISOString() });
-          const blob = new Blob([data], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `blender-export-${Date.now()}.json`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }
       }
     }
     setIsOpen(false);
@@ -103,7 +74,7 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-colors text-sm font-medium shadow-sm"
+        className="flex items-center gap-2 px-4 py-2 bg-[#10B981] text-white rounded-xl hover:bg-[#059669] transition-colors text-[13px] font-medium"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -114,16 +85,16 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
       {isOpen && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl border border-slate-200 shadow-lg py-2 z-20">
-            <div className="px-4 py-2 border-b border-slate-100">
+          <div className="absolute right-0 mt-2 w-52 bg-white/95 backdrop-blur-xl rounded-xl border border-[#d2d2d7]/50 shadow-xl py-2 z-20">
+            <div className="px-3 py-2 border-b border-[#d2d2d7]/50">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={saveLocal}
                   onChange={(e) => setSaveLocal(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-300 text-emerald-500 focus:ring-emerald-500 focus:ring-2"
+                  className="w-4 h-4 rounded border-[#d2d2d7] text-[#10B981] focus:ring-[#10B981]"
                 />
-                <span className="text-xs text-slate-600 font-medium">Save locally</span>
+                <span className="text-[12px] text-[#86868b]">Save locally</span>
               </label>
             </div>
             <div className="py-1">
@@ -131,13 +102,13 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
                 <button
                   key={format}
                   onClick={() => handleExport(format)}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-800 transition-colors"
+                  className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-[#1d1d1f] hover:bg-[#f5f5f7] transition-colors"
                 >
-                  <span className="text-slate-400">{ICONS[format]}</span>
-                  <span className="font-medium">{LABELS[format]}</span>
+                  <span className="text-[#86868b]">{ICONS[format]}</span>
+                  <span>{LABELS[format]}</span>
                   {(format === 'unreal-4k' || format === 'blender') && (
-                    <span className="ml-auto px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] font-semibold rounded-full">
-                      Hearst
+                    <span className="ml-auto px-1.5 py-0.5 bg-[#10B981]/10 text-[#10B981] text-[10px] font-medium rounded">
+                      Pro
                     </span>
                   )}
                 </button>

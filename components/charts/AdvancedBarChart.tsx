@@ -54,20 +54,15 @@ export const AdvancedBarChart: React.FC<AdvancedBarChartProps> = ({
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-slate-900/95 backdrop-blur-md border border-slate-700/50 rounded-lg shadow-xl p-4">
-          <p className="text-sm font-semibold text-slate-200 mb-2">{label}</p>
+        <div className="bg-white/95 backdrop-blur-xl border border-[#d2d2d7]/50 rounded-xl shadow-lg p-3">
+          <p className="text-[12px] font-medium text-[#86868b] mb-2">{label}</p>
           {payload.map((entry: any, index: number) => (
-            <div key={index} className="flex items-center gap-3 text-sm">
-              <div
-                className="w-2 h-2 rounded-sm "
-                style={{ backgroundColor: entry.color, color: entry.color }}
-              />
-              <span className="text-slate-400">{entry.name}:</span>
-              <span className="font-bold text-white tabular-nums">
+            <div key={index} className="flex items-center gap-2 text-[13px]">
+              <div className="w-2 h-2 rounded" style={{ backgroundColor: entry.color }} />
+              <span className="text-[#86868b]">{entry.name}:</span>
+              <span className="font-semibold text-[#1d1d1f]">
                 {tooltipFormatter ? tooltipFormatter(entry.value) : 
-                  typeof entry.value === 'number' ? 
-                    entry.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : 
-                    entry.value
+                  typeof entry.value === 'number' ? entry.value.toLocaleString() : entry.value
                 }
               </span>
             </div>
