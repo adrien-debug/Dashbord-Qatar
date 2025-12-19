@@ -32,10 +32,10 @@ export default function Dashboard() {
           <div className="relative w-full h-[320px] rounded-[2rem] overflow-hidden shadow-2xl bg-slate-900 group animate-fade-in-up">
             {/* Background */}
             <div className="absolute inset-0">
-               <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/95 to-slate-900/40 z-10" />
-               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-[#8AFD81]/10 via-transparent to-transparent z-10"></div>
+               <div className="absolute inset-0 bg-gradient-to-r from-slate-900/30 via-slate-800/20 to-transparent z-10" />
+               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-[#8AFD81]/5 via-transparent to-transparent z-10"></div>
                <div 
-                 className="absolute inset-0 bg-[url('/Image%2012-12-2025%20a%CC%80%206.58%E2%80%AFPM.JPG')] bg-cover opacity-60 mix-blend-overlay"
+                 className="absolute inset-0 bg-[url('/Image%2012-12-2025%20a%CC%80%206.58%E2%80%AFPM.JPG')] bg-cover opacity-100"
                  style={{ backgroundPosition: '30% center' }}
                />
             </div>
