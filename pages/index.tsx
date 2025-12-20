@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
 import { TimeFilter, TimeRange, ExportButton } from '../components/dashboard';
-import { AdvancedAreaChart, GaugeChart } from '../components/charts';
+import { AdvancedAreaChart } from '../components/charts';
 import { formatNumber } from '../utils/formatNumber';
 import {
   mockBitcoinKPIs,
@@ -54,15 +54,25 @@ export default function Dashboard() {
               </div>
 
               {/* Content */}
-              <div className="absolute inset-0 z-20 flex flex-col justify-between p-8 lg:p-10">
-                {/* Title and info */}
-                <div className="flex flex-col justify-center items-start flex-1">
+              <div className="absolute inset-0 z-20">
+                {/* Top Left - Badges */}
+                <div className="absolute top-6 left-8 lg:left-10 flex items-center gap-3">
+                  <span className="px-3 py-1.5 bg-[#8AFD81] text-slate-900 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                    Official Dashboard
+                  </span>
+                  <span className="px-3 py-1.5 bg-white/10 text-white/90 rounded-full text-[10px] font-medium backdrop-blur-md border border-white/10 uppercase tracking-widest">
+                    Hearst Corporation
+                  </span>
+                </div>
+
+                {/* Bottom Left - Title and info */}
+                <div className="absolute bottom-4 left-8 lg:left-10">
                   <h1 className="text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight text-left">
                     Qatar Bitcoin<br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">Strategic Reserve</span>
                   </h1>
 
-                  <div className="mt-4 w-full">
+                  <div className="mt-4">
                     <div className="flex items-center justify-start gap-4 text-white">
                       <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/50 backdrop-blur-sm">
                         <div className="w-2 h-2 rounded-full bg-[#8AFD81] animate-pulse" />
@@ -75,21 +85,11 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
-
-                {/* Badges - Bottom left, same line */}
-                <div className="flex items-center justify-start gap-3">
-                  <span className="px-3 py-1.5 bg-[#8AFD81] text-slate-900 rounded-full text-[10px] font-bold uppercase tracking-widest">
-                    Official Dashboard
-                  </span>
-                  <span className="px-3 py-1.5 bg-white/10 text-white/90 rounded-full text-[10px] font-medium backdrop-blur-md border border-white/10 uppercase tracking-widest">
-                    Hearst Corporation
-                  </span>
-                </div>
               </div>
             </div>
 
             {/* 2. TOTAL BTC RESERVE - 6 cols */}
-            <div className="col-span-12 lg:col-span-6 premium-card animate-fade-in-up delay-100">
+            <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100">
               {/* Header - Dark background */}
               <div className="bg-slate-800 px-6 py-4">
                 <div className="flex items-center justify-between">
@@ -131,30 +131,37 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                {/* Single Chart - Centered */}
-                <div className="flex items-end justify-center gap-1 h-24 my-6 mx-auto max-w-[90%]">
-                  {[30, 45, 38, 55, 48, 62, 58, 72, 68, 82, 78, 88, 84, 92, 86].map((h, i) => (
+                {/* Single Chart */}
+                <div className="flex items-end gap-1.5 h-36 mb-3 pt-6 border-t border-slate-100">
+                  {[25, 40, 35, 50, 45, 60, 55, 70, 65, 80, 75, 90, 85, 95, 88].map((h, i) => (
                     <div 
                       key={i} 
-                      className="flex-1 max-w-3 bg-gradient-to-t from-slate-200 to-[#8AFD81] rounded-full hover:from-[#8AFD81]/40 hover:to-[#8AFD81] transition-all duration-500 cursor-pointer hover:scale-110 origin-bottom" 
+                      className="flex-1 bg-gradient-to-t from-[#8AFD81]/30 to-[#8AFD81] rounded-t-sm hover:from-[#8AFD81]/50 hover:to-[#b6ffb0] transition-all cursor-pointer" 
                       style={{ height: `${h}%` }} 
                     />
                   ))}
                 </div>
 
-                {/* Stats - Refined */}
-                <div className="flex items-center justify-center gap-12 pt-6 mt-2 border-t border-slate-100">
-                  <div className="text-center group cursor-default">
-                    <div className="text-slate-400 text-[10px] uppercase tracking-[0.15em] font-semibold mb-2">Monthly</div>
-                    <div className="text-xl font-bold text-slate-800 tabular-nums tracking-tight group-hover:text-[#8AFD81] transition-colors duration-300">
-                      +{mockStrategicReserve.monthlyAccumulation} <span className="text-slate-300 font-medium text-sm">BTC</span>
+                {/* Stats */}
+                <div className="flex items-center justify-center gap-10 pt-4">
+                  <div className="text-center">
+                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Monthly</div>
+                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                      +{mockStrategicReserve.monthlyAccumulation} <span className="text-slate-400 font-medium text-sm">BTC</span>
                     </div>
                   </div>
-                  <div className="w-px h-12 bg-gradient-to-b from-transparent via-slate-200 to-transparent"></div>
-                  <div className="text-center group cursor-default">
-                    <div className="text-slate-400 text-[10px] uppercase tracking-[0.15em] font-semibold mb-2">Year-End Target</div>
-                    <div className="text-xl font-bold text-[#8AFD81] tabular-nums tracking-tight">
-                      {formatNumber(mockStrategicReserve.projectedYearEnd)} <span className="text-[#8AFD81]/50 font-medium text-sm">BTC</span>
+                  <div className="w-px h-10 bg-slate-200"></div>
+                  <div className="text-center">
+                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Year-End Target</div>
+                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                      {formatNumber(mockStrategicReserve.projectedYearEnd)} <span className="text-slate-400 font-medium text-sm">BTC</span>
+                    </div>
+                  </div>
+                  <div className="w-px h-10 bg-slate-200"></div>
+                  <div className="text-center">
+                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Avg. Cost</div>
+                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                      $42,850 <span className="text-slate-400 font-medium text-sm">/BTC</span>
                     </div>
                   </div>
                 </div>
@@ -162,7 +169,7 @@ export default function Dashboard() {
             </div>
 
             {/* 3. PORTFOLIO VALUE - 6 cols */}
-            <div className="col-span-12 lg:col-span-6 premium-card animate-fade-in-up delay-100">
+            <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100">
               {/* Header - Dark */}
               <div className="bg-slate-800 px-6 py-4">
                 <div className="flex items-center justify-between">
@@ -191,7 +198,7 @@ export default function Dashboard() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white px-6 pt-6">
+              <div className="bg-white p-6">
                 {/* Main Value */}
                 <div className="flex items-end gap-3 mb-4">
                   <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
@@ -204,81 +211,113 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                {/* Circular Gauges - Refined */}
-                <div className="flex items-center justify-center gap-8 py-6 mt-4">
-                  {[
-                    { label: 'ROI', value: 85, id: 'gauge1' },
-                    { label: 'Growth', value: 72, id: 'gauge2' },
-                    { label: 'Target', value: 68, id: 'gauge3' }
-                  ].map((item, i) => (
-                    <div key={i} className="flex flex-col items-center text-center group cursor-pointer">
-                      <div className="relative w-20 h-20 mb-3 transition-transform duration-500 group-hover:scale-105">
-                        <svg className="w-20 h-20 -rotate-90">
-                          <defs>
-                            <linearGradient id={item.id} x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" stopColor="#8AFD81" stopOpacity="0.4" />
-                              <stop offset="100%" stopColor="#8AFD81" stopOpacity="1" />
-                            </linearGradient>
-                            <filter id={`shadow-${item.id}`}>
-                              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#8AFD81" floodOpacity="0.3"/>
-                            </filter>
-                          </defs>
-                          <circle cx="40" cy="40" r="32" fill="none" stroke="#f1f5f9" strokeWidth="6" />
-                          <circle 
-                            cx="40" cy="40" r="32" fill="none" 
-                            stroke={`url(#${item.id})`} strokeWidth="6" strokeLinecap="round"
-                            strokeDasharray={`${item.value * 2.01} 201`}
-                            filter={`url(#shadow-${item.id})`}
-                            className="transition-all duration-700"
-                          />
-                        </svg>
-                        <span className="absolute inset-0 flex items-center justify-center text-lg font-bold text-slate-800">{item.value}<span className="text-sm text-slate-400">%</span></span>
-                      </div>
-                      <span className="text-[9px] text-slate-400 font-semibold uppercase tracking-[0.15em] group-hover:text-[#8AFD81] transition-colors duration-300">{item.label}</span>
+                {/* Area/Line Chart */}
+                <div className="relative h-36 pt-6 border-t border-slate-100">
+                  <svg className="w-full h-full" viewBox="0 0 300 100" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#8AFD81" stopOpacity="0.4" />
+                        <stop offset="100%" stopColor="#8AFD81" stopOpacity="0.05" />
+                      </linearGradient>
+                    </defs>
+                    {/* Area fill */}
+                    <path 
+                      d="M0,80 Q30,70 60,65 T120,50 T180,35 T240,25 T300,15 L300,100 L0,100 Z" 
+                      fill="url(#areaGradient)"
+                    />
+                    {/* Line */}
+                    <path 
+                      d="M0,80 Q30,70 60,65 T120,50 T180,35 T240,25 T300,15" 
+                      fill="none" 
+                      stroke="#8AFD81" 
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
+                    {/* Dots */}
+                    <circle cx="0" cy="80" r="4" fill="#8AFD81" />
+                    <circle cx="60" cy="65" r="4" fill="#8AFD81" />
+                    <circle cx="120" cy="50" r="4" fill="#8AFD81" />
+                    <circle cx="180" cy="35" r="4" fill="#8AFD81" />
+                    <circle cx="240" cy="25" r="4" fill="#8AFD81" />
+                    <circle cx="300" cy="15" r="4" fill="#8AFD81" />
+                  </svg>
+                </div>
+
+                {/* Stats */}
+                <div className="flex items-center justify-center gap-10 pt-4">
+                  <div className="text-center">
+                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">ROI</div>
+                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                      +85%
                     </div>
-                  ))}
+                  </div>
+                  <div className="w-px h-10 bg-slate-200"></div>
+                  <div className="text-center">
+                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Growth</div>
+                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                      +72%
+                    </div>
+                  </div>
+                  <div className="w-px h-10 bg-slate-200"></div>
+                  <div className="text-center">
+                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Target</div>
+                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                      68%
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* 4. OPERATIONAL KPIs - Single line format */}
-            <div className="col-span-12 bg-gradient-to-r from-[#8AFD81]/15 via-[#b6ffb0]/20 to-[#4ade80]/15 rounded-[2rem] px-8 py-5 border border-[#8AFD81]/10 hover:border-[#8AFD81]/25 transition-all duration-500 animate-fade-in-up delay-200 backdrop-blur-sm hover:shadow-lg hover:shadow-[#8AFD81]/5">
-              <div className="grid grid-cols-5 items-center">
+            {/* 4. OPERATIONAL KPIs - Single line format with header/body style */}
+            <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/40 transition-all duration-300 animate-fade-in-up delay-200">
+              {/* Header - Dark with titles */}
+              <div className="bg-slate-800 grid grid-cols-5">
                 {[
                   { label: 'Hashrate', value: formatNumber(mockBitcoinKPIs.totalHashrate), unit: 'PH/s', trend: 'up' },
                   { label: 'Daily Output', value: '2.45', unit: 'BTC', trend: 'up' },
                   { label: 'Efficiency', value: mockBitcoinKPIs.efficiency, unit: 'J/TH', trend: 'down' },
                   { label: 'Uptime', value: mockBitcoinKPIs.uptime, unit: '%', trend: 'up' },
                   { label: 'Miners', value: '5,760', unit: '', trend: 'up' }
-                ].map((kpi, idx, arr) => (
-                  <div key={idx} className="flex items-center justify-center border-r border-slate-900/20 last:border-r-0">
-                    <div className="flex flex-col items-center text-center py-1">
-                      <div className="flex items-center gap-2 justify-center mb-1">
-                        <span className="text-2xl font-bold text-slate-900 tabular-nums">{kpi.value}</span>
-                        <span className="text-sm font-medium text-slate-900/70">{kpi.unit}</span>
-                        {kpi.trend === 'up' && (
-                          <ChevronUp className="w-4 h-4 text-slate-900" />
-                        )}
-                        {kpi.trend === 'down' && (
-                          <ChevronUp className="w-4 h-4 text-slate-900 rotate-180" />
-                        )}
-                      </div>
-                      <div className="text-[10px] text-slate-900 font-semibold uppercase tracking-wider">{kpi.label}</div>
+                ].map((kpi, idx) => (
+                  <div key={idx} className="flex items-center justify-center border-r border-slate-700 last:border-r-0 py-3">
+                    <div className="text-sm text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] font-bold uppercase tracking-wider">{kpi.label}</div>
+                  </div>
+                ))}
+              </div>
+              {/* Body - White with values */}
+              <div className="bg-white grid grid-cols-5">
+                {[
+                  { label: 'Hashrate', value: formatNumber(mockBitcoinKPIs.totalHashrate), unit: 'PH/s' },
+                  { label: 'Daily Output', value: '2.45', unit: 'BTC' },
+                  { label: 'Efficiency', value: mockBitcoinKPIs.efficiency, unit: 'J/TH' },
+                  { label: 'Uptime', value: mockBitcoinKPIs.uptime, unit: '%' },
+                  { label: 'Miners', value: '5,760', unit: '' }
+                ].map((kpi, idx) => (
+                  <div key={idx} className="flex items-center justify-center border-r border-slate-200 last:border-r-0 py-4">
+                    <div className="flex items-center gap-1.5 justify-center">
+                      <span className="text-2xl font-bold text-slate-900 tabular-nums">{kpi.value}</span>
+                      <span className="text-sm font-medium text-slate-500">{kpi.unit}</span>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
+            {/* Section Title - Analytics */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <Activity className="w-10 h-10 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-4xl font-bold text-slate-900">Analytics & Monitoring</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent"></div>
+            </div>
+
             {/* 5. PRODUCTION CHART - 8 cols */}
-            <div className="col-span-12 lg:col-span-8 premium-card animate-fade-in-up delay-300">
+            <div className="col-span-12 lg:col-span-8 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
               <div className="bg-slate-800 px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-slate-700 flex items-center justify-center">
-                      <BarChart3 className="w-5 h-5 text-[#8AFD81]" strokeWidth={1.5} />
-                    </div>
+                    <BarChart3 className="w-6 h-6 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Production Trend
@@ -312,13 +351,11 @@ export default function Dashboard() {
             </div>
 
             {/* 6. SYSTEM HEALTH - 4 cols */}
-            <div className="col-span-12 lg:col-span-4 premium-card flex flex-col animate-fade-in-up delay-300">
+            <div className="col-span-12 lg:col-span-4 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex flex-col animate-fade-in-up delay-300">
               {/* Header - Dark */}
               <div className="bg-slate-800 px-6 py-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-700 flex items-center justify-center">
-                    <Activity className="w-5 h-5 text-[#8AFD81]" strokeWidth={1.5} />
-                  </div>
+                  <Activity className="w-6 h-6 text-white" strokeWidth={1.5} />
                   <div>
                     <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                       System Health
@@ -329,17 +366,48 @@ export default function Dashboard() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6 flex-1 flex flex-col justify-center items-center gap-8">
-                <GaugeChart
-                  value={mockBitcoinKPIs.efficiency}
-                  max={30}
-                  min={20}
-                  label="Energy Efficiency"
-                  unit=" J/TH"
-                  size={200}
-                  color="#8AFD81"
-                />
+              <div className="bg-white p-6 flex-1 flex flex-col justify-center gap-6">
+                {/* Energy Efficiency */}
+                <div className="w-full">
+                  <div className="flex justify-between items-baseline mb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#8AFD81] animate-pulse" />
+                      <span className="text-sm font-bold text-slate-700 uppercase tracking-wide">Energy Efficiency</span>
+                    </div>
+                    <span className="text-3xl font-bold tabular-nums bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] bg-clip-text text-transparent">{mockBitcoinKPIs.efficiency} <span className="text-lg">J/TH</span></span>
+                  </div>
+                  
+                  {/* Progress bar */}
+                  <div className="relative w-full h-5 rounded-full overflow-hidden">
+                    <div className="absolute inset-0 bg-slate-200/80 rounded-full" />
+                    <div 
+                      className="absolute inset-y-0 left-0 bg-[#8AFD81]/20 rounded-full blur-sm transition-all duration-1000 ease-out" 
+                      style={{ width: `${((30 - mockBitcoinKPIs.efficiency) / 10) * 100}%` }}
+                    />
+                    <div 
+                      className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] rounded-full transition-all duration-1000 ease-out shadow-lg" 
+                      style={{ 
+                        width: `${((30 - mockBitcoinKPIs.efficiency) / 10) * 100}%`,
+                        boxShadow: '0 0 20px rgba(138, 253, 129, 0.4)'
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-black/10 rounded-full" />
+                      <div className="absolute inset-0 overflow-hidden rounded-full">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-shimmer" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center mt-2.5">
+                    <span className="text-[10px] text-slate-400 font-medium">30 J/TH</span>
+                    <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#8AFD81]/10 border border-[#8AFD81]/30">
+                      <span className="text-[9px] font-bold uppercase tracking-wide text-[#8AFD81]">Optimal</span>
+                    </div>
+                    <span className="text-[10px] text-slate-400 font-medium">20 J/TH</span>
+                  </div>
+                </div>
                  
+                {/* Uptime */}
                 <div className="w-full">
                   <div className="flex justify-between items-baseline mb-3">
                     <div className="flex items-center gap-2">
@@ -391,68 +459,92 @@ export default function Dashboard() {
 
             {/* 7. INFRASTRUCTURE LINK - 6 cols */}
             <Link href="/infrastructure" className="col-span-12 lg:col-span-6 group block animate-fade-in-up delay-300">
-              <div className="h-full premium-card-dark link-card">
-                <div className="flex items-start justify-between mb-6">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">Infrastructure</h3>
-                    <p className="text-sm text-slate-400">100MW Facility Overview</p>
-                  </div>
-                  <div className="w-12 h-12 rounded-2xl bg-slate-700 flex items-center justify-center group-hover:bg-[#8AFD81] transition-all">
-                    <Server className="w-6 h-6 text-slate-400 group-hover:text-white" strokeWidth={1.5} />
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 rounded-2xl bg-slate-700/50 border border-slate-600">
-                    <div className="text-slate-400 text-xs uppercase font-semibold tracking-wider mb-2">Containers</div>
-                    <div className="text-2xl font-bold text-white tabular-nums">48/48</div>
-                  </div>
-                  <div className="p-4 rounded-2xl bg-slate-700/50 border border-slate-600">
-                    <div className="text-slate-400 text-xs uppercase font-semibold tracking-wider mb-2">Power</div>
-                    <div className="text-2xl font-bold text-emerald-400 tabular-nums">102 MW</div>
+              <div className="h-full rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+                {/* Header - Dark background */}
+                <div className="bg-slate-800 px-6 py-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Server className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <div>
+                        <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                          Infrastructure
+                        </div>
+                        <div className="text-white text-[11px]">100MW Facility Overview</div>
+                      </div>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#8AFD81] animate-pulse" />
+                      Active
+                    </span>
                   </div>
                 </div>
                 
-                <div className="mt-4 flex items-center gap-2 text-slate-400 group-hover:text-emerald-400 transition-colors">
-                  <span className="text-sm font-medium">View details</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                {/* Body - White */}
+                <div className="bg-white p-6">
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="p-4 rounded-2xl bg-white border border-slate-200">
+                      <div className="text-slate-500 text-[11px] uppercase font-semibold tracking-widest mb-2">Containers</div>
+                      <div className="text-2xl font-bold text-slate-900 tabular-nums">48/48</div>
+                    </div>
+                    <div className="p-4 rounded-2xl bg-white border border-slate-200">
+                      <div className="text-slate-500 text-[11px] uppercase font-semibold tracking-widest mb-2">Power</div>
+                      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] tabular-nums">102 MW</div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-2 text-slate-500 group-hover:text-[#8AFD81] transition-colors">
+                    <span className="text-sm font-medium">View details</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
               </div>
             </Link>
 
             {/* 8. MINING FLEET LINK - 6 cols */}
             <Link href="/mining-dashboard" className="col-span-12 lg:col-span-6 group block animate-fade-in-up delay-300">
-              <div className="h-full premium-card link-card">
-                <div className="flex items-start justify-between mb-6">
-                  <div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-emerald-600 transition-colors">Mining Fleet</h3>
-                    <p className="text-sm text-slate-500">Hardware Performance</p>
-                  </div>
-                  <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center group-hover:bg-[#8AFD81] transition-all">
-                    <BarChart3 className="w-6 h-6 text-slate-500 group-hover:text-white" strokeWidth={1.5} />
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="h-full rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+                {/* Header - Dark background */}
+                <div className="bg-slate-800 px-6 py-4">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#8AFD81]"></div>
-                      <span className="text-sm font-semibold text-slate-700">S19 XP Hydro</span>
+                      <BarChart3 className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <div>
+                        <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                          Mining Fleet
+                        </div>
+                        <div className="text-white text-[11px]">Hardware Performance</div>
+                      </div>
                     </div>
-                    <span className="text-xl font-bold text-slate-900 tabular-nums">5,760</span>
-                  </div>
-                  <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                    <div className="flex items-center gap-3">
-                      <div className="w-2.5 h-2.5 rounded-full bg-amber-500"></div>
-                      <span className="text-sm font-semibold text-slate-700">Maintenance</span>
-                    </div>
-                    <span className="text-xl font-bold text-slate-900 tabular-nums">12</span>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#8AFD81] animate-pulse" />
+                      Online
+                    </span>
                   </div>
                 </div>
                 
-                <div className="mt-4 flex items-center gap-2 text-slate-500 group-hover:text-emerald-600 transition-colors">
-                  <span className="text-sm font-medium">View details</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                {/* Body - White */}
+                <div className="bg-white p-6">
+                  <div className="space-y-3 mb-4">
+                    <div className="flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-200">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2.5 h-2.5 rounded-full bg-[#8AFD81]"></div>
+                        <span className="text-sm font-semibold text-slate-700">S19 XP Hydro</span>
+                      </div>
+                      <span className="text-xl font-bold text-slate-900 tabular-nums">5,760</span>
+                    </div>
+                    <div className="flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-200">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2.5 h-2.5 rounded-full bg-amber-500"></div>
+                        <span className="text-sm font-semibold text-slate-700">Maintenance</span>
+                      </div>
+                      <span className="text-xl font-bold text-slate-900 tabular-nums">12</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-2 text-slate-500 group-hover:text-[#8AFD81] transition-colors">
+                    <span className="text-sm font-medium">View details</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
               </div>
             </Link>
