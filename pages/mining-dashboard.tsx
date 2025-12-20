@@ -84,10 +84,10 @@ export default function MiningDashboard() {
         <div className="max-w-[1600px] mx-auto">
           
           {/* BENTO GRID CONTAINER */}
-          <div className="grid grid-cols-12 gap-6">
+          <div className="grid grid-cols-12 gap-4">
             
             {/* 1. HERO HEADER - Full Width */}
-            <div className="col-span-12 relative h-[200px] rounded-[2rem] overflow-hidden bg-slate-900 animate-fade-in-up">
+            <div className="col-span-12 relative h-[200px] rounded-2xl overflow-hidden bg-slate-900 animate-fade-in-up">
               {/* Background gradient */}
               <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900" />
               <div className="absolute inset-0 bg-[url('/Image%2012-12-2025%20a%CC%80%206.58%E2%80%AFPM.JPG')] bg-cover opacity-20" style={{ backgroundPosition: '30% center' }} />
@@ -120,17 +120,17 @@ export default function MiningDashboard() {
             </div>
 
             {/* 2. FLEET STATUS - 4 cols */}
-            <div className="col-span-12 lg:col-span-4 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+            <div className="col-span-12 lg:col-span-4 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Cpu className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <Cpu className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Fleet Status
                       </div>
-                      <div className="text-white text-[11px]">Miner Operations</div>
+                      <div className="text-white text-xs">Miner Operations</div>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -141,13 +141,13 @@ export default function MiningDashboard() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6 flex flex-col flex-1">
+              <div className="bg-white p-3 flex flex-col flex-1">
                 {/* Main Value - Centered */}
                 <div className="flex items-end justify-center gap-3 mb-4">
-                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                  <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                     {((mockHardwareStatus.activeMiners / mockHardwareStatus.totalMiners) * 100).toFixed(1)}
                   </div>
-                  <div className="text-2xl font-medium text-slate-400 pb-1">%</div>
+                  <div className="text-lg font-medium text-slate-400 pb-1">%</div>
                   <div className="flex items-center gap-1 ml-2 pb-1">
                     <ChevronUp className="w-5 h-5 text-[#8AFD81]" />
                     <span className="text-sm font-bold text-[#8AFD81]">Operational</span>
@@ -166,15 +166,15 @@ export default function MiningDashboard() {
                 {/* Stats */}
                 <div className="flex items-center justify-center gap-10 pt-4 border-t border-slate-100 mt-auto">
                   <div className="text-center flex-1">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Active</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Active</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       {formatNumber(mockHardwareStatus.activeMiners)}
                     </div>
                   </div>
                   <div className="w-px h-10 bg-slate-200"></div>
                   <div className="text-center flex-1">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Maintenance</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Maintenance</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       {mockHardwareStatus.maintenanceMiners}
                     </div>
                   </div>
@@ -183,17 +183,17 @@ export default function MiningDashboard() {
             </div>
 
             {/* 3. HASHRATE - 4 cols */}
-            <div className="col-span-12 lg:col-span-4 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+            <div className="col-span-12 lg:col-span-4 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Zap className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <Zap className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Total Hashrate
                       </div>
-                      <div className="text-white text-[11px]">Network Power</div>
+                      <div className="text-white text-xs">Network Power</div>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -203,13 +203,13 @@ export default function MiningDashboard() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6 flex flex-col flex-1">
+              <div className="bg-white p-3 flex flex-col flex-1">
                 {/* Main Value - Centered */}
                 <div className="flex items-end justify-center gap-3 mb-4">
-                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                  <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                     {formatNumber(mockBitcoinKPIs.totalHashrate)}
                   </div>
-                  <div className="text-2xl font-medium text-slate-400 pb-1">PH/s</div>
+                  <div className="text-lg font-medium text-slate-400 pb-1">PH/s</div>
                 </div>
 
                 {/* Mini Chart */}
@@ -226,15 +226,15 @@ export default function MiningDashboard() {
                 {/* Stats */}
                 <div className="flex items-center justify-center gap-10 pt-4 border-t border-slate-100 mt-auto">
                   <div className="text-center flex-1">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Target</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Target</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       1,000 <span className="text-slate-400 font-medium text-sm">PH/s</span>
                     </div>
                   </div>
                   <div className="w-px h-10 bg-slate-200"></div>
                   <div className="text-center flex-1">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Efficiency</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Efficiency</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       {mockBitcoinKPIs.efficiency} <span className="text-slate-400 font-medium text-sm">J/TH</span>
                     </div>
                   </div>
@@ -243,17 +243,17 @@ export default function MiningDashboard() {
             </div>
 
             {/* 4. DAILY PRODUCTION - 4 cols */}
-            <div className="col-span-12 lg:col-span-4 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+            <div className="col-span-12 lg:col-span-4 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <TrendingUp className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <TrendingUp className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Daily Production
                       </div>
-                      <div className="text-white text-[11px]">BTC Mined</div>
+                      <div className="text-white text-xs">BTC Mined</div>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -263,13 +263,13 @@ export default function MiningDashboard() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6 flex flex-col flex-1">
+              <div className="bg-white p-3 flex flex-col flex-1">
                 {/* Main Value - Centered */}
                 <div className="flex items-end justify-center gap-3 mb-4">
-                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                  <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                     {mockBitcoinKPIs.dailyProduction}
                   </div>
-                  <div className="text-2xl font-medium text-slate-400 pb-1">BTC</div>
+                  <div className="text-lg font-medium text-slate-400 pb-1">BTC</div>
                   <div className="flex items-center gap-1 ml-2 pb-1">
                     <ChevronUp className="w-5 h-5 text-[#8AFD81]" />
                     <span className="text-sm font-bold text-[#8AFD81]">+2.1%</span>
@@ -293,15 +293,15 @@ export default function MiningDashboard() {
                 {/* Stats */}
                 <div className="flex items-center justify-center gap-10 pt-4 border-t border-slate-100 mt-auto">
                   <div className="text-center flex-1">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Revenue</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Revenue</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       ${(mockBitcoinKPIs.dailyProduction * 98450 / 1000).toFixed(0)}k
                     </div>
                   </div>
                   <div className="w-px h-10 bg-slate-200"></div>
                   <div className="text-center flex-1">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Monthly</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Monthly</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       ~{(mockBitcoinKPIs.dailyProduction * 30).toFixed(0)} <span className="text-slate-400 font-medium text-sm">BTC</span>
                     </div>
                   </div>
@@ -317,17 +317,17 @@ export default function MiningDashboard() {
             </div>
 
             {/* 5. HASHRATE EVOLUTION - 8 cols */}
-            <div className="col-span-12 lg:col-span-8 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+            <div className="col-span-12 lg:col-span-8 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Activity className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Hashrate Evolution
                       </div>
-                      <div className="text-slate-400 text-[11px]">Network performance analysis</div>
+                      <div className="text-slate-400 text-xs">Network performance analysis</div>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -338,7 +338,7 @@ export default function MiningDashboard() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6">
+              <div className="bg-white p-3">
                 <AdvancedLineChart
                   data={hashrateChartData}
                   lines={[
@@ -354,21 +354,21 @@ export default function MiningDashboard() {
             </div>
 
             {/* 6. ACCUMULATION & OUTPUT - 4 cols */}
-            <div className="col-span-12 lg:col-span-4 flex flex-col gap-6 animate-fade-in-up delay-300">
+            <div className="col-span-12 lg:col-span-4 flex flex-col gap-4 animate-fade-in-up delay-300">
               {/* Accumulation */}
-              <div className="rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex-1">
-                <div className="bg-slate-800 px-6 py-4">
+              <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex-1">
+                <div className="bg-slate-800 px-4 py-3">
                   <div className="flex items-center gap-3">
-                    <TrendingUp className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <TrendingUp className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Accumulation
                       </div>
-                      <div className="text-slate-400 text-[11px]">Reserve Growth</div>
+                      <div className="text-slate-400 text-xs">Reserve Growth</div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white p-6">
+                <div className="bg-white p-3">
                   <AdvancedAreaChart
                     data={reserveChartData}
                     areas={[{ dataKey: 'btc', name: 'BTC', color: '#8AFD81' }]}
@@ -381,19 +381,19 @@ export default function MiningDashboard() {
               </div>
 
               {/* Daily Output */}
-              <div className="rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex-1">
-                <div className="bg-slate-800 px-6 py-4">
+              <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex-1">
+                <div className="bg-slate-800 px-4 py-3">
                   <div className="flex items-center gap-3">
-                    <BarChart3 className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <BarChart3 className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Daily Output
                       </div>
-                      <div className="text-slate-400 text-[11px]">BTC Mined</div>
+                      <div className="text-slate-400 text-xs">BTC Mined</div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white p-6">
+                <div className="bg-white p-3">
                   <AdvancedAreaChart
                     data={productionChartData}
                     areas={[{ dataKey: 'btc', name: 'BTC', color: '#8AFD81' }]}
@@ -414,17 +414,17 @@ export default function MiningDashboard() {
             </div>
 
             {/* 7. INFRASTRUCTURE HEATMAP - Full Width */}
-            <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+            <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Server className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <Server className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Container Status
                       </div>
-                      <div className="text-slate-400 text-[11px]">Real-time status of 48 Hydro Containers by Power Block</div>
+                      <div className="text-slate-400 text-xs">Real-time status of 48 Hydro Containers by Power Block</div>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -461,7 +461,7 @@ export default function MiningDashboard() {
                 </div>
 
                 {/* Legend */}
-                <div className="flex flex-wrap items-center justify-center gap-6 mt-8 pt-6 border-t border-slate-100">
+                <div className="flex flex-wrap items-center justify-center gap-4 mt-8 pt-6 border-t border-slate-100">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-[#8AFD81] shadow-sm" />
                     <span className="text-xs font-semibold text-slate-600">Optimal</span>

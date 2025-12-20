@@ -40,10 +40,10 @@ export default function Dashboard() {
         <div className="max-w-[1600px] mx-auto">
           
           {/* BENTO GRID CONTAINER */}
-          <div className="grid grid-cols-12 gap-6">
+          <div className="grid grid-cols-12 gap-4">
             
             {/* 1. HERO HEADER - Full Width (12 cols) */}
-            <div className="col-span-12 relative h-[300px] rounded-[2rem] overflow-hidden bg-slate-900 animate-fade-in-up">
+            <div className="col-span-12 relative h-[300px] rounded-2xl overflow-hidden bg-slate-900 animate-fade-in-up">
               {/* Background */}
               <div className="absolute inset-0">
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-900/40 via-slate-900/20 to-transparent z-10" />
@@ -67,7 +67,7 @@ export default function Dashboard() {
 
                 {/* Bottom Left - Title and info */}
                 <div className="absolute bottom-4 left-8 lg:left-10">
-                  <h1 className="text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight text-left">
+                  <h1 className="text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight text-left">
                     Qatar Bitcoin<br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">Strategic Reserve</span>
                   </h1>
@@ -89,17 +89,17 @@ export default function Dashboard() {
             </div>
 
             {/* 2. TOTAL BTC RESERVE - 6 cols */}
-            <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100">
+            <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100">
               {/* Header - Dark background */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Wallet className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <Wallet className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Total Bitcoin Held
                       </div>
-                      <div className="text-white text-[11px]">Strategic Reserve</div>
+                      <div className="text-white text-xs">Strategic Reserve</div>
                     </div>
                   </div>
                   {/* Filter buttons */}
@@ -118,10 +118,10 @@ export default function Dashboard() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6">
+              <div className="bg-white p-3">
                 {/* Main Value */}
                 <div className="flex items-end gap-3 mb-4">
-                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                  <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                     {mockStrategicReserve.totalBTC}
                   </div>
                   <div className="text-2xl font-medium text-slate-400 pb-1">BTC</div>
@@ -132,7 +132,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Single Chart */}
-                <div className="flex items-end gap-1.5 h-36 mb-3 pt-6 border-t border-slate-100">
+                <div className="flex items-end gap-1.5 h-28 mb-3 pt-6 border-t border-slate-100">
                   {[25, 40, 35, 50, 45, 60, 55, 70, 65, 80, 75, 90, 85, 95, 88].map((h, i) => (
                     <div 
                       key={i} 
@@ -145,22 +145,22 @@ export default function Dashboard() {
                 {/* Stats */}
                 <div className="flex items-center justify-center gap-10 pt-4">
                   <div className="text-center">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Monthly</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Monthly</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       +{mockStrategicReserve.monthlyAccumulation} <span className="text-slate-400 font-medium text-sm">BTC</span>
                     </div>
                   </div>
                   <div className="w-px h-10 bg-slate-200"></div>
                   <div className="text-center">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Year-End Target</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Year-End Target</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       {formatNumber(mockStrategicReserve.projectedYearEnd)} <span className="text-slate-400 font-medium text-sm">BTC</span>
                     </div>
                   </div>
                   <div className="w-px h-10 bg-slate-200"></div>
                   <div className="text-center">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Avg. Cost</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Avg. Cost</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       $42,850 <span className="text-slate-400 font-medium text-sm">/BTC</span>
                     </div>
                   </div>
@@ -169,17 +169,17 @@ export default function Dashboard() {
             </div>
 
             {/* 3. PORTFOLIO VALUE - 6 cols */}
-            <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100">
+            <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <DollarSign className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <DollarSign className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Portfolio Value
                       </div>
-                      <div className="text-white text-[11px]">USD Valuation</div>
+                      <div className="text-white text-xs">USD Valuation</div>
                     </div>
                   </div>
                   {/* Filter buttons */}
@@ -198,10 +198,10 @@ export default function Dashboard() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6">
+              <div className="bg-white p-3">
                 {/* Main Value */}
                 <div className="flex items-end gap-3 mb-4">
-                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                  <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                     ${(mockStrategicReserve.currentValue / 1000000).toFixed(0)}
                   </div>
                   <div className="text-2xl font-medium text-slate-400 pb-1">M</div>
@@ -212,7 +212,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Area/Line Chart */}
-                <div className="relative h-36 pt-6 border-t border-slate-100">
+                <div className="relative h-28 pt-6 border-t border-slate-100">
                   <svg className="w-full h-full" viewBox="0 0 300 100" preserveAspectRatio="none">
                     <defs>
                       <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -246,22 +246,22 @@ export default function Dashboard() {
                 {/* Stats */}
                 <div className="flex items-center justify-center gap-10 pt-4">
                   <div className="text-center">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">ROI</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">ROI</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       +85%
                     </div>
                   </div>
                   <div className="w-px h-10 bg-slate-200"></div>
                   <div className="text-center">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Growth</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Growth</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       +72%
                     </div>
                   </div>
                   <div className="w-px h-10 bg-slate-200"></div>
                   <div className="text-center">
-                    <div className="text-slate-500 text-[11px] uppercase tracking-widest font-semibold mb-1">Target</div>
-                    <div className="text-lg font-bold text-slate-900 tabular-nums tracking-tight">
+                    <div className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Target</div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums tracking-tight">
                       68%
                     </div>
                   </div>
@@ -270,7 +270,7 @@ export default function Dashboard() {
             </div>
 
             {/* 4. OPERATIONAL KPIs - Single line format with header/body style */}
-            <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/40 transition-all duration-300 animate-fade-in-up delay-200">
+            <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/40 transition-all duration-300 animate-fade-in-up delay-200">
               {/* Header - Dark with titles */}
               <div className="bg-slate-800 grid grid-cols-5">
                 {[
@@ -296,7 +296,7 @@ export default function Dashboard() {
                 ].map((kpi, idx) => (
                   <div key={idx} className="flex items-center justify-center border-r border-slate-200 last:border-r-0 py-4">
                     <div className="flex items-center gap-1.5 justify-center">
-                      <span className="text-2xl font-bold text-slate-900 tabular-nums">{kpi.value}</span>
+                      <span className="text-xl font-bold text-slate-900 tabular-nums">{kpi.value}</span>
                       <span className="text-sm font-medium text-slate-500">{kpi.unit}</span>
                     </div>
                   </div>
@@ -306,23 +306,23 @@ export default function Dashboard() {
 
             {/* Section Title - Analytics */}
             <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
-              <Activity className="w-10 h-10 text-[#8AFD81]" strokeWidth={1.5} />
-              <h2 className="text-4xl font-bold text-slate-900">Analytics & Monitoring</h2>
+              <Activity className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-2xl font-bold text-slate-900">Analytics & Monitoring</h2>
               <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent"></div>
             </div>
 
             {/* 5. PRODUCTION CHART - 8 cols */}
-            <div className="col-span-12 lg:col-span-8 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+            <div className="col-span-12 lg:col-span-8 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <BarChart3 className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <BarChart3 className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Production Trend
                       </div>
-                      <div className="text-slate-400 text-[11px]">Daily BTC accumulation over the last 30 days</div>
+                      <div className="text-slate-400 text-xs">Daily BTC accumulation over the last 30 days</div>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -333,7 +333,7 @@ export default function Dashboard() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6">
+              <div className="bg-white p-3">
                 <div className="h-[300px] w-full">
                   <AdvancedAreaChart
                     data={productionData}
@@ -351,22 +351,22 @@ export default function Dashboard() {
             </div>
 
             {/* 6. SYSTEM HEALTH - 4 cols */}
-            <div className="col-span-12 lg:col-span-4 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex flex-col animate-fade-in-up delay-300">
+            <div className="col-span-12 lg:col-span-4 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex flex-col animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center gap-3">
-                  <Activity className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
                   <div>
                     <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                       System Health
                     </div>
-                    <div className="text-slate-400 text-[11px]">Efficiency & uptime metrics</div>
+                    <div className="text-slate-400 text-xs">Efficiency & uptime metrics</div>
                   </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6 flex-1 flex flex-col justify-center gap-6">
+              <div className="bg-white p-3 flex-1 flex flex-col justify-center gap-6">
                 {/* Energy Efficiency */}
                 <div className="w-full">
                   <div className="flex justify-between items-baseline mb-3">
@@ -374,7 +374,7 @@ export default function Dashboard() {
                       <div className="w-2 h-2 rounded-full bg-[#8AFD81] animate-pulse" />
                       <span className="text-sm font-bold text-slate-700 uppercase tracking-wide">Energy Efficiency</span>
                     </div>
-                    <span className="text-3xl font-bold tabular-nums bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] bg-clip-text text-transparent">{mockBitcoinKPIs.efficiency} <span className="text-lg">J/TH</span></span>
+                    <span className="text-xl font-bold tabular-nums bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] bg-clip-text text-transparent">{mockBitcoinKPIs.efficiency} <span className="text-lg">J/TH</span></span>
                   </div>
                   
                   {/* Progress bar */}
@@ -414,7 +414,7 @@ export default function Dashboard() {
                       <div className="w-2 h-2 rounded-full bg-[#8AFD81] animate-pulse" />
                       <span className="text-sm font-bold text-slate-700 uppercase tracking-wide">Uptime</span>
                     </div>
-                    <span className="text-3xl font-bold tabular-nums bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] bg-clip-text text-transparent">{mockBitcoinKPIs.uptime}%</span>
+                    <span className="text-xl font-bold tabular-nums bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] bg-clip-text text-transparent">{mockBitcoinKPIs.uptime}%</span>
                   </div>
                   
                   {/* Enhanced progress bar with matching gradient */}
@@ -459,17 +459,17 @@ export default function Dashboard() {
 
             {/* 7. INFRASTRUCTURE LINK - 6 cols */}
             <Link href="/infrastructure" className="col-span-12 lg:col-span-6 group block animate-fade-in-up delay-300">
-              <div className="h-full rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+              <div className="h-full rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
                 {/* Header - Dark background */}
-                <div className="bg-slate-800 px-6 py-4">
+                <div className="bg-slate-800 px-4 py-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <Server className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Server className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Infrastructure
                         </div>
-                        <div className="text-white text-[11px]">100MW Facility Overview</div>
+                        <div className="text-white text-xs">100MW Facility Overview</div>
                       </div>
                     </div>
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -480,15 +480,15 @@ export default function Dashboard() {
                 </div>
                 
                 {/* Body - White */}
-                <div className="bg-white p-6">
+                <div className="bg-white p-3">
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     <div className="p-4 rounded-2xl bg-white border border-slate-200">
-                      <div className="text-slate-500 text-[11px] uppercase font-semibold tracking-widest mb-2">Containers</div>
-                      <div className="text-2xl font-bold text-slate-900 tabular-nums">48/48</div>
+                      <div className="text-slate-500 text-xs uppercase font-semibold tracking-widest mb-2">Containers</div>
+                      <div className="text-xl font-bold text-slate-900 tabular-nums">48/48</div>
                     </div>
                     <div className="p-4 rounded-2xl bg-white border border-slate-200">
-                      <div className="text-slate-500 text-[11px] uppercase font-semibold tracking-widest mb-2">Power</div>
-                      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] tabular-nums">102 MW</div>
+                      <div className="text-slate-500 text-xs uppercase font-semibold tracking-widest mb-2">Power</div>
+                      <div className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] tabular-nums">102 MW</div>
                     </div>
                   </div>
                   
@@ -502,17 +502,17 @@ export default function Dashboard() {
 
             {/* 8. MINING FLEET LINK - 6 cols */}
             <Link href="/mining-dashboard" className="col-span-12 lg:col-span-6 group block animate-fade-in-up delay-300">
-              <div className="h-full rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+              <div className="h-full rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
                 {/* Header - Dark background */}
-                <div className="bg-slate-800 px-6 py-4">
+                <div className="bg-slate-800 px-4 py-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <BarChart3 className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <BarChart3 className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Mining Fleet
                         </div>
-                        <div className="text-white text-[11px]">Hardware Performance</div>
+                        <div className="text-white text-xs">Hardware Performance</div>
                       </div>
                     </div>
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -523,7 +523,7 @@ export default function Dashboard() {
                 </div>
                 
                 {/* Body - White */}
-                <div className="bg-white p-6">
+                <div className="bg-white p-3">
                   <div className="space-y-3 mb-4">
                     <div className="flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-200">
                       <div className="flex items-center gap-3">

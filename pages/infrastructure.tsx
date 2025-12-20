@@ -70,10 +70,10 @@ export default function Infrastructure() {
         <div className="max-w-[1600px] mx-auto">
           
           {/* BENTO GRID CONTAINER */}
-          <div className="grid grid-cols-12 gap-6">
+          <div className="grid grid-cols-12 gap-4">
             
             {/* 1. HERO HEADER - Full Width */}
-            <div className="col-span-12 relative h-[200px] rounded-[2rem] overflow-hidden bg-slate-900 animate-fade-in-up">
+            <div className="col-span-12 relative h-[200px] rounded-2xl overflow-hidden bg-slate-900 animate-fade-in-up">
               {/* Background gradient */}
               <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900" />
               <div className="absolute inset-0 bg-[url('/Image%2012-12-2025%20a%CC%80%206.58%E2%80%AFPM.JPG')] bg-cover opacity-20" style={{ backgroundPosition: '30% center' }} />
@@ -92,7 +92,7 @@ export default function Infrastructure() {
 
                 {/* Bottom Left - Title */}
                 <div className="absolute bottom-6 left-8 lg:left-10">
-                  <h1 className="text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+                  <h1 className="text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
                     Infrastructure <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">Monitoring</span>
                   </h1>
                 </div>
@@ -106,27 +106,27 @@ export default function Infrastructure() {
             </div>
 
             {/* 2. SYSTEM UPTIME - 3 cols */}
-            <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+            <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center gap-3">
-                  <Activity className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
                   <div>
                     <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                       System Uptime
                     </div>
-                    <div className="text-white text-[11px]">Last 30 days</div>
+                    <div className="text-white text-xs">Last 30 days</div>
                   </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6 flex flex-col flex-1">
+              <div className="bg-white p-3 flex flex-col flex-1">
                 <div className="flex items-end justify-center gap-3 mb-4">
-                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                  <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                     {systemUptime}
                   </div>
-                  <div className="text-2xl font-medium text-slate-400 pb-1">%</div>
+                  <div className="text-lg font-medium text-slate-400 pb-1">%</div>
                   <div className="flex items-center gap-1 ml-2 pb-1">
                     <ChevronUp className="w-5 h-5 text-[#8AFD81]" />
                     <span className="text-sm font-bold text-[#8AFD81]">Optimal</span>
@@ -144,27 +144,27 @@ export default function Infrastructure() {
             </div>
 
             {/* 3. TOTAL LOAD - 3 cols */}
-            <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+            <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center gap-3">
-                  <Zap className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <Zap className="w-5 h-5 text-white" strokeWidth={1.5} />
                   <div>
                     <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                       Total Load
                     </div>
-                    <div className="text-white text-[11px]">Power consumption</div>
+                    <div className="text-white text-xs">Power consumption</div>
                   </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6 flex flex-col flex-1">
+              <div className="bg-white p-3 flex flex-col flex-1">
                 <div className="flex items-end justify-center gap-3 mb-4">
-                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                  <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                     {totalLoad.toFixed(1)}
                   </div>
-                  <div className="text-2xl font-medium text-slate-400 pb-1">MW</div>
+                  <div className="text-lg font-medium text-slate-400 pb-1">MW</div>
                 </div>
 
                 <div className="text-center text-sm text-slate-500 mb-4">of 100 MW capacity</div>
@@ -180,27 +180,27 @@ export default function Infrastructure() {
             </div>
 
             {/* 4. EFFICIENCY - 3 cols */}
-            <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+            <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center gap-3">
-                  <Gauge className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <Gauge className="w-5 h-5 text-white" strokeWidth={1.5} />
                   <div>
                     <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                       Efficiency
                     </div>
-                    <div className="text-white text-[11px]">Power systems</div>
+                    <div className="text-white text-xs">Power systems</div>
                   </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6 flex flex-col flex-1">
+              <div className="bg-white p-3 flex flex-col flex-1">
                 <div className="flex items-end justify-center gap-3 mb-4">
-                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                  <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                     {avgEfficiency}
                   </div>
-                  <div className="text-2xl font-medium text-slate-400 pb-1">%</div>
+                  <div className="text-lg font-medium text-slate-400 pb-1">%</div>
                   <div className="flex items-center gap-1 ml-2 pb-1">
                     <ChevronUp className="w-5 h-5 text-[#8AFD81]" />
                     <span className="text-sm font-bold text-[#8AFD81]">High</span>
@@ -218,27 +218,27 @@ export default function Infrastructure() {
             </div>
 
             {/* 5. TEMPERATURE - 3 cols */}
-            <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+            <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center gap-3">
-                  <Thermometer className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <Thermometer className="w-5 h-5 text-white" strokeWidth={1.5} />
                   <div>
                     <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                       Temperature
                     </div>
-                    <div className="text-white text-[11px]">Average</div>
+                    <div className="text-white text-xs">Average</div>
                   </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6 flex flex-col flex-1">
+              <div className="bg-white p-3 flex flex-col flex-1">
                 <div className="flex items-end justify-center gap-3 mb-4">
-                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                  <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                     {avgTemp}
                   </div>
-                  <div className="text-2xl font-medium text-slate-400 pb-1">°C</div>
+                  <div className="text-lg font-medium text-slate-400 pb-1">°C</div>
                   <div className="flex items-center gap-1 ml-2 pb-1">
                     <ChevronUp className="w-5 h-5 text-[#8AFD81] rotate-180" />
                     <span className="text-sm font-bold text-[#8AFD81]">Normal</span>
@@ -258,22 +258,22 @@ export default function Infrastructure() {
             {/* Section Title - Power Monitoring */}
             <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
               <Zap className="w-10 h-10 text-[#8AFD81]" strokeWidth={1.5} />
-              <h2 className="text-4xl font-bold text-slate-900">Power Monitoring</h2>
+              <h2 className="text-2xl font-bold text-slate-900">Power Monitoring</h2>
               <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent"></div>
             </div>
 
             {/* 6. POWER LOAD CHART - Full Width */}
-            <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+            <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Zap className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <Zap className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Power Load Monitoring
                       </div>
-                      <div className="text-slate-400 text-[11px]">Real-time power consumption across facility</div>
+                      <div className="text-slate-400 text-xs">Real-time power consumption across facility</div>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -284,7 +284,7 @@ export default function Infrastructure() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6">
+              <div className="bg-white p-3">
                 <AdvancedAreaChart
                   data={powerData}
                   areas={[
@@ -300,22 +300,22 @@ export default function Infrastructure() {
             </div>
 
             {/* 7. UPTIME CHART - 6 cols */}
-            <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+            <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center gap-3">
-                  <Activity className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
                   <div>
                     <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                       System Uptime
                     </div>
-                    <div className="text-slate-400 text-[11px]">Reliability trend (30 days)</div>
+                    <div className="text-slate-400 text-xs">Reliability trend (30 days)</div>
                   </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6">
+              <div className="bg-white p-3">
                 <AdvancedLineChart
                   data={uptimeData}
                   lines={[
@@ -331,22 +331,22 @@ export default function Infrastructure() {
             </div>
 
             {/* 8. EFFICIENCY CHART - 6 cols */}
-            <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+            <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center gap-3">
-                  <Gauge className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <Gauge className="w-5 h-5 text-white" strokeWidth={1.5} />
                   <div>
                     <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                       Operational Efficiency
                     </div>
-                    <div className="text-slate-400 text-[11px]">Performance trend (30 days)</div>
+                    <div className="text-slate-400 text-xs">Performance trend (30 days)</div>
                   </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6">
+              <div className="bg-white p-3">
                 <AdvancedLineChart
                   data={efficiencyData}
                   lines={[
@@ -364,22 +364,22 @@ export default function Infrastructure() {
             {/* Section Title - System Status */}
             <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
               <Server className="w-10 h-10 text-[#8AFD81]" strokeWidth={1.5} />
-              <h2 className="text-4xl font-bold text-slate-900">System Status</h2>
+              <h2 className="text-2xl font-bold text-slate-900">System Status</h2>
               <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent"></div>
             </div>
 
             {/* 9. POWER SYSTEMS - Full Width */}
-            <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+            <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Cpu className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <Cpu className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Power Systems
                       </div>
-                      <div className="text-slate-400 text-[11px]">4 Power Blocks Status</div>
+                      <div className="text-slate-400 text-xs">4 Power Blocks Status</div>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -390,8 +390,8 @@ export default function Infrastructure() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-white p-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {powerSystems.map(system => (
                     <div key={system.id} className="bg-white rounded-2xl p-5 border border-slate-200 hover:border-[#8AFD81]/30 transition-colors">
                       <div className="flex items-center gap-2 mb-4">
@@ -419,17 +419,17 @@ export default function Infrastructure() {
             </div>
 
             {/* 10. COOLING SYSTEMS - Full Width */}
-            <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+            <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-6 py-4">
+              <div className="bg-slate-800 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Droplets className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <Droplets className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
                       <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                         Cooling Systems
                       </div>
-                      <div className="text-slate-400 text-[11px]">Hydro Cooling Status</div>
+                      <div className="text-slate-400 text-xs">Hydro Cooling Status</div>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -440,8 +440,8 @@ export default function Infrastructure() {
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-white p-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {coolingSystems.map(system => (
                     <div key={system.id} className="bg-white rounded-2xl p-5 border border-slate-200 hover:border-[#8AFD81]/30 transition-colors">
                       <div className="flex items-center gap-2 mb-4">

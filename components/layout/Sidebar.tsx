@@ -13,6 +13,15 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
 
   const menuItems = [
     {
+      name: 'The Project',
+      href: '/project',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      ),
+    },
+    {
       name: 'Vue d\'ensemble',
       href: '/',
       icon: (

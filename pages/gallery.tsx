@@ -127,11 +127,11 @@ export default function GalleryPage() {
         <meta name="description" content="Bibliothèque complète de modèles 3D pour l'infrastructure mining" />
       </Head>
 
-      <div className="min-h-screen bg-slate-50 p-6 lg:p-8">
+      <div className="min-h-screen bg-slate-50 p-6 lg:p-6">
         {/* Hero Header - Style cohérent avec le Dashboard */}
-        <div className="relative h-[200px] rounded-[2rem] overflow-hidden bg-slate-900 mb-8">
+        <div className="relative h-[160px] rounded-2xl overflow-hidden bg-slate-900 mb-6">
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/60 to-slate-900/40" />
-          <div className="absolute inset-0 z-10 p-8 flex flex-col justify-center">
+          <div className="absolute inset-0 z-10 p-6 flex flex-col justify-center">
             <div className="flex items-center gap-3 mb-4">
               <span className="px-3 py-1.5 bg-[#8AFD81] text-slate-900 rounded-full text-[10px] font-bold uppercase tracking-widest">
                 Galerie 3D
@@ -140,10 +140,10 @@ export default function GalleryPage() {
                 {UNIFIED_MODEL_CATALOG.length} Modèles
               </span>
             </div>
-            <h1 className="text-4xl lg:text-5xl font-bold text-white tracking-tight">
+            <h1 className="text-3xl lg:text-4xl font-bold text-white tracking-tight">
               Galerie de Modèles 3D
             </h1>
-            <p className="mt-2 text-slate-400 text-lg">
+            <p className="mt-2 text-slate-400 text-sm">
               Bibliothèque d'assets ultra-réalistes 4K pour l'infrastructure mining
             </p>
           </div>
@@ -248,7 +248,7 @@ export default function GalleryPage() {
           {filteredModels.length === 0 && (
             <div className="text-center py-20">
               <Box className="w-16 h-16 mx-auto text-slate-300 mb-4" />
-              <h3 className="text-slate-900 text-lg font-semibold mb-2">Aucun modèle trouvé</h3>
+              <h3 className="text-slate-900 text-sm font-semibold mb-2">Aucun modèle trouvé</h3>
               <p className="text-slate-500 text-sm">Essayez de modifier vos filtres de recherche</p>
             </div>
           )}
@@ -406,3 +406,4 @@ function ModelListItem({ model }: { model: UnifiedModel }) {
     </div>
   );
 }
+

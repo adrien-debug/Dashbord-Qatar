@@ -110,10 +110,10 @@ export default function Monitoring() {
         <div className="max-w-[1600px] mx-auto">
           
           {/* BENTO GRID CONTAINER */}
-          <div className="grid grid-cols-12 gap-6">
+          <div className="grid grid-cols-12 gap-4">
             
             {/* 1. HERO HEADER - Full Width */}
-            <div className="col-span-12 relative h-[200px] rounded-[2rem] overflow-hidden bg-slate-900 animate-fade-in-up">
+            <div className="col-span-12 relative h-[200px] rounded-2xl overflow-hidden bg-slate-900 animate-fade-in-up">
               {/* Background gradient */}
               <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900" />
               <div className="absolute inset-0 bg-[url('/Image%2012-12-2025%20a%CC%80%206.58%E2%80%AFPM.JPG')] bg-cover opacity-20" style={{ backgroundPosition: '30% center' }} />
@@ -132,7 +132,7 @@ export default function Monitoring() {
 
                 {/* Bottom Left - Title */}
                 <div className="absolute bottom-6 left-8 lg:left-10">
-                  <h1 className="text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+                  <h1 className="text-4xl lg:text-3xl font-bold text-white tracking-tight leading-tight">
                     {mockProject.name.split(' ')[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">{mockProject.name.split(' ').slice(1).join(' ')}</span>
                   </h1>
                   <p className="text-sm text-slate-400 mt-2">Target: {mockProject.targetMW} MW | Location: {mockProject.location}</p>
@@ -175,24 +175,24 @@ export default function Monitoring() {
             {activeTab === 'overview' && (
               <>
                 {/* KPI Cards - 4 cols each */}
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <TrendingUp className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <TrendingUp className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Overall Progress
                         </div>
-                        <div className="text-white text-[11px]">Project completion</div>
+                        <div className="text-white text-xs">Project completion</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6 flex flex-col flex-1">
+                  <div className="bg-white p-3 flex flex-col flex-1">
                     <div className="flex items-end justify-center gap-3 mb-4">
-                      <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                      <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                         {mockProjectKPIs.overallProgress}
                       </div>
-                      <div className="text-2xl font-medium text-slate-400 pb-1">%</div>
+                      <div className="text-lg font-medium text-slate-400 pb-1">%</div>
                     </div>
                     <div className="relative w-full h-4 rounded-full overflow-hidden mt-auto">
                       <div className="absolute inset-0 bg-slate-200 rounded-full" />
@@ -201,24 +201,24 @@ export default function Monitoring() {
                   </div>
                 </div>
 
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <Zap className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Zap className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Power Capacity
                         </div>
-                        <div className="text-white text-[11px]">Operational MW</div>
+                        <div className="text-white text-xs">Operational MW</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6 flex flex-col flex-1">
+                  <div className="bg-white p-3 flex flex-col flex-1">
                     <div className="flex items-end justify-center gap-3 mb-2">
-                      <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                      <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                         {mockProjectKPIs.operationalMW}
                       </div>
-                      <div className="text-2xl font-medium text-slate-400 pb-1">/ {mockProjectKPIs.targetMW} MW</div>
+                      <div className="text-lg font-medium text-slate-400 pb-1">/ {mockProjectKPIs.targetMW} MW</div>
                     </div>
                     <div className="text-center text-sm text-slate-500 mb-2">Installed: {mockProjectKPIs.installedMW} MW</div>
                     <div className="relative w-full h-4 rounded-full overflow-hidden mt-auto">
@@ -228,21 +228,21 @@ export default function Monitoring() {
                   </div>
                 </div>
 
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <Target className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Target className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Capex Spent
                         </div>
-                        <div className="text-white text-[11px]">Budget utilization</div>
+                        <div className="text-white text-xs">Budget utilization</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6 flex flex-col flex-1">
+                  <div className="bg-white p-3 flex flex-col flex-1">
                     <div className="flex items-end justify-center gap-3 mb-2">
-                      <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                      <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">
                         ${(mockProjectKPIs.capexSpent / 1000000).toFixed(1)}M
                       </div>
                     </div>
@@ -254,24 +254,24 @@ export default function Monitoring() {
                   </div>
                 </div>
 
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-700 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col bg-slate-900">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-700 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col bg-slate-900">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <Clock className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Clock className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Days to Target
                         </div>
-                        <div className="text-slate-400 text-[11px]">{mockProject.targetDate}</div>
+                        <div className="text-slate-400 text-xs">{mockProject.targetDate}</div>
                       </div>
                     </div>
                   </div>
                   <div className="p-6 flex flex-col flex-1">
                     <div className="flex items-end justify-center gap-3">
-                      <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] tracking-tight tabular-nums">
+                      <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] tracking-tight tabular-nums">
                         {mockProjectKPIs.daysToTarget}
                       </div>
-                      <div className="text-2xl font-medium text-slate-400 pb-1">days</div>
+                      <div className="text-lg font-medium text-slate-400 pb-1">days</div>
                     </div>
                   </div>
                 </div>
@@ -279,24 +279,24 @@ export default function Monitoring() {
                 {/* Section Title */}
                 <div className="col-span-12 flex items-center gap-4 mt-4 mb-2">
                   <BarChart3 className="w-10 h-10 text-[#8AFD81]" strokeWidth={1.5} />
-                  <h2 className="text-4xl font-bold text-slate-900">Progress & Performance</h2>
+                  <h2 className="text-xl font-bold text-slate-900">Progress & Performance</h2>
                   <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent"></div>
                 </div>
 
                 {/* Phase Status & Ramp-Up */}
-                <div className="col-span-12 lg:col-span-4 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-4 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <CheckCircle className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <CheckCircle className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Phase Status
                         </div>
-                        <div className="text-slate-400 text-[11px]">{phaseStats.total} total phases</div>
+                        <div className="text-slate-400 text-xs">{phaseStats.total} total phases</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-3">
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -330,16 +330,16 @@ export default function Monitoring() {
                   </div>
                 </div>
 
-                <div className="col-span-12 lg:col-span-8 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-8 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <TrendingUp className="w-6 h-6 text-white" strokeWidth={1.5} />
+                        <TrendingUp className="w-5 h-5 text-white" strokeWidth={1.5} />
                         <div>
                           <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                             Ramp-Up Progress
                           </div>
-                          <div className="text-slate-400 text-[11px]">Target vs Actual MW</div>
+                          <div className="text-slate-400 text-xs">Target vs Actual MW</div>
                         </div>
                       </div>
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -348,7 +348,7 @@ export default function Monitoring() {
                       </span>
                     </div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-3">
                     <AdvancedBarChart
                       data={rampUpData}
                       bars={[
@@ -364,19 +364,19 @@ export default function Monitoring() {
                 </div>
 
                 {/* All Phases Progress */}
-                <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <Layers className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Layers className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           All Phases Progress
                         </div>
-                        <div className="text-slate-400 text-[11px]">Detailed breakdown</div>
+                        <div className="text-slate-400 text-xs">Detailed breakdown</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-3">
                     <div className="space-y-4">
                       {mockPhases.map(phase => (
                         <div key={phase.id}>
@@ -411,16 +411,16 @@ export default function Monitoring() {
                 </div>
 
                 {/* Blockers & Activity */}
-                <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <AlertTriangle className="w-6 h-6 text-white" strokeWidth={1.5} />
+                        <AlertTriangle className="w-5 h-5 text-white" strokeWidth={1.5} />
                         <div>
                           <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                             Active Blockers
                           </div>
-                          <div className="text-slate-400 text-[11px]">Issues requiring attention</div>
+                          <div className="text-slate-400 text-xs">Issues requiring attention</div>
                         </div>
                       </div>
                       <span className="px-2 py-1 bg-red-500/20 text-red-400 text-xs font-bold rounded-full border border-red-500/30">
@@ -428,7 +428,7 @@ export default function Monitoring() {
                       </span>
                     </div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-3">
                     <div className="space-y-3">
                       {activeBlockers.slice(0, 5).map(blocker => (
                         <div key={blocker.id} className="p-4 bg-slate-50 rounded-xl border border-slate-100">
@@ -448,19 +448,19 @@ export default function Monitoring() {
                   </div>
                 </div>
 
-                <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <Activity className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Recent Activity
                         </div>
-                        <div className="text-slate-400 text-[11px]">Latest updates</div>
+                        <div className="text-slate-400 text-xs">Latest updates</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-3">
                     <div className="space-y-3">
                       {mockActivityLog.slice(0, 6).map(log => (
                         <div key={log.id} className="flex items-start gap-3 p-2 hover:bg-slate-50 rounded-lg transition-colors">
@@ -489,22 +489,22 @@ export default function Monitoring() {
             {activeTab === 'current' && (
               <>
                 {/* Current KPIs */}
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 animate-fade-in-up delay-100 flex flex-col">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 animate-fade-in-up delay-100 flex flex-col">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <Zap className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Zap className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Operational MW
                         </div>
-                        <div className="text-white text-[11px]">Current capacity</div>
+                        <div className="text-white text-xs">Current capacity</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6 flex flex-col flex-1">
+                  <div className="bg-white p-3 flex flex-col flex-1">
                     <div className="flex items-end justify-center gap-3">
-                      <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">{mockProjectKPIs.operationalMW}</div>
-                      <div className="text-2xl font-medium text-slate-400 pb-1">MW</div>
+                      <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">{mockProjectKPIs.operationalMW}</div>
+                      <div className="text-lg font-medium text-slate-400 pb-1">MW</div>
                     </div>
                     <div className="text-center text-sm text-[#8AFD81] font-medium mt-2">
                       {((mockProjectKPIs.operationalMW / mockProjectKPIs.targetMW) * 100).toFixed(0)}% of target
@@ -512,62 +512,62 @@ export default function Monitoring() {
                   </div>
                 </div>
 
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 animate-fade-in-up delay-100 flex flex-col">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 animate-fade-in-up delay-100 flex flex-col">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <Activity className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Hashrate
                         </div>
-                        <div className="text-white text-[11px]">Network power</div>
+                        <div className="text-white text-xs">Network power</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6 flex flex-col flex-1">
+                  <div className="bg-white p-3 flex flex-col flex-1">
                     <div className="flex items-end justify-center gap-3">
-                      <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">{mockProjectKPIs.totalHashrate}</div>
-                      <div className="text-2xl font-medium text-slate-400 pb-1">PH/s</div>
+                      <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">{mockProjectKPIs.totalHashrate}</div>
+                      <div className="text-lg font-medium text-slate-400 pb-1">PH/s</div>
                     </div>
                     <div className="text-center text-sm text-[#8AFD81] font-medium mt-2">Excellent</div>
                   </div>
                 </div>
 
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 animate-fade-in-up delay-100 flex flex-col">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 animate-fade-in-up delay-100 flex flex-col">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <Settings className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Settings className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           PUE
                         </div>
-                        <div className="text-white text-[11px]">Efficiency ratio</div>
+                        <div className="text-white text-xs">Efficiency ratio</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6 flex flex-col flex-1">
+                  <div className="bg-white p-3 flex flex-col flex-1">
                     <div className="flex items-end justify-center gap-3">
-                      <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">{mockProjectKPIs.pue}</div>
+                      <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">{mockProjectKPIs.pue}</div>
                     </div>
                     <div className="text-center text-sm text-[#8AFD81] font-medium mt-2">Industry-leading</div>
                   </div>
                 </div>
 
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 animate-fade-in-up delay-100 flex flex-col">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 animate-fade-in-up delay-100 flex flex-col">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <FileText className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <FileText className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Open Tickets
                         </div>
-                        <div className="text-white text-[11px]">Support queue</div>
+                        <div className="text-white text-xs">Support queue</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6 flex flex-col flex-1">
+                  <div className="bg-white p-3 flex flex-col flex-1">
                     <div className="flex items-end justify-center gap-3">
-                      <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">{mockTickets.open}</div>
+                      <div className="text-3xl font-bold text-slate-900 tracking-tight tabular-nums">{mockTickets.open}</div>
                       <div className="text-lg font-medium text-red-500 pb-1">({mockTickets.critical} critical)</div>
                     </div>
                     <div className="text-center text-sm text-slate-500 mt-2">Avg: {mockTickets.avgResolutionHours}h resolution</div>
@@ -575,16 +575,16 @@ export default function Monitoring() {
                 </div>
 
                 {/* Power History Chart */}
-                <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <Zap className="w-6 h-6 text-white" strokeWidth={1.5} />
+                        <Zap className="w-5 h-5 text-white" strokeWidth={1.5} />
                         <div>
                           <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                             Power Consumption History
                           </div>
-                          <div className="text-slate-400 text-[11px]">MW operational over time</div>
+                          <div className="text-slate-400 text-xs">MW operational over time</div>
                         </div>
                       </div>
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
@@ -593,7 +593,7 @@ export default function Monitoring() {
                       </span>
                     </div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-3">
                     <AdvancedAreaChart
                       data={powerChartData}
                       areas={[{ dataKey: 'mw', name: 'Operational MW', color: '#8AFD81' }]}
@@ -607,19 +607,19 @@ export default function Monitoring() {
                 </div>
 
                 {/* Phases In Progress */}
-                <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <Layers className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Layers className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Phases In Progress
                         </div>
-                        <div className="text-slate-400 text-[11px]">Active work streams</div>
+                        <div className="text-slate-400 text-xs">Active work streams</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-3">
                     <div className="space-y-4">
                       {mockPhases.filter(p => p.status === 'in_progress').map(phase => (
                         <div key={phase.id} className="p-5 bg-slate-50 rounded-xl border border-slate-100">
@@ -629,7 +629,7 @@ export default function Monitoring() {
                               <p className="text-xs text-slate-500 mt-1">{phase.description}</p>
                             </div>
                             <div className="text-right">
-                              <div className="text-2xl font-bold text-slate-900">{phase.progress}%</div>
+                              <div className="text-xl font-bold text-slate-900">{phase.progress}%</div>
                               <div className="text-xs text-slate-500">Owner: {phase.owner}</div>
                             </div>
                           </div>
@@ -643,20 +643,20 @@ export default function Monitoring() {
                 </div>
 
                 {/* Monthly Operations */}
-                <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-700 animate-fade-in-up delay-300 bg-slate-900">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-700 animate-fade-in-up delay-300 bg-slate-900">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <TrendingUp className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <TrendingUp className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Monthly Operations
                         </div>
-                        <div className="text-slate-400 text-[11px]">Financial overview</div>
+                        <div className="text-slate-400 text-xs">Financial overview</div>
                       </div>
                     </div>
                   </div>
                   <div className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="text-center">
                         <div className="text-slate-400 text-xs uppercase mb-2">Opex Monthly</div>
                         <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">
@@ -681,24 +681,24 @@ export default function Monitoring() {
             {activeTab === 'tobe' && (
               <>
                 {/* Target Summary */}
-                <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-700 animate-fade-in-up delay-100 bg-slate-900">
+                <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-700 animate-fade-in-up delay-100 bg-slate-900">
                   <div className="p-8">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                       <div className="text-center">
                         <div className="text-slate-400 text-xs uppercase tracking-wider mb-2">Target Capacity</div>
-                        <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">{mockProject.targetMW} MW</div>
+                        <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">{mockProject.targetMW} MW</div>
                       </div>
                       <div className="text-center">
                         <div className="text-slate-400 text-xs uppercase tracking-wider mb-2">Current</div>
-                        <div className="text-5xl font-bold text-white">{mockProjectKPIs.operationalMW} MW</div>
+                        <div className="text-3xl font-bold text-white">{mockProjectKPIs.operationalMW} MW</div>
                       </div>
                       <div className="text-center">
                         <div className="text-slate-400 text-xs uppercase tracking-wider mb-2">Remaining</div>
-                        <div className="text-5xl font-bold text-amber-400">{mockProject.targetMW - mockProjectKPIs.operationalMW} MW</div>
+                        <div className="text-3xl font-bold text-amber-400">{mockProject.targetMW - mockProjectKPIs.operationalMW} MW</div>
                       </div>
                       <div className="text-center">
                         <div className="text-slate-400 text-xs uppercase tracking-wider mb-2">Target Date</div>
-                        <div className="text-2xl font-bold text-white">{mockProject.targetDate}</div>
+                        <div className="text-xl font-bold text-white">{mockProject.targetDate}</div>
                         <div className="text-sm text-[#8AFD81] mt-1">{mockProjectKPIs.daysToTarget} days remaining</div>
                       </div>
                     </div>
@@ -706,19 +706,19 @@ export default function Monitoring() {
                 </div>
 
                 {/* Ramp-Up Roadmap */}
-                <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <Target className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Target className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Ramp-Up Roadmap
                         </div>
-                        <div className="text-slate-400 text-[11px]">Milestone tracking</div>
+                        <div className="text-slate-400 text-xs">Milestone tracking</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-3">
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                       {mockRampUpSteps.map((step, idx) => (
                         <div 
@@ -763,19 +763,19 @@ export default function Monitoring() {
                 </div>
 
                 {/* Pending Phases */}
-                <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <Layers className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <Layers className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Pending & At-Risk Phases
                         </div>
-                        <div className="text-slate-400 text-[11px]">Work remaining</div>
+                        <div className="text-slate-400 text-xs">Work remaining</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-3">
                     <div className="space-y-4">
                       {pendingPhases.map(phase => (
                         <div key={phase.id} className={`p-4 rounded-xl border-l-4 bg-slate-50 ${statusColors[phase.status].border}`}>
@@ -816,45 +816,45 @@ export default function Monitoring() {
             {activeTab === 'waiting' && (
               <>
                 {/* Blockers Summary */}
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-red-200 bg-red-50 animate-fade-in-up delay-100">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-red-200 bg-red-50 animate-fade-in-up delay-100">
                   <div className="p-6 text-center">
                     <div className="text-red-600 text-xs uppercase tracking-wider mb-2 font-semibold">Critical</div>
-                    <div className="text-5xl font-bold text-red-700">{activeBlockers.filter(b => b.severity === 'critical').length}</div>
+                    <div className="text-3xl font-bold text-red-700">{activeBlockers.filter(b => b.severity === 'critical').length}</div>
                   </div>
                 </div>
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-orange-200 bg-orange-50 animate-fade-in-up delay-100">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-orange-200 bg-orange-50 animate-fade-in-up delay-100">
                   <div className="p-6 text-center">
                     <div className="text-orange-600 text-xs uppercase tracking-wider mb-2 font-semibold">High</div>
-                    <div className="text-5xl font-bold text-orange-700">{activeBlockers.filter(b => b.severity === 'high').length}</div>
+                    <div className="text-3xl font-bold text-orange-700">{activeBlockers.filter(b => b.severity === 'high').length}</div>
                   </div>
                 </div>
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-amber-200 bg-amber-50 animate-fade-in-up delay-100">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-amber-200 bg-amber-50 animate-fade-in-up delay-100">
                   <div className="p-6 text-center">
                     <div className="text-amber-600 text-xs uppercase tracking-wider mb-2 font-semibold">Medium</div>
-                    <div className="text-5xl font-bold text-amber-700">{activeBlockers.filter(b => b.severity === 'medium').length}</div>
+                    <div className="text-3xl font-bold text-amber-700">{activeBlockers.filter(b => b.severity === 'medium').length}</div>
                   </div>
                 </div>
-                <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 bg-slate-50 animate-fade-in-up delay-100">
+                <div className="col-span-12 lg:col-span-3 rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 animate-fade-in-up delay-100">
                   <div className="p-6 text-center">
                     <div className="text-slate-500 text-xs uppercase tracking-wider mb-2 font-semibold">Low</div>
-                    <div className="text-5xl font-bold text-slate-600">{activeBlockers.filter(b => b.severity === 'low').length}</div>
+                    <div className="text-3xl font-bold text-slate-600">{activeBlockers.filter(b => b.severity === 'low').length}</div>
                   </div>
                 </div>
 
                 {/* Active Blockers List */}
-                <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <AlertTriangle className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <AlertTriangle className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Active Blockers
                         </div>
-                        <div className="text-slate-400 text-[11px]">Issues requiring resolution</div>
+                        <div className="text-slate-400 text-xs">Issues requiring resolution</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-3">
                     <div className="space-y-4">
                       {activeBlockers.map(blocker => (
                         <div key={blocker.id} className={`p-5 rounded-xl border-l-4 bg-slate-50 ${
@@ -903,19 +903,19 @@ export default function Monitoring() {
                 </div>
 
                 {/* Phases Requiring Attention */}
-                <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
-                  <div className="bg-slate-800 px-6 py-4">
+                <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+                  <div className="bg-slate-800 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <AlertTriangle className="w-6 h-6 text-white" strokeWidth={1.5} />
+                      <AlertTriangle className="w-5 h-5 text-white" strokeWidth={1.5} />
                       <div>
                         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
                           Phases Requiring Attention
                         </div>
-                        <div className="text-slate-400 text-[11px]">At risk or blocked</div>
+                        <div className="text-slate-400 text-xs">At risk or blocked</div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-3">
                     <div className="space-y-3">
                       {mockPhases.filter(p => p.status === 'at_risk' || p.status === 'blocked').map(phase => (
                         <div key={phase.id} className={`flex items-center justify-between p-4 rounded-xl border ${
