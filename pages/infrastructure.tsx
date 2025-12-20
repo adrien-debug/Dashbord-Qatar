@@ -4,7 +4,6 @@ import { TimeFilter, TimeRange, ExportButton } from '../components/dashboard';
 import {
   AdvancedLineChart,
   AdvancedAreaChart,
-  GaugeChart,
 } from '../components/charts';
 import {
   mockPowerSystems,
@@ -15,6 +14,16 @@ import {
   mockSystemUptime,
   mockEfficiencyHistory,
 } from '../lib/mock-infrastructure';
+import {
+  Server,
+  Zap,
+  Activity,
+  Thermometer,
+  Gauge,
+  ChevronUp,
+  Cpu,
+  Droplets,
+} from 'lucide-react';
 
 export default function Infrastructure() {
   const [timeRange, setTimeRange] = useState<TimeRange>('24h');
@@ -57,173 +66,411 @@ export default function Infrastructure() {
         <title>Infrastructure Monitoring - Hearst Qatar</title>
       </Head>
 
-      <div className="min-h-screen bg-slate-50 p-8">
+      <div className="min-h-screen bg-slate-50 bg-grid-slate-100 p-6 lg:p-8">
         <div className="max-w-[1600px] mx-auto">
-          {/* Header Simple */}
-          <div className="flex items-center justify-between mb-8 pb-6 border-b-2 border-slate-200">
-            <div>
-              <h1 className="text-3xl font-bold text-slate-900 mb-2">Infrastructure Monitoring</h1>
-              <p className="text-sm text-slate-600">Real-time power systems & cooling performance</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <TimeFilter selected={timeRange} onChange={setTimeRange} options={['24h', '7d', '30d']} />
-              <ExportButton />
-            </div>
-          </div>
-
-          {/* KPIs - Grande Box Blanche avec Texte Foncé Lisible */}
-          <div className="bg-white rounded-2xl p-8 mb-8 border border-slate-200 shadow-lg">
-            <div className="grid grid-cols-4 gap-8">
-              <div>
-                <div className="text-slate-500 text-xs uppercase tracking-wider mb-3 font-semibold">System Uptime</div>
-                <div className="flex items-baseline gap-3">
-                  <div className="text-5xl font-bold text-slate-900">{systemUptime}</div>
-                  <div className="text-xl font-semibold text-slate-600">%</div>
-                </div>
-                <div className="mt-2 text-sm text-slate-500">Last 30 days</div>
-              </div>
-              <div>
-                <div className="text-slate-500 text-xs uppercase tracking-wider mb-3 font-semibold">Total Load</div>
-                <div className="flex items-baseline gap-3">
-                  <div className="text-5xl font-bold text-slate-900">{totalLoad.toFixed(1)}</div>
-                  <div className="text-xl font-semibold text-slate-600">MW</div>
-                </div>
-                <div className="mt-2 text-sm text-slate-500">of 100 MW capacity</div>
-              </div>
-              <div>
-                <div className="text-slate-500 text-xs uppercase tracking-wider mb-3 font-semibold">Efficiency</div>
-                <div className="flex items-baseline gap-3">
-                  <div className="text-5xl font-bold text-slate-900">{avgEfficiency}</div>
-                  <div className="text-xl font-semibold text-slate-600">%</div>
-                </div>
-                <div className="mt-2 text-sm text-slate-500">Power systems</div>
-              </div>
-              <div>
-                <div className="text-slate-500 text-xs uppercase tracking-wider mb-3 font-semibold">Temperature</div>
-                <div className="flex items-baseline gap-3">
-                  <div className="text-5xl font-bold text-slate-900">{avgTemp}</div>
-                  <div className="text-xl font-semibold text-slate-600">°C</div>
-                </div>
-                <div className="mt-2 text-sm text-slate-500">Average</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Power Monitoring - Grande Box */}
-          <div className="bg-white rounded-2xl p-8 mb-8 border border-slate-200 shadow-lg">
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-slate-900 mb-2">Power Load Monitoring</h2>
-              <p className="text-sm text-slate-600">Real-time power consumption across facility</p>
-            </div>
-            <AdvancedAreaChart
-              data={powerData}
-              areas={[
-                { dataKey: 'total', name: 'Total Load (MW)', color: '#8AFD81' },
-              ]}
-              xAxisKey="time"
-              height={280}
-              showGrid={true}
-              showLegend={false}
-              yAxisLabel="MW"
-            />
-          </div>
-
-          {/* System Performance - 2 Charts Côte à Côte */}
-          <div className="grid grid-cols-2 gap-6 mb-8">
-            <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg">
-              <div className="mb-6">
-                <h2 className="text-xl font-bold text-slate-900 mb-2">System Uptime</h2>
-                <p className="text-sm text-slate-600">Reliability trend (30 days)</p>
-              </div>
-              <AdvancedLineChart
-                data={uptimeData}
-                lines={[
-                  { dataKey: 'overall', name: 'Uptime', color: '#8AFD81', strokeWidth: 3 },
-                ]}
-                xAxisKey="date"
-                height={240}
-                showGrid={true}
-                showLegend={false}
-                yAxisLabel="%"
-              />
-            </div>
-
-            <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg">
-              <div className="mb-6">
-                <h2 className="text-xl font-bold text-slate-900 mb-2">Operational Efficiency</h2>
-                <p className="text-sm text-slate-600">Performance trend (30 days)</p>
-              </div>
-              <AdvancedLineChart
-                data={efficiencyData}
-                lines={[
-                  { dataKey: 'avg', name: 'Efficiency', color: '#8AFD81', strokeWidth: 3 },
-                ]}
-                xAxisKey="date"
-                height={240}
-                showGrid={true}
-                showLegend={false}
-                yAxisLabel="%"
-              />
-            </div>
-          </div>
-
-          {/* System Status - Liste Simple et Lisible */}
-          <div className="bg-slate-50 rounded-2xl p-8 border border-slate-200">
-            <h2 className="text-lg font-bold text-slate-900 mb-6">System Status Overview</h2>
+          
+          {/* BENTO GRID CONTAINER */}
+          <div className="grid grid-cols-12 gap-6">
             
-            <div className="mb-6">
-              <div className="text-sm font-semibold text-slate-700 mb-4">Power Systems</div>
-              <div className="grid grid-cols-4 gap-4">
-                {powerSystems.map(system => (
-                  <div key={system.id} className="bg-white rounded-xl p-5 border border-slate-200">
-                    <div className="text-sm font-bold text-slate-900 mb-3">{system.name}</div>
-                    <div className="space-y-2 text-sm text-slate-700">
-                      <div className="flex justify-between">
-                        <span className="text-slate-600">Load:</span>
-                        <span className="font-semibold">{system.currentLoad} MW</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-600">Efficiency:</span>
-                        <span className="font-semibold">{system.efficiency}%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-600">Temp:</span>
-                        <span className="font-semibold">{system.temperature}°C</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+            {/* 1. HERO HEADER - Full Width */}
+            <div className="col-span-12 relative h-[200px] rounded-[2rem] overflow-hidden bg-slate-900 animate-fade-in-up">
+              {/* Background gradient */}
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900" />
+              <div className="absolute inset-0 bg-[url('/Image%2012-12-2025%20a%CC%80%206.58%E2%80%AFPM.JPG')] bg-cover opacity-20" style={{ backgroundPosition: '30% center' }} />
+
+              {/* Content */}
+              <div className="absolute inset-0 z-20">
+                {/* Top Left - Badges */}
+                <div className="absolute top-6 left-8 lg:left-10 flex items-center gap-3">
+                  <span className="px-3 py-1.5 bg-[#8AFD81] text-slate-900 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                    Infrastructure
+                  </span>
+                  <span className="px-3 py-1.5 bg-white/10 text-white/90 rounded-full text-[10px] font-medium backdrop-blur-md border border-white/10 uppercase tracking-widest">
+                    100MW Facility
+                  </span>
+                </div>
+
+                {/* Bottom Left - Title */}
+                <div className="absolute bottom-6 left-8 lg:left-10">
+                  <h1 className="text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+                    Infrastructure <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">Monitoring</span>
+                  </h1>
+                </div>
+
+                {/* Bottom Right - Time Filter */}
+                <div className="absolute bottom-6 right-8 lg:right-10 flex items-center gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700 backdrop-blur-sm">
+                  <TimeFilter selected={timeRange} onChange={setTimeRange} options={['24h', '7d', '30d']} />
+                  <ExportButton />
+                </div>
               </div>
             </div>
 
-            <div>
-              <div className="text-sm font-semibold text-slate-700 mb-4">Cooling Systems</div>
-              <div className="grid grid-cols-4 gap-4">
-                {coolingSystems.map(system => (
-                  <div key={system.id} className="bg-white rounded-xl p-5 border border-slate-200">
-                    <div className="text-sm font-bold text-slate-900 mb-3">{system.name}</div>
-                    <div className="space-y-2 text-sm text-slate-700">
-                      <div className="flex justify-between">
-                        <span className="text-slate-600">Flow:</span>
-                        <span className="font-semibold">{system.flowRate} L/min</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-600">ΔT:</span>
-                        <span className="font-semibold">{system.temperature.input - system.temperature.output}°C</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-600">Efficiency:</span>
-                        <span className="font-semibold">{system.efficiency}%</span>
-                      </div>
+            {/* 2. SYSTEM UPTIME - 3 cols */}
+            <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <Activity className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                      System Uptime
                     </div>
+                    <div className="text-white text-[11px]">Last 30 days</div>
                   </div>
-                ))}
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6 flex flex-col flex-1">
+                <div className="flex items-end justify-center gap-3 mb-4">
+                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                    {systemUptime}
+                  </div>
+                  <div className="text-2xl font-medium text-slate-400 pb-1">%</div>
+                  <div className="flex items-center gap-1 ml-2 pb-1">
+                    <ChevronUp className="w-5 h-5 text-[#8AFD81]" />
+                    <span className="text-sm font-bold text-[#8AFD81]">Optimal</span>
+                  </div>
+                </div>
+
+                <div className="relative w-full h-4 rounded-full overflow-hidden mt-auto">
+                  <div className="absolute inset-0 bg-slate-200 rounded-full" />
+                  <div 
+                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] rounded-full" 
+                    style={{ width: `${systemUptime}%` }}
+                  />
+                </div>
               </div>
             </div>
+
+            {/* 3. TOTAL LOAD - 3 cols */}
+            <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <Zap className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                      Total Load
+                    </div>
+                    <div className="text-white text-[11px]">Power consumption</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6 flex flex-col flex-1">
+                <div className="flex items-end justify-center gap-3 mb-4">
+                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                    {totalLoad.toFixed(1)}
+                  </div>
+                  <div className="text-2xl font-medium text-slate-400 pb-1">MW</div>
+                </div>
+
+                <div className="text-center text-sm text-slate-500 mb-4">of 100 MW capacity</div>
+
+                <div className="relative w-full h-4 rounded-full overflow-hidden mt-auto">
+                  <div className="absolute inset-0 bg-slate-200 rounded-full" />
+                  <div 
+                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] rounded-full" 
+                    style={{ width: `${totalLoad}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* 4. EFFICIENCY - 3 cols */}
+            <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <Gauge className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                      Efficiency
+                    </div>
+                    <div className="text-white text-[11px]">Power systems</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6 flex flex-col flex-1">
+                <div className="flex items-end justify-center gap-3 mb-4">
+                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                    {avgEfficiency}
+                  </div>
+                  <div className="text-2xl font-medium text-slate-400 pb-1">%</div>
+                  <div className="flex items-center gap-1 ml-2 pb-1">
+                    <ChevronUp className="w-5 h-5 text-[#8AFD81]" />
+                    <span className="text-sm font-bold text-[#8AFD81]">High</span>
+                  </div>
+                </div>
+
+                <div className="relative w-full h-4 rounded-full overflow-hidden mt-auto">
+                  <div className="absolute inset-0 bg-slate-200 rounded-full" />
+                  <div 
+                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] rounded-full" 
+                    style={{ width: `${avgEfficiency}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* 5. TEMPERATURE - 3 cols */}
+            <div className="col-span-12 lg:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10 animate-fade-in-up delay-100 flex flex-col">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <Thermometer className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                      Temperature
+                    </div>
+                    <div className="text-white text-[11px]">Average</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6 flex flex-col flex-1">
+                <div className="flex items-end justify-center gap-3 mb-4">
+                  <div className="text-5xl font-bold text-slate-900 tracking-tight tabular-nums">
+                    {avgTemp}
+                  </div>
+                  <div className="text-2xl font-medium text-slate-400 pb-1">°C</div>
+                  <div className="flex items-center gap-1 ml-2 pb-1">
+                    <ChevronUp className="w-5 h-5 text-[#8AFD81] rotate-180" />
+                    <span className="text-sm font-bold text-[#8AFD81]">Normal</span>
+                  </div>
+                </div>
+
+                <div className="relative w-full h-4 rounded-full overflow-hidden mt-auto">
+                  <div className="absolute inset-0 bg-slate-200 rounded-full" />
+                  <div 
+                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] rounded-full" 
+                    style={{ width: `${(parseFloat(avgTemp) / 50) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Section Title - Power Monitoring */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <Zap className="w-10 h-10 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-4xl font-bold text-slate-900">Power Monitoring</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent"></div>
+            </div>
+
+            {/* 6. POWER LOAD CHART - Full Width */}
+            <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Zap className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <div>
+                      <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                        Power Load Monitoring
+                      </div>
+                      <div className="text-slate-400 text-[11px]">Real-time power consumption across facility</div>
+                    </div>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#8AFD81] animate-pulse" />
+                    Live
+                  </span>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6">
+                <AdvancedAreaChart
+                  data={powerData}
+                  areas={[
+                    { dataKey: 'total', name: 'Total Load (MW)', color: '#8AFD81' },
+                  ]}
+                  xAxisKey="time"
+                  height={280}
+                  showGrid={true}
+                  showLegend={false}
+                  yAxisLabel="MW"
+                />
+              </div>
+            </div>
+
+            {/* 7. UPTIME CHART - 6 cols */}
+            <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <Activity className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                      System Uptime
+                    </div>
+                    <div className="text-slate-400 text-[11px]">Reliability trend (30 days)</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6">
+                <AdvancedLineChart
+                  data={uptimeData}
+                  lines={[
+                    { dataKey: 'overall', name: 'Uptime', color: '#8AFD81', strokeWidth: 3 },
+                  ]}
+                  xAxisKey="date"
+                  height={240}
+                  showGrid={true}
+                  showLegend={false}
+                  yAxisLabel="%"
+                />
+              </div>
+            </div>
+
+            {/* 8. EFFICIENCY CHART - 6 cols */}
+            <div className="col-span-12 lg:col-span-6 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <Gauge className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                      Operational Efficiency
+                    </div>
+                    <div className="text-slate-400 text-[11px]">Performance trend (30 days)</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6">
+                <AdvancedLineChart
+                  data={efficiencyData}
+                  lines={[
+                    { dataKey: 'avg', name: 'Efficiency', color: '#8AFD81', strokeWidth: 3 },
+                  ]}
+                  xAxisKey="date"
+                  height={240}
+                  showGrid={true}
+                  showLegend={false}
+                  yAxisLabel="%"
+                />
+              </div>
+            </div>
+
+            {/* Section Title - System Status */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <Server className="w-10 h-10 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-4xl font-bold text-slate-900">System Status</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent"></div>
+            </div>
+
+            {/* 9. POWER SYSTEMS - Full Width */}
+            <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Cpu className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <div>
+                      <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                        Power Systems
+                      </div>
+                      <div className="text-slate-400 text-[11px]">4 Power Blocks Status</div>
+                    </div>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#8AFD81] animate-pulse" />
+                    All Online
+                  </span>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {powerSystems.map(system => (
+                    <div key={system.id} className="bg-white rounded-2xl p-5 border border-slate-200 hover:border-[#8AFD81]/30 transition-colors">
+                      <div className="flex items-center gap-2 mb-4">
+                        <div className="w-2 h-2 rounded-full bg-[#8AFD81] animate-pulse"></div>
+                        <span className="text-sm font-bold text-slate-900">{system.name}</span>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-500">Load</span>
+                          <span className="text-sm font-bold text-slate-900">{system.currentLoad} MW</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-500">Efficiency</span>
+                          <span className="text-sm font-bold text-slate-900">{system.efficiency}%</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-500">Temperature</span>
+                          <span className="text-sm font-bold text-slate-900">{system.temperature}°C</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* 10. COOLING SYSTEMS - Full Width */}
+            <div className="col-span-12 rounded-[2rem] overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Droplets className="w-6 h-6 text-white" strokeWidth={1.5} />
+                    <div>
+                      <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                        Cooling Systems
+                      </div>
+                      <div className="text-slate-400 text-[11px]">Hydro Cooling Status</div>
+                    </div>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#8AFD81] animate-pulse" />
+                    Optimal
+                  </span>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {coolingSystems.map(system => (
+                    <div key={system.id} className="bg-white rounded-2xl p-5 border border-slate-200 hover:border-[#8AFD81]/30 transition-colors">
+                      <div className="flex items-center gap-2 mb-4">
+                        <div className="w-2 h-2 rounded-full bg-[#8AFD81] animate-pulse"></div>
+                        <span className="text-sm font-bold text-slate-900">{system.name}</span>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-500">Flow Rate</span>
+                          <span className="text-sm font-bold text-slate-900">{system.flowRate} L/min</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-500">ΔT</span>
+                          <span className="text-sm font-bold text-slate-900">{system.temperature.input - system.temperature.output}°C</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-500">Efficiency</span>
+                          <span className="text-sm font-bold text-slate-900">{system.efficiency}%</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
     </>
   );
 }
-
