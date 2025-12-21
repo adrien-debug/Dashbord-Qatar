@@ -266,15 +266,18 @@ export function Model3DViewer({
           alpha: false,
           powerPreference: 'high-performance',
         }}
-        style={{ background: '#0f172a' }}
+        style={{ background: 'linear-gradient(180deg, #94a3b8 0%, #64748b 100%)' }}
       >
+        {/* Fond gris pour le Canvas */}
+        <color attach="background" args={['#94a3b8']} />
+        
         <PerspectiveCamera makeDefault position={[5, 3, 5]} fov={45} />
         
-        {/* Éclairage professionnel */}
-        <ambientLight intensity={0.3} />
+        {/* Éclairage professionnel - plus lumineux pour le fond gris */}
+        <ambientLight intensity={0.6} />
         <directionalLight 
           position={[10, 10, 5]} 
-          intensity={1.2} 
+          intensity={1.5} 
           castShadow
           shadow-mapSize={[2048, 2048]}
           shadow-camera-far={50}
@@ -283,17 +286,19 @@ export function Model3DViewer({
           shadow-camera-top={10}
           shadow-camera-bottom={-10}
         />
-        <directionalLight position={[-5, 5, -5]} intensity={0.4} color="#8AFD81" />
+        <directionalLight position={[-5, 5, -5]} intensity={0.6} color="#ffffff" />
+        <directionalLight position={[0, -5, 0]} intensity={0.3} color="#8AFD81" />
         <spotLight 
           position={[0, 10, 0]} 
-          intensity={0.5} 
+          intensity={0.8} 
           angle={0.3} 
           penumbra={1} 
           castShadow
         />
+        <hemisphereLight args={['#ffffff', '#64748b', 0.5]} />
 
-        {/* Environnement HDR */}
-        <Environment preset="city" />
+        {/* Environnement HDR - studio pour meilleur éclairage */}
+        <Environment preset="studio" />
 
         <Suspense fallback={<Loader />}>
           <Bounds fit clip observe margin={1.5}>
@@ -320,13 +325,13 @@ export function Model3DViewer({
           far={10}
         />
 
-        {/* Grille */}
+        {/* Grille - couleurs adaptées au fond gris */}
         {showGrid && (
           <Grid 
             args={[20, 20]}
             cellSize={0.5}
             cellThickness={0.5}
-            cellColor="#1e293b"
+            cellColor="#475569"
             sectionSize={2}
             sectionThickness={1}
             sectionColor="#334155"
@@ -335,6 +340,16 @@ export function Model3DViewer({
             position={[0, -0.02, 0]}
           />
         )}
+        
+        {/* Sol réfléchissant */}
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.03, 0]} receiveShadow>
+          <planeGeometry args={[50, 50]} />
+          <meshStandardMaterial 
+            color="#cbd5e1" 
+            metalness={0.1} 
+            roughness={0.8}
+          />
+        </mesh>
 
         {/* Contrôles orbitaux */}
         <OrbitControls 
@@ -359,14 +374,14 @@ export function Model3DViewer({
       </Canvas>
 
       {/* Overlay avec nom du modèle */}
-      <div className="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-sm border border-slate-700 rounded-xl px-4 py-2">
+      <div className="absolute top-4 left-4 bg-slate-900/95 backdrop-blur-sm border border-slate-600 rounded-xl px-4 py-2 shadow-lg">
         <div className="text-white font-semibold text-sm">{modelName}</div>
-        <div className="text-slate-400 text-xs mt-0.5">Mode interactif</div>
+        <div className="text-slate-300 text-xs mt-0.5">Mode interactif • Fond gris</div>
       </div>
 
       {/* Instructions de contrôle */}
-      <div className="absolute bottom-4 left-4 bg-slate-900/80 backdrop-blur-sm border border-slate-700 rounded-lg px-3 py-2">
-        <div className="flex items-center gap-4 text-[10px] text-slate-400">
+      <div className="absolute bottom-4 left-4 bg-slate-900/95 backdrop-blur-sm border border-slate-600 rounded-lg px-3 py-2 shadow-lg">
+        <div className="flex items-center gap-4 text-[10px] text-slate-300">
           <span><kbd className="bg-slate-700 px-1.5 py-0.5 rounded text-white">Drag</kbd> Orbiter</span>
           <span><kbd className="bg-slate-700 px-1.5 py-0.5 rounded text-white">Scroll</kbd> Zoom</span>
           <span><kbd className="bg-slate-700 px-1.5 py-0.5 rounded text-white">Shift+Drag</kbd> Pan</span>
@@ -376,7 +391,7 @@ export function Model3DViewer({
       {/* Bouton reset caméra */}
       <button
         onClick={resetCamera}
-        className="absolute bottom-4 right-4 bg-slate-800/90 hover:bg-slate-700 backdrop-blur-sm border border-slate-600 rounded-lg px-3 py-2 text-white text-xs font-medium transition-all"
+        className="absolute bottom-4 right-4 bg-slate-900/95 hover:bg-slate-800 backdrop-blur-sm border border-slate-600 rounded-lg px-3 py-2 text-white text-xs font-medium transition-all shadow-lg"
       >
         Reset Vue
       </button>

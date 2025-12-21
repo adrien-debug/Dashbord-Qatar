@@ -1,14 +1,26 @@
 /**
- * Model3DPreview - Composant de prévisualisation 3D pour la galerie
- * Le Canvas 3D ne s'active QU'AU HOVER pour éviter les problèmes de contextes WebGL
+ * Model3DPreview - Composant de prévisualisation pour la galerie
+ * Version statique sans WebGL - Le 3D est réservé au workspace
  */
 
-import { Suspense, useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { PerspectiveCamera } from '@react-three/drei';
-import { PrimitiveSelector, PrimitiveType } from './PrimitiveShapes';
-import * as THREE from 'three';
-import { Box, Zap, Snowflake, Shield, Layers, Camera, Car, ArrowUpRight } from 'lucide-react';
+import { useState } from 'react';
+import { PrimitiveType } from './PrimitiveShapes';
+import { 
+  Box, 
+  Zap, 
+  Snowflake, 
+  Shield, 
+  Layers, 
+  Camera, 
+  Car, 
+  ArrowUpRight,
+  Cuboid,
+  CircuitBoard,
+  Fan,
+  Fence,
+  Footprints,
+  Eye,
+} from 'lucide-react';
 
 interface Model3DPreviewProps {
   modelType: PrimitiveType;
@@ -17,289 +29,284 @@ interface Model3DPreviewProps {
   autoRotate?: boolean;
   hovered?: boolean;
   className?: string;
+  thumbnail?: string;
   onClick?: () => void;
 }
 
-// Composant interne pour le modèle rotatif
-function RotatingModel({ 
-  modelType, 
-  color, 
-  variant, 
-}: {
-  modelType: PrimitiveType;
-  color?: string;
-  variant?: string;
-}) {
-  const groupRef = useRef<THREE.Group>(null);
+// Configuration des icônes et couleurs par type
+const MODEL_CONFIG: Record<string, { 
+  icon: React.ElementType; 
+  gradient: string;
+  accentColor: string;
+  pattern: 'grid' | 'dots' | 'lines' | 'circuit';
+}> = {
+  container: { 
+    icon: Cuboid, 
+    gradient: 'from-emerald-900 via-emerald-800 to-slate-900',
+    accentColor: '#8AFD81',
+    pattern: 'grid',
+  },
+  transformer: { 
+    icon: Zap, 
+    gradient: 'from-amber-900 via-orange-800 to-slate-900',
+    accentColor: '#f59e0b',
+    pattern: 'circuit',
+  },
+  'power-block': { 
+    icon: CircuitBoard, 
+    gradient: 'from-blue-900 via-blue-800 to-slate-900',
+    accentColor: '#3b82f6',
+    pattern: 'circuit',
+  },
+  cooling: { 
+    icon: Fan, 
+    gradient: 'from-cyan-900 via-teal-800 to-slate-900',
+    accentColor: '#06b6d4',
+    pattern: 'lines',
+  },
+  fence: { 
+    icon: Fence, 
+    gradient: 'from-purple-900 via-violet-800 to-slate-900',
+    accentColor: '#a855f7',
+    pattern: 'grid',
+  },
+  camera: { 
+    icon: Camera, 
+    gradient: 'from-slate-800 via-gray-700 to-slate-900',
+    accentColor: '#64748b',
+    pattern: 'dots',
+  },
+  'golf-car': { 
+    icon: Car, 
+    gradient: 'from-slate-700 via-gray-600 to-slate-900',
+    accentColor: '#ffffff',
+    pattern: 'dots',
+  },
+  ground: { 
+    icon: Layers, 
+    gradient: 'from-stone-800 via-stone-700 to-slate-900',
+    accentColor: '#78716c',
+    pattern: 'grid',
+  },
+  stairs: { 
+    icon: Footprints, 
+    gradient: 'from-yellow-900 via-amber-800 to-slate-900',
+    accentColor: '#fbbf24',
+    pattern: 'lines',
+  },
+  placeholder: { 
+    icon: Box, 
+    gradient: 'from-emerald-900 via-green-800 to-slate-900',
+    accentColor: '#8AFD81',
+    pattern: 'grid',
+  },
+};
 
-  useFrame((state, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.4;
-    }
-  });
-
-  return (
-    <group ref={groupRef}>
-      <PrimitiveSelector 
-        type={modelType} 
-        color={color} 
-        variant={variant}
-        animate={true}
-        scale={0.8}
-      />
-    </group>
-  );
-}
-
-// Loader pendant le chargement
-function Loader() {
-  return (
-    <mesh>
-      <boxGeometry args={[0.5, 0.5, 0.5]} />
-      <meshBasicMaterial color="#8AFD81" wireframe />
-    </mesh>
-  );
-}
-
-// Icône selon le type de modèle
-function getModelIcon(modelType: PrimitiveType) {
-  switch (modelType) {
-    case 'container':
-      return <Box className="w-8 h-8" />;
-    case 'transformer':
-    case 'power-block':
-      return <Zap className="w-8 h-8" />;
-    case 'cooling':
-      return <Snowflake className="w-8 h-8" />;
-    case 'fence':
-      return <Shield className="w-8 h-8" />;
-    case 'camera':
-      return <Camera className="w-8 h-8" />;
-    case 'golf-car':
-      return <Car className="w-8 h-8" />;
-    case 'ground':
-    case 'stairs':
+// Patterns SVG
+function PatternBackground({ pattern, color }: { pattern: string; color: string }) {
+  switch (pattern) {
+    case 'grid':
+      return (
+        <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+              <path d="M 30 0 L 0 0 0 30" fill="none" stroke={color} strokeWidth="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+      );
+    case 'dots':
+      return (
+        <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill={color}/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#dots)" />
+        </svg>
+      );
+    case 'lines':
+      return (
+        <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="lines" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <line x1="0" y1="0" x2="0" y2="40" stroke={color} strokeWidth="1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#lines)" />
+        </svg>
+      );
+    case 'circuit':
+      return (
+        <svg className="absolute inset-0 w-full h-full opacity-15" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="circuit" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M 30 0 L 30 20 M 30 40 L 30 60 M 0 30 L 20 30 M 40 30 L 60 30" stroke={color} strokeWidth="0.5" fill="none"/>
+              <circle cx="30" cy="30" r="3" fill={color}/>
+              <circle cx="30" cy="20" r="2" fill={color}/>
+              <circle cx="30" cy="40" r="2" fill={color}/>
+              <circle cx="20" cy="30" r="2" fill={color}/>
+              <circle cx="40" cy="30" r="2" fill={color}/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#circuit)" />
+        </svg>
+      );
     default:
-      return <Layers className="w-8 h-8" />;
+      return null;
   }
-}
-
-// Couleur selon le type
-function getModelColor(modelType: PrimitiveType, customColor?: string): string {
-  if (customColor) return customColor;
-  
-  const colors: Record<string, string> = {
-    container: '#8AFD81',
-    transformer: '#f59e0b',
-    'power-block': '#3b82f6',
-    cooling: '#06b6d4',
-    fence: '#a855f7',
-    camera: '#64748b',
-    'golf-car': '#ffffff',
-    ground: '#78716c',
-    stairs: '#fbbf24',
-    placeholder: '#8AFD81',
-  };
-  
-  return colors[modelType] || '#8AFD81';
-}
-
-// Placeholder statique avec animation CSS
-function StaticPlaceholder({ 
-  modelType, 
-  color,
-  isHovered,
-}: { 
-  modelType: PrimitiveType; 
-  color?: string;
-  isHovered: boolean;
-}) {
-  const modelColor = getModelColor(modelType, color);
-  
-  return (
-    <div className="w-full h-full bg-gradient-to-br from-slate-800 via-slate-850 to-slate-900 flex items-center justify-center relative overflow-hidden">
-      {/* Grille de fond animée */}
-      <div 
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: `linear-gradient(${modelColor}20 1px, transparent 1px),
-                           linear-gradient(90deg, ${modelColor}20 1px, transparent 1px)`,
-          backgroundSize: '20px 20px',
-        }}
-      />
-      
-      {/* Cercle lumineux au centre */}
-      <div 
-        className={`absolute w-32 h-32 rounded-full blur-3xl transition-all duration-500 ${
-          isHovered ? 'opacity-30 scale-110' : 'opacity-10 scale-100'
-        }`}
-        style={{ backgroundColor: modelColor }}
-      />
-      
-      {/* Icône centrale */}
-      <div className={`relative z-10 flex flex-col items-center transition-all duration-300 ${
-        isHovered ? 'scale-110' : 'scale-100'
-      }`}>
-        <div 
-          className={`p-4 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${
-            isHovered 
-              ? 'bg-white/10 border-white/20 shadow-lg' 
-              : 'bg-slate-800/50 border-slate-700/50'
-          }`}
-          style={{ 
-            boxShadow: isHovered ? `0 0 30px ${modelColor}40` : 'none',
-          }}
-        >
-          <div style={{ color: modelColor }} className="transition-transform duration-300">
-            {getModelIcon(modelType)}
-          </div>
-        </div>
-        
-        {/* Label */}
-        <div className={`mt-3 flex items-center gap-1.5 transition-all duration-300 ${
-          isHovered ? 'opacity-100 translate-y-0' : 'opacity-50 translate-y-1'
-        }`}>
-          <span className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">
-            {isHovered ? 'Vue 3D Active' : 'Survoler pour 3D'}
-          </span>
-          {isHovered && (
-            <ArrowUpRight className="w-3 h-3 text-slate-400 animate-pulse" />
-          )}
-        </div>
-      </div>
-      
-      {/* Particules décoratives */}
-      {isHovered && (
-        <>
-          <div 
-            className="absolute w-1 h-1 rounded-full animate-ping"
-            style={{ backgroundColor: modelColor, top: '20%', left: '30%', animationDelay: '0s' }}
-          />
-          <div 
-            className="absolute w-1 h-1 rounded-full animate-ping"
-            style={{ backgroundColor: modelColor, top: '60%', right: '25%', animationDelay: '0.5s' }}
-          />
-          <div 
-            className="absolute w-1 h-1 rounded-full animate-ping"
-            style={{ backgroundColor: modelColor, bottom: '30%', left: '20%', animationDelay: '1s' }}
-          />
-        </>
-      )}
-    </div>
-  );
 }
 
 export function Model3DPreview({
   modelType,
   color,
-  variant,
-  autoRotate = true,
   hovered = false,
   className = '',
+  thumbnail,
   onClick,
 }: Model3DPreviewProps) {
-  const [isClient, setIsClient] = useState(false);
-  const [render3D, setRender3D] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [imgError, setImgError] = useState(false);
+  const config = MODEL_CONFIG[modelType] || MODEL_CONFIG.placeholder;
+  const Icon = config.icon;
+  const accentColor = color || config.accentColor;
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // Active le 3D uniquement au hover
-  useEffect(() => {
-    if (hovered && !hasError) {
-      // Petit délai pour éviter les activations accidentelles
-      const timer = setTimeout(() => {
-        setRender3D(true);
-      }, 150);
-      return () => clearTimeout(timer);
-    } else {
-      // Désactive après un délai pour éviter le flickering
-      const timer = setTimeout(() => {
-        setRender3D(false);
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [hovered, hasError]);
-
-  if (!isClient) {
-    return (
-      <div className={`bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center ${className}`}>
-        <div className="w-8 h-8 border-2 border-[#8AFD81]/30 border-t-[#8AFD81] rounded-full animate-spin" />
-      </div>
-    );
-  }
+  // Utiliser la thumbnail si disponible et pas d'erreur de chargement
+  const showThumbnail = thumbnail && !imgError;
 
   return (
     <div 
-      ref={containerRef}
-      className={`relative overflow-hidden cursor-pointer ${className}`}
+      className={`relative overflow-hidden cursor-pointer group ${className}`}
       onClick={onClick}
     >
-      {/* Placeholder statique (toujours visible en arrière-plan) */}
-      <div className={`absolute inset-0 transition-opacity duration-300 ${
-        render3D ? 'opacity-0' : 'opacity-100'
+      {/* Thumbnail image si disponible */}
+      {showThumbnail ? (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={thumbnail}
+            alt="Preview"
+            className={`absolute inset-0 w-full h-full object-cover transition-transform duration-500 ${
+              hovered ? 'scale-110' : 'scale-100'
+            }`}
+            onError={() => setImgError(true)}
+          />
+          {/* Overlay sombre pour lisibilité */}
+          <div 
+            className={`absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent transition-opacity duration-300 ${
+              hovered ? 'opacity-80' : 'opacity-60'
+            }`}
+          />
+        </>
+      ) : (
+        <>
+          {/* Background gradient (fallback) */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${config.gradient} transition-all duration-500`} />
+          
+          {/* Pattern overlay */}
+          <PatternBackground pattern={config.pattern} color={accentColor} />
+          
+          {/* Animated glow effect on hover */}
+          <div 
+            className={`absolute inset-0 transition-opacity duration-500 ${
+              hovered ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{
+              background: `radial-gradient(circle at center, ${accentColor}15 0%, transparent 70%)`,
+            }}
+          />
+          
+          {/* Floating particles effect */}
+          {hovered && (
+            <div className="absolute inset-0 overflow-hidden">
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute w-1 h-1 rounded-full animate-float"
+                  style={{
+                    backgroundColor: accentColor,
+                    left: `${15 + i * 15}%`,
+                    top: `${20 + (i % 3) * 25}%`,
+                    animationDelay: `${i * 0.2}s`,
+                    opacity: 0.6,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Main content - Icon (seulement en mode fallback) */}
+          <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-4">
+            {/* Icon container with glow */}
+            <div 
+              className={`relative p-5 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${
+                hovered 
+                  ? 'bg-white/10 border-white/30 scale-110 shadow-2xl' 
+                  : 'bg-black/20 border-white/10 scale-100'
+              }`}
+              style={{ 
+                boxShadow: hovered ? `0 0 40px ${accentColor}50, 0 0 80px ${accentColor}20` : 'none',
+              }}
+            >
+              {/* Rotating ring on hover */}
+              {hovered && (
+                <div 
+                  className="absolute inset-0 rounded-2xl animate-spin-slow"
+                  style={{
+                    background: `conic-gradient(from 0deg, transparent, ${accentColor}40, transparent)`,
+                  }}
+                />
+              )}
+              
+              <Icon 
+                className={`relative z-10 transition-all duration-300 ${
+                  hovered ? 'w-10 h-10' : 'w-8 h-8'
+                }`}
+                style={{ color: accentColor }}
+                strokeWidth={1.5}
+              />
+            </div>
+          </div>
+
+          {/* Corner accent */}
+          <div 
+            className={`absolute top-0 right-0 w-20 h-20 transition-opacity duration-300 ${
+              hovered ? 'opacity-100' : 'opacity-50'
+            }`}
+            style={{
+              background: `linear-gradient(135deg, ${accentColor}20 0%, transparent 60%)`,
+            }}
+          />
+        </>
+      )}
+
+      {/* 3D badge - toujours visible */}
+      <div className={`absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 transition-all duration-300 ${
+        hovered ? 'opacity-100 translate-y-0' : 'opacity-70 translate-y-1'
       }`}>
-        <StaticPlaceholder 
-          modelType={modelType} 
-          color={color} 
-          isHovered={hovered}
-        />
+        <div 
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-md border"
+          style={{ 
+            backgroundColor: `${accentColor}20`,
+            borderColor: `${accentColor}40`,
+          }}
+        >
+          <Eye className="w-3 h-3" style={{ color: accentColor }} />
+          <span 
+            className="text-[10px] font-semibold uppercase tracking-wider"
+            style={{ color: accentColor }}
+          >
+            {hovered ? 'Ouvrir en 3D' : 'Voir en 3D'}
+          </span>
+          {hovered && (
+            <ArrowUpRight className="w-3 h-3 animate-pulse" style={{ color: accentColor }} />
+          )}
+        </div>
       </div>
 
-      {/* Canvas 3D (uniquement quand hovered) */}
-      {render3D && !hasError && (
-        <div className="absolute inset-0 animate-fadeIn">
-          <Canvas
-            shadows={false}
-            dpr={[1, 1.5]}
-            gl={{ 
-              antialias: true,
-              alpha: true,
-              powerPreference: 'high-performance',
-              preserveDrawingBuffer: false,
-            }}
-            onError={() => setHasError(true)}
-            style={{ background: 'transparent' }}
-          >
-            <PerspectiveCamera makeDefault position={[3, 2, 3]} fov={35} />
-            
-            {/* Éclairage simplifié */}
-            <ambientLight intensity={0.6} />
-            <directionalLight position={[5, 5, 5]} intensity={1} />
-            <directionalLight position={[-5, 3, -5]} intensity={0.3} color="#8AFD81" />
-            
-            <Suspense fallback={<Loader />}>
-              <RotatingModel 
-                modelType={modelType}
-                color={color}
-                variant={variant}
-              />
-            </Suspense>
-
-            {/* Sol */}
-            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
-              <planeGeometry args={[10, 10]} />
-              <meshBasicMaterial color="#0f172a" transparent opacity={0.5} />
-            </mesh>
-          </Canvas>
-        </div>
-      )}
-
-      {/* Overlay gradient en bas */}
-      <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-slate-900/80 to-transparent pointer-events-none z-10" />
-      
-      {/* Indicateur 3D actif */}
-      {render3D && (
-        <div className="absolute top-2 right-2 px-2 py-1 bg-[#8AFD81]/20 backdrop-blur-sm border border-[#8AFD81]/30 rounded-lg z-10">
-          <span className="text-[9px] text-[#8AFD81] font-bold uppercase tracking-wider flex items-center gap-1">
-            <span className="w-1.5 h-1.5 bg-[#8AFD81] rounded-full animate-pulse" />
-            3D
-          </span>
-        </div>
-      )}
+      {/* Bottom gradient overlay */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-slate-900/90 to-transparent pointer-events-none z-20" />
     </div>
   );
 }

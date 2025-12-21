@@ -669,92 +669,315 @@ export default function Monitoring() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="space-y-8"
               >
-                {/* Section: All Sub-SOPs */}
-                <section>
-                  <div className="flex items-center gap-4 mb-6">
-                    <FileText className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
-                    <h2 className="text-2xl font-bold text-slate-900">All Sub-SOP Documents</h2>
-                    <div className="flex-1 h-px bg-gradient-to-r from-slate-200 to-transparent" />
-                  </div>
+                {/* ================================================================ */}
+                {/* UNIFIED SUB-SOPS BOX - Terminal Bloomberg Style */}
+                {/* ================================================================ */}
+                <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-xl shadow-slate-200/50">
+                  
+                  {/* ============================================================ */}
+                  {/* HEADER - Dark */}
+                  {/* ============================================================ */}
+                  <div className="bg-slate-800 px-6 py-5">
+                    <div className="flex flex-wrap items-center justify-between gap-4">
+                      
+                      {/* Left - Logo + Title */}
+                      <div className="flex items-center gap-4">
+                        <div className="p-3 bg-gradient-to-br from-[#8AFD81] via-[#4ade80] to-[#22c55e] rounded-xl shadow-lg shadow-[#8AFD81]/30">
+                          <FileText className="w-7 h-7 text-slate-900" />
+                        </div>
+                        <div>
+                          <h1 className="text-2xl font-bold text-white tracking-tight">
+                            Sub-SOP Documents
+                          </h1>
+                          <p className="text-sm text-slate-400">
+                            All Required Documents • Master SOP Lifecycle
+                          </p>
+                        </div>
+                      </div>
 
-                  {/* Summary Card */}
-                  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-8">
-                    <div className="bg-slate-800 px-8 py-4 flex items-center justify-between">
-                      <span className="text-white font-semibold text-lg">Document Status</span>
-                      <span className="text-slate-400 text-sm">
-                        <span className="text-[#8AFD81] font-bold text-lg">{completedSubSOPs}</span> of {allSubSOPs.length} completed
-                      </span>
-                    </div>
-                    <div className="p-6">
-                      <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full rounded-full"
-                          style={{ 
-                            width: `${(completedSubSOPs / allSubSOPs.length) * 100}%`,
-                            background: 'linear-gradient(90deg, #8AFD81, #6ee667)'
-                          }}
-                        />
+                      {/* Right - KPI Badges */}
+                      <div className="flex items-center gap-3">
+                        {/* Completed Badge */}
+                        <div className="flex items-center gap-2 px-4 py-2.5 bg-[#8AFD81]/10 rounded-xl border border-[#8AFD81]/30">
+                          <CheckCircle className="w-4 h-4 text-[#8AFD81]" />
+                          <div>
+                            <p className="text-[10px] uppercase tracking-wider text-[#8AFD81]/70">Completed</p>
+                            <span className="text-lg font-bold text-[#8AFD81]">{completedSubSOPs}</span>
+                          </div>
+                        </div>
+
+                        {/* Total Badge */}
+                        <div className="flex items-center gap-2 px-4 py-2.5 bg-slate-700/50 rounded-xl border border-slate-600">
+                          <FileText className="w-4 h-4 text-slate-400" />
+                          <div>
+                            <p className="text-[10px] uppercase tracking-wider text-slate-400">Total</p>
+                            <span className="text-lg font-bold text-white">{allSubSOPs.length}</span>
+                          </div>
+                        </div>
+
+                        {/* Progress Badge */}
+                        <div className="flex items-center gap-2 px-4 py-2.5 bg-slate-700/50 rounded-xl border border-slate-600">
+                          <TrendingUp className="w-4 h-4 text-[#8AFD81]" />
+                          <div>
+                            <p className="text-[10px] uppercase tracking-wider text-slate-400">Progress</p>
+                            <span className="text-lg font-bold text-[#8AFD81]">
+                              {allSubSOPs.length > 0 
+                                ? Math.round((completedSubSOPs / allSubSOPs.length) * 100) 
+                                : 0}%
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Sub-SOPs Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {allSubSOPs.map((sop) => {
-                      const SopIcon = DimensionIcons[sop.dimension];
-                      const isComplete = sop.status === 'completed';
-                      return (
-                        <div 
-                          key={sop.id}
-                          className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-all"
-                        >
-                          <div className="bg-slate-800 px-5 py-3 flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <SopIcon className="w-4 h-4 text-[#8AFD81]" />
-                              <code className="text-xs text-[#8AFD81] font-mono">{sop.code}</code>
+                  {/* ============================================================ */}
+                  {/* BODY - White */}
+                  {/* ============================================================ */}
+                  <div className="bg-white">
+                    <div className="flex">
+                      
+                      {/* ======================================================== */}
+                      {/* SIDEBAR - Stats Panel */}
+                      {/* ======================================================== */}
+                      <div className="w-72 border-r border-slate-100 p-4 space-y-4 bg-slate-50/50">
+                        
+                        {/* Overall Progress */}
+                        <div className="bg-white rounded-xl p-3.5 border border-slate-100 shadow-sm">
+                          <div className="flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-100">
+                            <div className="p-2 bg-[#8AFD81]/20 rounded-lg">
+                              <Activity className="w-4 h-4 text-[#8AFD81]" />
                             </div>
-                            <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
-                              isComplete ? 'bg-[#8AFD81]/20 text-[#8AFD81]' : 'bg-slate-700 text-slate-300'
-                            }`}>
-                              {sop.status.replace('-', ' ')}
-                            </span>
+                            <span className="text-sm font-bold uppercase tracking-wide text-slate-700">Overall Progress</span>
                           </div>
                           
-                          <div className="p-5">
-                            <h4 className="text-slate-900 font-semibold mb-2">{sop.name}</h4>
-                            <p className="text-slate-500 text-sm mb-5 line-clamp-2">{sop.description}</p>
-                            
-                            <div className="flex items-center justify-between mb-2">
-                              <span className="text-xs text-slate-500">Progress</span>
-                              <span className={`text-sm font-bold ${isComplete ? 'text-[#22c55e]' : 'text-slate-600'}`}>
-                                {sop.completionPercent}%
-                              </span>
+                          <div className="flex items-baseline gap-1.5 mb-3">
+                            <span className="text-3xl font-bold text-slate-900 tabular-nums">
+                              {allSubSOPs.length > 0 
+                                ? Math.round((completedSubSOPs / allSubSOPs.length) * 100) 
+                                : 0}
+                            </span>
+                            <span className="text-lg text-slate-400">%</span>
+                          </div>
+                          
+                          <div className="h-3 bg-slate-100 rounded-full overflow-hidden mb-2">
+                            <div 
+                              className="h-full rounded-full transition-all duration-700"
+                              style={{ 
+                                width: `${allSubSOPs.length > 0 ? (completedSubSOPs / allSubSOPs.length) * 100 : 0}%`,
+                                background: 'linear-gradient(90deg, #8AFD81, #6ee667)'
+                              }}
+                            />
+                          </div>
+                          <p className="text-xs text-slate-500">{completedSubSOPs} of {allSubSOPs.length} documents completed</p>
+                        </div>
+
+                        {/* Status Breakdown */}
+                        <div className="bg-white rounded-xl p-3.5 border border-slate-100 shadow-sm">
+                          <div className="flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-100">
+                            <div className="p-2 bg-slate-600/10 rounded-lg">
+                              <Layers className="w-4 h-4 text-slate-600" />
                             </div>
-                            
-                            <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                              <div 
-                                className="h-full rounded-full transition-all"
-                                style={{ 
-                                  width: `${sop.completionPercent}%`,
-                                  backgroundColor: STATUS_COLORS_LOCAL[sop.status],
-                                }}
-                              />
-                            </div>
-                            
-                            {sop.owner && (
-                              <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-2 text-sm text-slate-500">
-                                <User className="w-4 h-4" />
-                                <span>{sop.owner}</span>
-                              </div>
-                            )}
+                            <span className="text-sm font-bold uppercase tracking-wide text-slate-700">Status Breakdown</span>
+                          </div>
+                          
+                          <div className="space-y-3">
+                            {[
+                              { status: 'completed', label: 'Completed', icon: CheckCircle, count: allSubSOPs.filter(s => s.status === 'completed').length },
+                              { status: 'in-progress', label: 'In Progress', icon: Clock, count: allSubSOPs.filter(s => s.status === 'in-progress').length },
+                              { status: 'not-started', label: 'Not Started', icon: Circle, count: allSubSOPs.filter(s => s.status === 'not-started').length },
+                              { status: 'blocked', label: 'Blocked', icon: AlertTriangle, count: allSubSOPs.filter(s => s.status === 'blocked').length },
+                            ].map(item => {
+                              const StatusIcon = item.icon;
+                              const color = STATUS_COLORS_LOCAL[item.status as Status];
+                              return (
+                                <div key={item.status} className="flex items-center justify-between">
+                                  <div className="flex items-center gap-2">
+                                    <StatusIcon className="w-4 h-4" style={{ color }} />
+                                    <span className="text-sm text-slate-600">{item.label}</span>
+                                  </div>
+                                  <span className="text-sm font-bold text-slate-900">{item.count}</span>
+                                </div>
+                              );
+                            })}
                           </div>
                         </div>
-                      );
-                    })}
+
+                        {/* By Dimension */}
+                        <div className="bg-white rounded-xl p-3.5 border border-slate-100 shadow-sm">
+                          <div className="flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-100">
+                            <div className="p-2 bg-[#8AFD81]/20 rounded-lg">
+                              <Briefcase className="w-4 h-4 text-[#8AFD81]" />
+                            </div>
+                            <span className="text-sm font-bold uppercase tracking-wide text-slate-700">By Dimension</span>
+                          </div>
+                          
+                          <div className="space-y-3">
+                            {(['business', 'administrative', 'technology', 'engineering'] as DimensionId[]).map(dim => {
+                              const DimIcon = DimensionIcons[dim];
+                              const count = allSubSOPs.filter(s => s.dimension === dim).length;
+                              const completed = allSubSOPs.filter(s => s.dimension === dim && s.status === 'completed').length;
+                              return (
+                                <div key={dim}>
+                                  <div className="flex items-center justify-between mb-1">
+                                    <div className="flex items-center gap-2">
+                                      <DimIcon className="w-4 h-4 text-slate-400" />
+                                      <span className="text-sm text-slate-600 capitalize">{dim}</span>
+                                    </div>
+                                    <span className="text-xs text-slate-500">{completed}/{count}</span>
+                                  </div>
+                                  <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                    <div 
+                                      className="h-full rounded-full bg-[#8AFD81]"
+                                      style={{ width: count > 0 ? `${(completed / count) * 100}%` : '0%' }}
+                                    />
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Quick Actions */}
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 px-4 py-3 bg-[#8AFD81]/10 rounded-xl border border-[#8AFD81]/30 cursor-pointer hover:bg-[#8AFD81]/20 transition-colors">
+                            <FileText className="w-4 h-4 text-[#8AFD81]" />
+                            <span className="text-sm font-medium text-[#8AFD81]">Export All Documents</span>
+                          </div>
+                          <div className="flex items-center gap-2 px-4 py-3 bg-slate-100 rounded-xl cursor-pointer hover:bg-slate-200 transition-colors">
+                            <Clock className="w-4 h-4 text-slate-600" />
+                            <span className="text-sm font-medium text-slate-600">View Timeline</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* ======================================================== */}
+                      {/* MAIN CONTENT AREA */}
+                      {/* ======================================================== */}
+                      <div className="flex-1 p-6">
+                        
+                        {/* Sub-SOPs Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                          {allSubSOPs.map((sop) => {
+                            const SopIcon = DimensionIcons[sop.dimension];
+                            const isComplete = sop.status === 'completed';
+                            const isInProgress = sop.status === 'in-progress';
+                            return (
+                              <div 
+                                key={sop.id}
+                                className={`rounded-xl border-2 overflow-hidden transition-all hover:shadow-lg ${
+                                  isComplete 
+                                    ? 'border-[#8AFD81]/30 bg-[#8AFD81]/5 hover:border-[#8AFD81]/50' 
+                                    : isInProgress
+                                      ? 'border-slate-200 bg-white hover:border-slate-300'
+                                      : 'border-slate-100 bg-slate-50 hover:border-slate-200'
+                                }`}
+                              >
+                                {/* Card Header */}
+                                <div className={`px-4 py-3 flex items-center justify-between ${
+                                  isComplete ? 'bg-[#8AFD81]/10' : 'bg-slate-100'
+                                }`}>
+                                  <div className="flex items-center gap-2">
+                                    <SopIcon className={`w-4 h-4 ${isComplete ? 'text-[#22c55e]' : 'text-slate-400'}`} />
+                                    <code className={`text-xs font-mono px-2 py-0.5 rounded ${
+                                      isComplete 
+                                        ? 'bg-[#8AFD81]/20 text-[#22c55e]' 
+                                        : 'bg-slate-200 text-slate-600'
+                                    }`}>
+                                      {sop.code}
+                                    </code>
+                                  </div>
+                                  <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${
+                                    isComplete 
+                                      ? 'bg-[#8AFD81]/20 text-[#22c55e]' 
+                                      : isInProgress
+                                        ? 'bg-slate-600/20 text-slate-600'
+                                        : 'bg-slate-200 text-slate-500'
+                                  }`}>
+                                    {sop.status === 'completed' ? 'Complete' :
+                                     sop.status === 'in-progress' ? 'In Progress' :
+                                     sop.status === 'not-started' ? 'Pending' : 'Blocked'}
+                                  </span>
+                                </div>
+                                
+                                {/* Card Body */}
+                                <div className="p-4">
+                                  <h4 className="text-slate-900 font-semibold mb-2 line-clamp-1">{sop.name}</h4>
+                                  <p className="text-slate-500 text-sm mb-4 line-clamp-2">{sop.description}</p>
+                                  
+                                  {/* Progress */}
+                                  <div className="flex items-center justify-between mb-2">
+                                    <span className="text-xs text-slate-500">Progress</span>
+                                    <span className={`text-sm font-bold ${isComplete ? 'text-[#22c55e]' : 'text-slate-600'}`}>
+                                      {sop.completionPercent}%
+                                    </span>
+                                  </div>
+                                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                                    <div 
+                                      className="h-full rounded-full transition-all duration-500"
+                                      style={{ 
+                                        width: `${sop.completionPercent}%`,
+                                        background: isComplete 
+                                          ? 'linear-gradient(90deg, #8AFD81, #6ee667)' 
+                                          : 'linear-gradient(90deg, #64748B, #94A3B8)'
+                                      }}
+                                    />
+                                  </div>
+                                  
+                                  {/* Owner */}
+                                  {sop.owner && (
+                                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center gap-2 text-sm text-slate-500">
+                                      <User className="w-4 h-4" />
+                                      <span>{sop.owner}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {/* Empty State */}
+                        {allSubSOPs.length === 0 && (
+                          <div className="text-center py-16">
+                            <FileText className="w-16 h-16 mx-auto mb-4 text-slate-200" />
+                            <h3 className="text-lg font-semibold text-slate-900 mb-2">No Sub-SOPs Yet</h3>
+                            <p className="text-slate-500">Sub-SOPs will appear here as the project progresses.</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </section>
+
+                  {/* ============================================================ */}
+                  {/* FOOTER - Summary Bar */}
+                  {/* ============================================================ */}
+                  <div className="bg-slate-50 border-t border-slate-100 px-6 py-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-6 text-sm">
+                        <div className="flex items-center gap-2">
+                          <span className="text-slate-400">Current Phase:</span>
+                          <span className="font-semibold text-slate-700">{currentPhaseData?.shortName}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-slate-400">Active SOPs:</span>
+                          <span className="font-semibold text-[#8AFD81]">{allSubSOPs.filter(s => s.status === 'in-progress').length}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-slate-400">Pending:</span>
+                          <span className="font-semibold text-slate-500">{allSubSOPs.filter(s => s.status === 'not-started').length}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm">
+                        <span className="text-slate-400">Master SOP • Lifecycle Governance</span>
+                        <span className="px-2 py-1 bg-[#8AFD81]/20 text-[#8AFD81] text-xs font-bold rounded">LIVE</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                {/* END UNIFIED SUB-SOPS BOX */}
               </motion.div>
             )}
           </AnimatePresence>

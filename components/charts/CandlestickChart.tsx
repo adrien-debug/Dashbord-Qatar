@@ -21,41 +21,41 @@ interface CandlestickChartProps {
   theme?: 'light' | 'dark';
 }
 
-// Palette LUCID - Moderne, Vive et Professionnelle
+// Palette HEARST QATAR - Unifiée avec le thème principal
 const THEMES = {
   dark: {
-    background: '#0f172a',      // Deep navy
-    cardBg: '#1e293b',          // Slate dark
+    background: '#0f172a',
+    cardBg: '#1e293b',
     chartBg: '#1e293b',
-    bullish: '#22C55E',         // Lucid Green - vif et clair
-    bullishGlow: '#22C55E40',
-    bearish: '#F43F5E',         // Lucid Rose - moderne
-    bearishGlow: '#F43F5E40',
-    grid: '#334155',            // Slate grid
-    gridLight: '#475569',       // Slate light
-    text: '#94a3b8',            // Slate text
-    textBright: '#f1f5f9',      // Bright white
-    ma7: '#F97316',             // Lucid Orange - court terme
-    ma20: '#0EA5E9',            // Lucid Sky Blue - moyen terme
-    ma50: '#A855F7',            // Lucid Purple - long terme
-    breakeven: '#14B8A6',       // Lucid Teal
+    bullish: '#8AFD81',           // Hearst Green
+    bullishGlow: '#8AFD8140',
+    bearish: '#64748b',           // Slate Gray
+    bearishGlow: '#64748b40',
+    grid: '#334155',
+    gridLight: '#475569',
+    text: '#94a3b8',
+    textBright: '#f1f5f9',
+    ma7: '#94a3b8',               // Slate light
+    ma20: '#64748b',              // Slate medium
+    ma50: '#475569',              // Slate dark
+    breakeven: '#64748b',         // Slate
   },
   light: {
     background: '#f8fafc',
     cardBg: '#ffffff',
-    chartBg: '#f8fafc',
-    bullish: '#22C55E',         // Lucid Green
-    bullishGlow: '#22C55E40',
-    bearish: '#F43F5E',         // Lucid Rose
-    bearishGlow: '#F43F5E40',
+    chartBg: '#ffffff',
+    bullish: '#8AFD81',           // Hearst Green
+    bullishGlow: '#8AFD8140',
+    bearish: '#cbd5e1',           // Slate light
+    bearishGlow: '#cbd5e140',
     grid: '#e2e8f0',
     gridLight: '#cbd5e1',
     text: '#64748b',
     textBright: '#1e293b',
-    ma7: '#F97316',             // Lucid Orange
-    ma20: '#0EA5E9',            // Lucid Sky Blue
-    ma50: '#A855F7',            // Lucid Purple
-    breakeven: '#14B8A6',       // Lucid Teal
+    ma7: '#94a3b8',               // Slate light
+    ma20: '#64748b',              // Slate medium
+    ma50: '#475569',              // Slate dark
+    breakeven: '#64748b',         // Slate
   },
 };
 

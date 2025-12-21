@@ -427,6 +427,7 @@ function FeaturedCard({ model, onOpen }: { model: UnifiedModel; onOpen: () => vo
           modelType={model.primitiveType}
           color={model.primitiveColor}
           variant={model.primitiveVariant}
+          thumbnail={model.thumbnail}
           hovered={hovered}
           className="w-full h-full"
         />

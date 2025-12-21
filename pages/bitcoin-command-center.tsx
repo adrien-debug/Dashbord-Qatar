@@ -1,7 +1,7 @@
 /**
- * Bitcoin Command Center - 5 Professional Layouts
+ * Bitcoin Command Center - Terminal Bloomberg Unifié
  * Hearst Qatar - Strategic Bitcoin Reserve Monitoring
- * Style cohérent avec le dashboard principal
+ * Une seule grande boîte intégrant tous les éléments
  */
 
 import Head from 'next/head';
@@ -9,13 +9,15 @@ import Link from 'next/link';
 import { CandlestickChart, AccumulationChart, PortfolioChart } from '../components/charts';
 import { 
   ArrowLeft, 
-  BarChart3, 
-  TrendingUp,
   Wallet,
-  LineChart,
-  LayoutGrid,
-  Layers,
+  TrendingUp,
+  DollarSign,
+  Target,
+  Zap,
+  BarChart2,
   Activity,
+  ChevronUp,
+  ChevronDown,
 } from 'lucide-react';
 
 // ============================================================================
@@ -80,604 +82,385 @@ const portfolioData = [
   { date: 'Déc', value: 22000000, invested: 12000000 },
 ];
 
-// ============================================================================
-// LAYOUT 1 : Classique (3 colonnes égales)
-// ============================================================================
-const Layout1 = () => (
-  <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300">
-    {/* Header */}
-    <div className="bg-slate-800 px-6 py-4 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="px-3 py-1.5 bg-slate-600/50 rounded-full border border-slate-500/50">
-          <span className="text-slate-300 text-xs font-bold">LAYOUT 1</span>
-        </div>
-        <div>
-          <h2 className="text-lg font-bold text-white">Classique - 3 Colonnes Égales</h2>
-          <p className="text-xs text-slate-400">BTC Reserve | Price Action | Portfolio USD</p>
-        </div>
-      </div>
-    </div>
-    
-    {/* Body - 3 equal columns */}
-    <div className="bg-white p-6">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Accumulation Chart */}
-        <div>
-          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">BTC Reserve</h3>
-          <AccumulationChart 
-            data={accumulationData}
-            height={320}
-            showBars={true}
-            showMA={true}
-            maPeriods={[3, 6]}
-            targetValue={300}
-            unit="BTC"
-            theme="light"
-          />
-        </div>
-
-        {/* Candlestick Chart */}
-        <div>
-          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Price Action</h3>
-          <CandlestickChart 
-            data={candlestickData}
-            height={320}
-            showVolume={true}
-            showMA={true}
-            maPeriods={[7, 20]}
-            breakevenPrice={38500}
-            unit="$"
-            theme="light"
-          />
-        </div>
-
-        {/* Portfolio Chart */}
-        <div>
-          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Portfolio USD</h3>
-          <PortfolioChart 
-            data={portfolioData}
-            height={320}
-            showBollinger={true}
-            showROI={true}
-            showInvested={true}
-            bollingerPeriod={5}
-            unit="$"
-            theme="light"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-);
+// Mini sparkline data
+const btcSparkline = [125, 138, 146, 158, 166, 172, 180, 189, 195, 206, 212, 221];
+const usdSparkline = [5.2, 5.8, 6.5, 7.2, 7.8, 8.2, 9.1, 10.5, 11.2, 13.8, 16.2, 22];
 
 // ============================================================================
-// LAYOUT 2 : Focus Centre (graphique principal large)
+// MINI SPARKLINE COMPONENT
 // ============================================================================
-const Layout2 = () => (
-  <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300">
-    {/* Header */}
-    <div className="bg-slate-800 px-6 py-4 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="px-3 py-1.5 bg-slate-600/50 rounded-full border border-slate-500/50">
-          <span className="text-slate-300 text-xs font-bold">LAYOUT 2</span>
-        </div>
-        <div>
-          <h2 className="text-lg font-bold text-white">Focus Centre - Prix Principal</h2>
-          <p className="text-xs text-slate-400">Price Action au centre (60%), panneaux latéraux (20% chacun)</p>
-        </div>
-      </div>
-    </div>
-    
-    {/* Body - Focus center */}
-    <div className="bg-white p-6">
-      <div className="grid grid-cols-12 gap-6">
-        {/* Left - Accumulation (smaller) */}
-        <div className="col-span-12 lg:col-span-2">
-          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">BTC Reserve</h3>
-          <AccumulationChart 
-            data={accumulationData}
-            height={400}
-            showBars={false}
-            showMA={true}
-            maPeriods={[3]}
-            targetValue={300}
-            unit="BTC"
-            theme="light"
-          />
-        </div>
+const MiniSparkline = ({ data, color, height = 30 }: { data: number[], color: string, height?: number }) => {
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+  
+  const points = data.map((v, i) => {
+    const x = (i / (data.length - 1)) * 100;
+    const y = height - ((v - min) / range) * (height - 4);
+    return `${x},${y}`;
+  }).join(' ');
 
-        {/* Center - Candlestick (large) */}
-        <div className="col-span-12 lg:col-span-8">
-          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Price Action</h3>
-          <CandlestickChart 
-            data={candlestickData}
-            height={400}
-            showVolume={true}
-            showMA={true}
-            maPeriods={[7, 20]}
-            breakevenPrice={38500}
-            unit="$"
-            theme="light"
-          />
-        </div>
-
-        {/* Right - Portfolio (smaller) */}
-        <div className="col-span-12 lg:col-span-2">
-          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Portfolio USD</h3>
-          <PortfolioChart 
-            data={portfolioData}
-            height={400}
-            showBollinger={false}
-            showROI={false}
-            showInvested={true}
-            unit="$"
-            theme="light"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-);
+  return (
+    <svg className="w-full" height={height} viewBox={`0 0 100 ${height}`} preserveAspectRatio="none">
+      <defs>
+        <linearGradient id={`spark-${color}`} x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor={color} stopOpacity="0.3" />
+          <stop offset="100%" stopColor={color} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <polygon
+        points={`0,${height} ${points} 100,${height}`}
+        fill={`url(#spark-${color})`}
+      />
+      <polyline
+        points={points}
+        fill="none"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
 
 // ============================================================================
-// LAYOUT 3 : Stack Vertical (2 lignes)
-// ============================================================================
-const Layout3 = () => (
-  <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300">
-    {/* Header */}
-    <div className="bg-slate-800 px-6 py-4 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="px-3 py-1.5 bg-slate-600/50 rounded-full border border-slate-500/50">
-          <span className="text-slate-300 text-xs font-bold">LAYOUT 3</span>
-        </div>
-        <div>
-          <h2 className="text-lg font-bold text-white">Stack Vertical - 2 Lignes</h2>
-          <p className="text-xs text-slate-400">Price Action en haut, BTC & Portfolio en bas</p>
-        </div>
-      </div>
-    </div>
-    
-    {/* Body - Stacked */}
-    <div className="bg-white p-6 space-y-6">
-      {/* Top - Full width Candlestick */}
-      <div>
-        <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Price Action</h3>
-        <CandlestickChart 
-          data={candlestickData}
-          height={350}
-          showVolume={true}
-          showMA={true}
-          maPeriods={[7, 20]}
-          breakevenPrice={38500}
-          unit="$"
-          theme="light"
-        />
-      </div>
-
-      {/* Bottom - Two charts side by side */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div>
-          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">BTC Reserve</h3>
-          <AccumulationChart 
-            data={accumulationData}
-            height={280}
-            showBars={true}
-            showMA={true}
-            maPeriods={[3, 6]}
-            targetValue={300}
-            unit="BTC"
-            theme="light"
-          />
-        </div>
-        <div>
-          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Portfolio USD</h3>
-          <PortfolioChart 
-            data={portfolioData}
-            height={280}
-            showBollinger={true}
-            showROI={true}
-            showInvested={true}
-            bollingerPeriod={5}
-            unit="$"
-            theme="light"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-// ============================================================================
-// LAYOUT 4 : Dashboard (grille asymétrique)
-// ============================================================================
-const Layout4 = () => (
-  <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300">
-    {/* Header */}
-    <div className="bg-slate-800 px-6 py-4 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="px-3 py-1.5 bg-slate-600/50 rounded-full border border-slate-500/50">
-          <span className="text-slate-300 text-xs font-bold">LAYOUT 4</span>
-        </div>
-        <div>
-          <h2 className="text-lg font-bold text-white">Dashboard - Grille Asymétrique</h2>
-          <p className="text-xs text-slate-400">Candlestick + Portfolio à gauche, BTC Reserve + Stats à droite</p>
-        </div>
-      </div>
-    </div>
-    
-    {/* Body - Asymmetric grid */}
-    <div className="bg-white p-6">
-      <div className="grid grid-cols-12 gap-6">
-        {/* Left side - 8 cols */}
-        <div className="col-span-12 lg:col-span-8 space-y-6">
-          <div>
-            <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Price Action</h3>
-            <CandlestickChart 
-              data={candlestickData}
-              height={280}
-              showVolume={true}
-              showMA={true}
-              maPeriods={[7, 20]}
-              breakevenPrice={38500}
-              unit="$"
-              theme="light"
-            />
-          </div>
-          <div>
-            <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Portfolio USD</h3>
-            <PortfolioChart 
-              data={portfolioData}
-              height={250}
-              showBollinger={true}
-              showROI={true}
-              showInvested={true}
-              bollingerPeriod={5}
-              unit="$"
-              theme="light"
-            />
-          </div>
-        </div>
-
-        {/* Right side - 4 cols */}
-        <div className="col-span-12 lg:col-span-4 space-y-6">
-          <div>
-            <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">BTC Reserve</h3>
-            <AccumulationChart 
-              data={accumulationData}
-              height={280}
-              showBars={true}
-              showMA={true}
-              maPeriods={[3, 6]}
-              targetValue={300}
-              unit="BTC"
-              theme="light"
-            />
-          </div>
-          
-          {/* Stats Panel */}
-          <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
-            <h3 className="text-sm font-bold text-slate-700 mb-4 uppercase tracking-wider">Statistiques Clés</h3>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-slate-600">Total BTC</span>
-                <span className="text-lg font-bold text-[#8AFD81]">220.5 BTC</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-slate-600">Portfolio Value</span>
-                <span className="text-lg font-bold text-slate-900">$22M</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-slate-600">ROI Global</span>
-                <span className="text-lg font-bold text-[#8AFD81]">+83.3%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-slate-600">Avg Cost Basis</span>
-                <span className="text-lg font-bold text-slate-900">$42,850</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-slate-600">Current Price</span>
-                <span className="text-lg font-bold text-slate-900">$49,800</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-slate-600">Unrealized P&L</span>
-                <span className="text-lg font-bold text-[#8AFD81]">+$10M</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-// ============================================================================
-// LAYOUT 5 : Terminal Pro (sidebar + main) - RECOMMANDÉ
-// ============================================================================
-const Layout5 = () => (
-  <div className="rounded-2xl overflow-hidden border-2 border-[#8AFD81]/50 hover:shadow-xl hover:shadow-[#8AFD81]/10 transition-all duration-300">
-    {/* Header */}
-    <div className="bg-slate-800 px-6 py-4 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="px-3 py-1.5 bg-[#8AFD81]/20 rounded-full border border-[#8AFD81]/40 flex items-center gap-2">
-          <span className="text-[#8AFD81] text-xs font-bold">LAYOUT 5</span>
-          <span className="text-[8px] bg-[#8AFD81] text-slate-900 px-1.5 py-0.5 rounded font-bold">RECOMMANDÉ</span>
-        </div>
-        <div>
-          <h2 className="text-lg font-bold text-white">Terminal Pro - Bloomberg Style</h2>
-          <p className="text-xs text-slate-400">Stats sidebar + Candlestick main + Portfolio bottom</p>
-        </div>
-      </div>
-    </div>
-    
-    {/* Body - Terminal layout */}
-    <div className="bg-white p-6">
-      <div className="grid grid-cols-12 gap-6">
-        {/* Left sidebar - Stats + Mini charts */}
-        <div className="col-span-12 lg:col-span-3 space-y-4">
-          {/* Quick Stats */}
-          <div className="bg-slate-800 rounded-xl p-4">
-            <h3 className="text-xs font-bold text-[#8AFD81] mb-3 uppercase tracking-wider">Quick Stats</h3>
-            <div className="space-y-3">
-              <div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">BTC Holdings</span>
-                  <span className="font-bold text-white">220.5</span>
-                </div>
-                <div className="mt-1 h-1 bg-slate-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-[#8AFD81] rounded-full" style={{ width: '73%' }} />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">Portfolio</span>
-                  <span className="font-bold text-white">$22M</span>
-                </div>
-                <div className="mt-1 h-1 bg-slate-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-slate-400 rounded-full" style={{ width: '88%' }} />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">ROI</span>
-                  <span className="font-bold text-[#8AFD81]">+83.3%</span>
-                </div>
-                <div className="mt-1 h-1 bg-slate-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-[#8AFD81] rounded-full" style={{ width: '83%' }} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* BTC Reserve Chart */}
-          <div>
-            <h3 className="text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">BTC Accumulation</h3>
-            <AccumulationChart 
-              data={accumulationData}
-              height={200}
-              showBars={false}
-              showMA={true}
-              maPeriods={[3]}
-              targetValue={300}
-              unit="BTC"
-              theme="light"
-            />
-          </div>
-
-          {/* Portfolio Mini Chart */}
-          <div>
-            <h3 className="text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Portfolio Growth</h3>
-            <PortfolioChart 
-              data={portfolioData}
-              height={180}
-              showBollinger={false}
-              showROI={false}
-              showInvested={true}
-              unit="$"
-              theme="light"
-            />
-          </div>
-        </div>
-
-        {/* Main area - Candlestick + Full Portfolio */}
-        <div className="col-span-12 lg:col-span-9 space-y-4">
-          {/* Main Candlestick */}
-          <div>
-            <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Bitcoin Price Action</h3>
-            <CandlestickChart 
-              data={candlestickData}
-              height={380}
-              showVolume={true}
-              showMA={true}
-              maPeriods={[7, 20]}
-              breakevenPrice={38500}
-              unit="$"
-              theme="light"
-            />
-          </div>
-
-          {/* Bottom Portfolio */}
-          <div>
-            <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Portfolio Performance</h3>
-            <PortfolioChart 
-              data={portfolioData}
-              height={280}
-              showBollinger={true}
-              showROI={true}
-              showInvested={true}
-              bollingerPeriod={5}
-              unit="$"
-              theme="light"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-// ============================================================================
-// MAIN PAGE
+// MAIN PAGE - UNIFIED COMMAND CENTER
 // ============================================================================
 export default function BitcoinCommandCenter() {
+  const currentPrice = 49800;
+  const priceChange = +18.6;
+  const totalBTC = 220.5;
+  const targetBTC = 300;
+  const portfolioValue = 22000000;
+  const invested = 12000000;
+  const roi = ((portfolioValue - invested) / invested) * 100;
+  const pnl = portfolioValue - invested;
+
   return (
     <>
       <Head>
         <title>Bitcoin Command Center - Hearst Qatar</title>
       </Head>
 
-      <div className="min-h-screen bg-slate-50 bg-grid-slate-100 p-6 lg:p-8">
-        <div className="max-w-[1600px] mx-auto">
+      <div className="min-h-screen bg-slate-100 p-4 lg:p-6">
+        <div className="max-w-[1800px] mx-auto">
           
-          {/* BENTO GRID CONTAINER */}
-          <div className="grid grid-cols-12 gap-4">
+          {/* Back Link */}
+          <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-[#8AFD81] transition-colors mb-4">
+            <ArrowLeft className="w-4 h-4" />
+            <span className="text-sm font-medium">Dashboard</span>
+          </Link>
+
+          {/* ================================================================ */}
+          {/* UNIFIED COMMAND CENTER BOX */}
+          {/* ================================================================ */}
+          <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-xl shadow-slate-200/50">
             
-            {/* 1. HERO HEADER - Full Width */}
-            <div className="col-span-12 relative h-[200px] rounded-2xl overflow-hidden bg-slate-900 animate-fade-in-up">
-              {/* Background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900" />
-              <div className="absolute inset-0 bg-[url('/Image%2012-12-2025%20a%CC%80%206.58%E2%80%AFPM.JPG')] bg-cover opacity-20" style={{ backgroundPosition: '30% center' }} />
-
-              {/* Content */}
-              <div className="absolute inset-0 z-20">
-                {/* Top Left - Badges */}
-                <div className="absolute top-6 left-8 lg:left-10 flex items-center gap-3">
-                  <span className="px-3 py-1.5 bg-[#8AFD81] text-slate-900 rounded-full text-[10px] font-bold uppercase tracking-widest">
-                    Command Center
-                  </span>
-                  <span className="px-3 py-1.5 bg-white/10 text-white/90 rounded-full text-[10px] font-medium backdrop-blur-md border border-white/10 uppercase tracking-widest">
-                    5 Layouts Pro
-                  </span>
+            {/* ============================================================ */}
+            {/* HEADER - Dark */}
+            {/* ============================================================ */}
+            <div className="bg-slate-800 px-6 py-5">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                
+                {/* Left - Logo + Title */}
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-gradient-to-br from-[#8AFD81] via-[#4ade80] to-[#22c55e] rounded-xl shadow-lg shadow-[#8AFD81]/30">
+                    <Wallet className="w-7 h-7 text-slate-900" />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl font-bold text-white tracking-tight">
+                      Bitcoin Command Center
+                    </h1>
+                    <p className="text-sm text-slate-400">
+                      Strategic Reserve • Price Action • Portfolio Performance
+                    </p>
+                  </div>
                 </div>
 
-                {/* Bottom Left - Title */}
-                <div className="absolute bottom-6 left-8 lg:left-10">
-                  <h1 className="text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
-                    Bitcoin <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">Command Center</span>
-                  </h1>
+                {/* Center - Time Filters */}
+                <div className="flex items-center gap-1 bg-slate-700/50 rounded-xl p-1">
+                  <button className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-colors rounded-lg">
+                    Day
+                  </button>
+                  <button className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-colors rounded-lg">
+                    Week
+                  </button>
+                  <button className="px-4 py-2 text-xs font-bold uppercase tracking-wider bg-[#8AFD81] text-slate-900 rounded-lg">
+                    Month
+                  </button>
+                  <button className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-colors rounded-lg">
+                    Year
+                  </button>
+                  <button className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-colors rounded-lg">
+                    All
+                  </button>
                 </div>
 
-                {/* Bottom Right - Back Link */}
-                <div className="absolute bottom-6 right-8 lg:right-10">
-                  <Link 
-                    href="/" 
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-all duration-300 border border-slate-600"
-                  >
-                    <ArrowLeft className="w-4 h-4" />
-                    <span className="text-sm font-medium">Dashboard</span>
-                  </Link>
+                {/* Right - KPI Badges */}
+                <div className="flex items-center gap-3">
+                  {/* Price Badge */}
+                  <div className="flex items-center gap-2 px-4 py-2.5 bg-slate-700/50 rounded-xl border border-slate-600">
+                    <BarChart2 className="w-4 h-4 text-slate-400" />
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-slate-400">BTC Price</p>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-lg font-bold text-white">${currentPrice.toLocaleString('en-US')}</span>
+                        <span className="text-xs font-bold text-[#8AFD81] flex items-center">
+                          <ChevronUp className="w-3 h-3" />
+                          {priceChange}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* BTC Badge */}
+                  <div className="flex items-center gap-2 px-4 py-2.5 bg-[#8AFD81]/10 rounded-xl border border-[#8AFD81]/30">
+                    <Wallet className="w-4 h-4 text-[#8AFD81]" />
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-[#8AFD81]/70">Reserve</p>
+                      <span className="text-lg font-bold text-[#8AFD81]">{totalBTC} BTC</span>
+                    </div>
+                  </div>
+
+                  {/* ROI Badge */}
+                  <div className="flex items-center gap-2 px-4 py-2.5 bg-[#8AFD81]/10 rounded-xl border border-[#8AFD81]/30">
+                    <TrendingUp className="w-4 h-4 text-[#8AFD81]" />
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-[#8AFD81]/70">ROI</p>
+                      <span className="text-lg font-bold text-[#8AFD81]">+{roi.toFixed(1)}%</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Section Title - Layout 1 */}
-            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
-              <LayoutGrid className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
-              <h2 className="text-2xl font-bold text-slate-900">Layout 1 - Classique</h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
-            </div>
+            {/* ============================================================ */}
+            {/* BODY - White */}
+            {/* ============================================================ */}
+            <div className="bg-white">
+              <div className="flex">
+                
+                {/* ======================================================== */}
+                {/* SIDEBAR - Stats Panel */}
+                {/* ======================================================== */}
+                <div className="w-72 border-r border-slate-100 p-4 space-y-4 bg-slate-50/50">
+                  
+                  {/* BTC Reserve Stats */}
+                  <div className="bg-white rounded-xl p-3.5 border border-slate-100 shadow-sm">
+                    <div className="flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-100">
+                      <div className="p-2 bg-[#8AFD81]/20 rounded-lg">
+                        <Wallet className="w-4 h-4 text-[#8AFD81]" />
+                      </div>
+                      <span className="text-sm font-bold uppercase tracking-wide text-slate-700">BTC Reserve</span>
+                    </div>
+                    
+                    <div className="flex items-baseline gap-1.5 mb-2">
+                      <span className="text-2xl font-bold text-slate-900 tabular-nums">{totalBTC}</span>
+                      <span className="text-base text-slate-400">BTC</span>
+                    </div>
+                    
+                    <MiniSparkline data={btcSparkline} color="#8AFD81" height={35} />
+                    
+                    <div className="mt-2.5 space-y-1.5">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-500">Monthly Add</span>
+                        <span className="font-semibold text-[#8AFD81]">+8.1 BTC</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-500">Avg Cost</span>
+                        <span className="font-semibold text-slate-700">$42,850</span>
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-sm mb-1">
+                          <span className="text-slate-500">Target</span>
+                          <span className="font-semibold text-slate-700">{targetBTC} BTC</span>
+                        </div>
+                        <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-gradient-to-r from-[#8AFD81] to-[#4ade80] rounded-full transition-all duration-500"
+                            style={{ width: `${(totalBTC / targetBTC) * 100}%` }}
+                          />
+                        </div>
+                        <p className="text-[10px] text-slate-400 mt-1 text-right">{((totalBTC / targetBTC) * 100).toFixed(1)}% complete</p>
+                      </div>
+                    </div>
+                  </div>
 
-            {/* Layout 1 */}
-            <div className="col-span-12 animate-fade-in-up delay-100">
-              <Layout1 />
-            </div>
+                  {/* Portfolio USD Stats */}
+                  <div className="bg-white rounded-xl p-3.5 border border-slate-100 shadow-sm">
+                    <div className="flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-100">
+                      <div className="p-2 bg-slate-600/10 rounded-lg">
+                        <DollarSign className="w-4 h-4 text-slate-600" />
+                      </div>
+                      <span className="text-sm font-bold uppercase tracking-wide text-slate-700">Portfolio USD</span>
+                    </div>
+                    
+                    <div className="flex items-baseline gap-1.5 mb-2">
+                      <span className="text-2xl font-bold text-slate-900 tabular-nums">${(portfolioValue / 1000000).toFixed(0)}</span>
+                      <span className="text-base text-slate-400">M</span>
+                    </div>
+                    
+                    <MiniSparkline data={usdSparkline} color="#64748b" height={35} />
+                    
+                    <div className="mt-2.5 space-y-1.5">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-500">Invested</span>
+                        <span className="font-semibold text-slate-700">${(invested / 1000000).toFixed(0)}M</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-500">P&L</span>
+                        <span className="font-semibold text-[#8AFD81]">+${(pnl / 1000000).toFixed(0)}M</span>
+                      </div>
+                    </div>
+                  </div>
 
-            {/* Section Title - Layout 2 */}
-            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
-              <BarChart3 className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
-              <h2 className="text-2xl font-bold text-slate-900">Layout 2 - Focus Centre</h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
-            </div>
+                  {/* Performance Indicators */}
+                  <div className="bg-white rounded-xl p-3.5 border border-slate-100 shadow-sm">
+                    <div className="flex items-center gap-2.5 mb-4 pb-2 border-b border-slate-100">
+                      <div className="p-2 bg-[#8AFD81]/20 rounded-lg">
+                        <Zap className="w-4 h-4 text-[#8AFD81]" />
+                      </div>
+                      <span className="text-sm font-bold uppercase tracking-wide text-slate-700">Performance</span>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="bg-slate-50 rounded-lg p-2.5 text-center">
+                        <p className="text-[10px] uppercase tracking-wider text-slate-400 mb-1">ROI</p>
+                        <p className="text-xl font-bold text-[#8AFD81]">+{roi.toFixed(1)}%</p>
+                      </div>
+                      <div className="bg-slate-50 rounded-lg p-2.5 text-center">
+                        <p className="text-[10px] uppercase tracking-wider text-slate-400 mb-1">Sharpe</p>
+                        <p className="text-xl font-bold text-slate-700">2.4</p>
+                      </div>
+                      <div className="bg-slate-50 rounded-lg p-2.5 text-center">
+                        <p className="text-[10px] uppercase tracking-wider text-slate-400 mb-1">Volatility</p>
+                        <p className="text-xl font-bold text-slate-700">12.5%</p>
+                      </div>
+                      <div className="bg-slate-50 rounded-lg p-2.5 text-center">
+                        <p className="text-[10px] uppercase tracking-wider text-slate-400 mb-1">Max DD</p>
+                        <p className="text-xl font-bold text-slate-500">-8.2%</p>
+                      </div>
+                    </div>
+                  </div>
 
-            {/* Layout 2 */}
-            <div className="col-span-12 animate-fade-in-up delay-100">
-              <Layout2 />
-            </div>
-
-            {/* Section Title - Layout 3 */}
-            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
-              <Layers className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
-              <h2 className="text-2xl font-bold text-slate-900">Layout 3 - Stack Vertical</h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
-            </div>
-
-            {/* Layout 3 */}
-            <div className="col-span-12 animate-fade-in-up delay-100">
-              <Layout3 />
-            </div>
-
-            {/* Section Title - Layout 4 */}
-            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
-              <LineChart className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
-              <h2 className="text-2xl font-bold text-slate-900">Layout 4 - Dashboard</h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
-            </div>
-
-            {/* Layout 4 */}
-            <div className="col-span-12 animate-fade-in-up delay-100">
-              <Layout4 />
-            </div>
-
-            {/* Section Title - Layout 5 */}
-            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
-              <Activity className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
-              <h2 className="text-2xl font-bold text-slate-900">Layout 5 - Terminal Pro</h2>
-              <span className="px-2 py-1 bg-[#8AFD81]/20 text-[#8AFD81] text-xs font-bold rounded-full border border-[#8AFD81]/30">RECOMMANDÉ</span>
-              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
-            </div>
-
-            {/* Layout 5 */}
-            <div className="col-span-12 animate-fade-in-up delay-100">
-              <Layout5 />
-            </div>
-
-            {/* Summary Stats */}
-            <div className="col-span-12 grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#8AFD81]/20 flex items-center justify-center">
-                    <Wallet className="w-5 h-5 text-[#8AFD81]" />
+                  {/* Quick Actions */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 px-4 py-3 bg-[#8AFD81]/10 rounded-xl border border-[#8AFD81]/30 cursor-pointer hover:bg-[#8AFD81]/20 transition-colors">
+                      <Target className="w-4 h-4 text-[#8AFD81]" />
+                      <span className="text-sm font-medium text-[#8AFD81]">Breakeven: $38,500</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-3 bg-slate-100 rounded-xl cursor-pointer hover:bg-slate-200 transition-colors">
+                      <Activity className="w-4 h-4 text-slate-600" />
+                      <span className="text-sm font-medium text-slate-600">Streak: 8 months profit</span>
+                    </div>
                   </div>
                 </div>
-                <p className="text-sm text-slate-500 mb-1">Total BTC</p>
-                <p className="text-2xl font-bold text-slate-900">220.5 BTC</p>
-                <p className="text-xs mt-1 text-[#8AFD81] font-medium">73% of target</p>
+
+                {/* ======================================================== */}
+                {/* MAIN CONTENT AREA */}
+                {/* ======================================================== */}
+                <div className="flex-1 p-6 space-y-6">
+                  
+                  {/* Main Candlestick Chart */}
+                  <div className="bg-white rounded-xl border border-slate-100 p-5 shadow-sm">
+                    <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-100">
+                      <h2 className="text-base font-bold uppercase tracking-wide text-slate-800">Bitcoin Price Action</h2>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs text-slate-400">Last updated: Just now</span>
+                        <div className="w-2 h-2 rounded-full bg-[#8AFD81] animate-pulse"></div>
+                      </div>
+                    </div>
+                    <CandlestickChart 
+                      data={candlestickData}
+                      height={340}
+                      showVolume={true}
+                      showMA={true}
+                      maPeriods={[7, 20]}
+                      breakevenPrice={38500}
+                      unit="$"
+                      theme="light"
+                    />
+                  </div>
+
+                  {/* Bottom Row - Two Charts */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    {/* Accumulation Chart */}
+                    <div className="bg-white rounded-xl border border-slate-100 p-5 shadow-sm">
+                      <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-100">
+                        <h2 className="text-base font-bold uppercase tracking-wide text-slate-800">BTC Accumulation</h2>
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#8AFD81]/10 rounded-lg border border-[#8AFD81]/20">
+                          <ChevronUp className="w-3.5 h-3.5 text-[#8AFD81]" />
+                          <span className="text-xs font-bold text-[#8AFD81]">+75.7% YTD</span>
+                        </div>
+                      </div>
+                      <AccumulationChart 
+                        data={accumulationData}
+                        height={300}
+                        showBars={true}
+                        showMA={true}
+                        maPeriods={[3, 6]}
+                        targetValue={300}
+                        unit="BTC"
+                        theme="light"
+                      />
+                    </div>
+
+                    {/* Portfolio Chart */}
+                    <div className="bg-white rounded-xl border border-slate-100 p-5 shadow-sm">
+                      <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-100">
+                        <h2 className="text-base font-bold uppercase tracking-wide text-slate-800">Portfolio Performance</h2>
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#8AFD81]/10 rounded-lg border border-[#8AFD81]/20">
+                          <ChevronUp className="w-3.5 h-3.5 text-[#8AFD81]" />
+                          <span className="text-xs font-bold text-[#8AFD81]">+{roi.toFixed(1)}% ROI</span>
+                        </div>
+                      </div>
+                      <PortfolioChart 
+                        data={portfolioData}
+                        height={300}
+                        showBollinger={true}
+                        showROI={true}
+                        showInvested={true}
+                        bollingerPeriod={5}
+                        unit="$"
+                        theme="light"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-              
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-600/20 flex items-center justify-center">
-                    <BarChart3 className="w-5 h-5 text-slate-600" />
+            </div>
+
+            {/* ============================================================ */}
+            {/* FOOTER - Summary Bar */}
+            {/* ============================================================ */}
+            <div className="bg-slate-50 border-t border-slate-100 px-6 py-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-6 text-sm">
+                  <div className="flex items-center gap-2">
+                    <span className="text-slate-400">24h Volume:</span>
+                    <span className="font-semibold text-slate-700">$55K</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-slate-400">24h High:</span>
+                    <span className="font-semibold text-[#8AFD81]">$52,000</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-slate-400">24h Low:</span>
+                    <span className="font-semibold text-slate-500">$49,500</span>
                   </div>
                 </div>
-                <p className="text-sm text-slate-500 mb-1">Portfolio Value</p>
-                <p className="text-2xl font-bold text-slate-900">$22M</p>
-                <p className="text-xs mt-1 text-slate-500">Current valuation</p>
-              </div>
-              
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#8AFD81]/20 flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-[#8AFD81]" />
-                  </div>
+                <div className="flex items-center gap-4 text-sm">
+                  <span className="text-slate-400">Hearst Qatar • Strategic Reserve</span>
+                  <span className="px-2 py-1 bg-[#8AFD81]/20 text-[#8AFD81] text-xs font-bold rounded">LIVE</span>
                 </div>
-                <p className="text-sm text-slate-500 mb-1">ROI Global</p>
-                <p className="text-2xl font-bold text-slate-900">+83.3%</p>
-                <p className="text-xs mt-1 text-[#8AFD81] font-medium">Since inception</p>
-              </div>
-              
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-600/20 flex items-center justify-center">
-                    <Activity className="w-5 h-5 text-slate-600" />
-                  </div>
-                </div>
-                <p className="text-sm text-slate-500 mb-1">Unrealized P&L</p>
-                <p className="text-2xl font-bold text-slate-900">+$10M</p>
-                <p className="text-xs mt-1 text-slate-500">vs invested</p>
               </div>
             </div>
 
           </div>
+          {/* END UNIFIED COMMAND CENTER BOX */}
+
         </div>
       </div>
     </>
