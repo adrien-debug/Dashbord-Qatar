@@ -18,3 +18,7 @@ export { FunnelChart } from './FunnelChart';
 export { CandlestickChart } from './CandlestickChart';
 export { BoxPlotChart } from './BoxPlotChart';
 export { GaugeClusterChart } from './GaugeClusterChart';
+
+// Bitcoin Command Center Charts (Phase 3)
+export { AccumulationChart } from './AccumulationChart';
+export { PortfolioChart } from './PortfolioChart';

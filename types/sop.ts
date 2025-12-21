@@ -120,19 +120,20 @@ export const DIMENSION_NAMES: Record<DimensionId, string> = {
   engineering: 'Engineering',
 };
 
+// Color Palette: Grey, Green (#8AFD81), White only - No blue, orange, red
 export const STATUS_COLORS: Record<Status, string> = {
-  'not-started': '#94A3B8',
-  'in-progress': '#64748B',
-  'completed': '#8AFD81',
-  'blocked': '#475569',
-  'at-risk': '#64748B',
+  'not-started': '#94A3B8',  // Light grey
+  'in-progress': '#64748B',  // Medium grey
+  'completed': '#8AFD81',    // Hearst green
+  'blocked': '#475569',      // Dark grey
+  'at-risk': '#64748B',      // Medium grey
 };
 
 export const GATE_STATUS_COLORS: Record<GateStatus, string> = {
-  'passed': '#8AFD81',
-  'pending': '#94A3B8',
-  'blocked': '#475569',
-  'not-applicable': '#CBD5E1',
+  'passed': '#8AFD81',       // Hearst green
+  'pending': '#94A3B8',      // Light grey
+  'blocked': '#475569',      // Dark grey
+  'not-applicable': '#CBD5E1', // Very light grey
 };
 
 // Icon names for Lucide React - use these with the Lucide component

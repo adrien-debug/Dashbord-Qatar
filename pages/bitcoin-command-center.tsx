@@ -1,23 +1,26 @@
+/**
+ * Bitcoin Command Center - 5 Professional Layouts
+ * Hearst Qatar - Strategic Bitcoin Reserve Monitoring
+ * Style cohérent avec le dashboard principal
+ */
+
 import Head from 'next/head';
 import Link from 'next/link';
-import { CandlestickChart } from '../components/charts';
-import { formatNumber } from '../utils/formatNumber';
-import {
-  mockStrategicReserve,
-} from '../lib/mock-mining';
-import {
-  Wallet,
-  DollarSign,
-  Activity,
-  BarChart3,
-  ChevronUp,
-  ArrowLeft,
+import { CandlestickChart, AccumulationChart, PortfolioChart } from '../components/charts';
+import { 
+  ArrowLeft, 
+  BarChart3, 
   TrendingUp,
-  Target,
-  Zap,
+  Wallet,
+  LineChart,
+  LayoutGrid,
+  Layers,
+  Activity,
 } from 'lucide-react';
 
-// Data for Bitcoin Price Action OHLC Chart
+// ============================================================================
+// DATA - Bitcoin Price Action OHLC
+// ============================================================================
 const candlestickData = [
   { date: '1 Jan', open: 42000, high: 43250, low: 41500, close: 42800, volume: 45000 },
   { date: '2 Jan', open: 42800, high: 44100, low: 42200, close: 43500, volume: 52000 },
@@ -41,548 +44,274 @@ const candlestickData = [
   { date: '20 Avr', open: 50800, high: 52000, low: 49500, close: 49800, volume: 55000 },
 ];
 
-// Mini data for sparklines
-const sparklineData = [42, 44, 43, 46, 48, 47, 50, 52, 51, 54, 56, 58, 57, 60, 62];
-const portfolioSparkline = [18, 19, 18.5, 20, 21, 20.5, 22, 23, 22.5, 24, 25, 26, 25.5, 27, 28];
+// ============================================================================
+// DATA - BTC Accumulation
+// ============================================================================
+const accumulationData = [
+  { date: 'Jan', accumulated: 125.5, added: 12.5 },
+  { date: 'Fév', accumulated: 138.2, added: 12.7 },
+  { date: 'Mar', accumulated: 145.8, added: 7.6 },
+  { date: 'Avr', accumulated: 158.3, added: 12.5 },
+  { date: 'Mai', accumulated: 165.9, added: 7.6 },
+  { date: 'Juin', accumulated: 172.4, added: 6.5 },
+  { date: 'Juil', accumulated: 180.1, added: 7.7 },
+  { date: 'Août', accumulated: 188.5, added: 8.4 },
+  { date: 'Sept', accumulated: 195.2, added: 6.7 },
+  { date: 'Oct', accumulated: 205.8, added: 10.6 },
+  { date: 'Nov', accumulated: 212.4, added: 6.6 },
+  { date: 'Déc', accumulated: 220.5, added: 8.1 },
+];
 
 // ============================================================================
-// PROPOSITION 1 : Sparklines Élégantes
+// DATA - Portfolio Value
 // ============================================================================
-const Proposition1 = () => (
-  <div className="rounded-2xl overflow-hidden border border-slate-200 mb-8">
+const portfolioData = [
+  { date: 'Jan', value: 5200000, invested: 4800000 },
+  { date: 'Fév', value: 5800000, invested: 5100000 },
+  { date: 'Mar', value: 6500000, invested: 5400000 },
+  { date: 'Avr', value: 7200000, invested: 5800000 },
+  { date: 'Mai', value: 7800000, invested: 6200000 },
+  { date: 'Juin', value: 8200000, invested: 6600000 },
+  { date: 'Juil', value: 9100000, invested: 7000000 },
+  { date: 'Août', value: 10500000, invested: 7500000 },
+  { date: 'Sept', value: 11200000, invested: 8000000 },
+  { date: 'Oct', value: 13800000, invested: 8500000 },
+  { date: 'Nov', value: 16200000, invested: 9000000 },
+  { date: 'Déc', value: 22000000, invested: 12000000 },
+];
+
+// ============================================================================
+// LAYOUT 1 : Classique (3 colonnes égales)
+// ============================================================================
+const Layout1 = () => (
+  <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300">
     {/* Header */}
-    <div className="bg-slate-900 px-6 py-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="px-3 py-1 bg-amber-500/20 rounded-full border border-amber-500/40">
-            <span className="text-amber-400 text-xs font-bold">PROPOSITION 1</span>
-          </div>
-          <div>
-            <h2 className="text-lg font-bold text-white">Sparklines Élégantes</h2>
-            <p className="text-xs text-slate-400">Style minimaliste, épuré, professionnel</p>
-          </div>
+    <div className="bg-slate-800 px-6 py-4 flex items-center justify-between">
+      <div className="flex items-center gap-4">
+        <div className="px-3 py-1.5 bg-slate-600/50 rounded-full border border-slate-500/50">
+          <span className="text-slate-300 text-xs font-bold">LAYOUT 1</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-2 bg-[#8AFD81]/15 rounded-xl border border-[#8AFD81]/30">
-            <TrendingUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-bold text-[#8AFD81]">+38.5%</span>
-          </div>
+        <div>
+          <h2 className="text-lg font-bold text-white">Classique - 3 Colonnes Égales</h2>
+          <p className="text-xs text-slate-400">BTC Reserve | Price Action | Portfolio USD</p>
         </div>
       </div>
     </div>
     
-    {/* Body */}
+    {/* Body - 3 equal columns */}
     <div className="bg-white p-6">
-      <div className="grid grid-cols-12 gap-6">
-        
-        {/* LEFT - Sparkline BTC */}
-        <div className="col-span-12 lg:col-span-3">
-          <div className="flex items-center gap-2 mb-3">
-            <Wallet className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] to-[#4ade80]">
-              BTC Reserve
-            </span>
-          </div>
-          
-          <div className="flex items-end gap-2 mb-1">
-            <span className="text-3xl font-bold text-slate-900 tabular-nums">{mockStrategicReserve.totalBTC}</span>
-            <span className="text-lg text-slate-400 pb-0.5">BTC</span>
-          </div>
-          <div className="flex items-center gap-1 mb-4">
-            <ChevronUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-semibold text-[#8AFD81]">+4.2%</span>
-          </div>
-
-          {/* Sparkline SVG */}
-          <div className="h-16 mb-4">
-            <svg className="w-full h-full" viewBox="0 0 200 60" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="spark1" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#8AFD81" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="#8AFD81" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path 
-                d={`M0,${60 - sparklineData[0]} ${sparklineData.map((v, i) => `L${i * (200 / (sparklineData.length - 1))},${60 - v}`).join(' ')} L200,60 L0,60 Z`}
-                fill="url(#spark1)"
-              />
-              <path 
-                d={`M0,${60 - sparklineData[0]} ${sparklineData.map((v, i) => `L${i * (200 / (sparklineData.length - 1))},${60 - v}`).join(' ')}`}
-                fill="none"
-                stroke="#8AFD81"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-              <circle cx="200" cy={60 - sparklineData[sparklineData.length - 1]} r="4" fill="#8AFD81" />
-            </svg>
-          </div>
-
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between"><span className="text-slate-500">Monthly</span><span className="font-semibold text-slate-900">+{mockStrategicReserve.monthlyAccumulation} BTC</span></div>
-            <div className="flex justify-between"><span className="text-slate-500">Target</span><span className="font-semibold text-slate-900">{formatNumber(mockStrategicReserve.projectedYearEnd)} BTC</span></div>
-            <div className="flex justify-between"><span className="text-slate-500">Avg Cost</span><span className="font-semibold text-slate-900">$42,850</span></div>
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Accumulation Chart */}
+        <div>
+          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">BTC Reserve</h3>
+          <AccumulationChart 
+            data={accumulationData}
+            height={320}
+            showBars={true}
+            showMA={true}
+            maPeriods={[3, 6]}
+            targetValue={300}
+            unit="BTC"
+            theme="light"
+          />
         </div>
 
-        {/* CENTER - Chart */}
-        <div className="col-span-12 lg:col-span-6">
-          <div className="rounded-xl border border-slate-200 overflow-hidden">
-            <CandlestickChart 
-              data={candlestickData}
-              height={280}
-              showVolume={true}
-              showMA={true}
-              maPeriods={[7, 20]}
-              breakevenPrice={38500}
-              unit="$"
-              theme="light"
-            />
-          </div>
+        {/* Candlestick Chart */}
+        <div>
+          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Price Action</h3>
+          <CandlestickChart 
+            data={candlestickData}
+            height={320}
+            showVolume={true}
+            showMA={true}
+            maPeriods={[7, 20]}
+            breakevenPrice={38500}
+            unit="$"
+            theme="light"
+          />
         </div>
 
-        {/* RIGHT - Sparkline Portfolio */}
-        <div className="col-span-12 lg:col-span-3">
-          <div className="flex items-center gap-2 mb-3">
-            <DollarSign className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] to-[#4ade80]">
-              Portfolio USD
-            </span>
-          </div>
-          
-          <div className="flex items-end gap-2 mb-1">
-            <span className="text-3xl font-bold text-slate-900 tabular-nums">${(mockStrategicReserve.currentValue / 1000000).toFixed(0)}</span>
-            <span className="text-lg text-slate-400 pb-0.5">M</span>
-          </div>
-          <div className="flex items-center gap-1 mb-4">
-            <ChevronUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-semibold text-[#8AFD81]">+4.2%</span>
-          </div>
-
-          {/* Sparkline SVG with dots */}
-          <div className="h-16 mb-4">
-            <svg className="w-full h-full" viewBox="0 0 200 60" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="spark1b" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#8AFD81" stopOpacity="0.25" />
-                  <stop offset="100%" stopColor="#8AFD81" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path 
-                d={`M0,${60 - portfolioSparkline[0] * 2} ${portfolioSparkline.map((v, i) => `L${i * (200 / (portfolioSparkline.length - 1))},${60 - v * 2}`).join(' ')} L200,60 L0,60 Z`}
-                fill="url(#spark1b)"
-              />
-              <path 
-                d={`M0,${60 - portfolioSparkline[0] * 2} ${portfolioSparkline.map((v, i) => `L${i * (200 / (portfolioSparkline.length - 1))},${60 - v * 2}`).join(' ')}`}
-                fill="none"
-                stroke="#8AFD81"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-              {portfolioSparkline.filter((_, i) => i % 3 === 0).map((v, i) => (
-                <circle key={i} cx={i * 3 * (200 / (portfolioSparkline.length - 1))} cy={60 - v * 2} r="3" fill="#8AFD81" />
-              ))}
-            </svg>
-          </div>
-
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between"><span className="text-slate-500">ROI</span><span className="font-semibold text-[#8AFD81]">+85%</span></div>
-            <div className="flex justify-between"><span className="text-slate-500">Growth</span><span className="font-semibold text-[#8AFD81]">+72%</span></div>
-            <div className="flex justify-between"><span className="text-slate-500">Target</span><span className="font-semibold text-slate-900">68%</span></div>
-          </div>
+        {/* Portfolio Chart */}
+        <div>
+          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Portfolio USD</h3>
+          <PortfolioChart 
+            data={portfolioData}
+            height={320}
+            showBollinger={true}
+            showROI={true}
+            showInvested={true}
+            bollingerPeriod={5}
+            unit="$"
+            theme="light"
+          />
         </div>
-
       </div>
     </div>
   </div>
 );
 
 // ============================================================================
-// PROPOSITION 2 : Bar Charts Animés
+// LAYOUT 2 : Focus Centre (graphique principal large)
 // ============================================================================
-const Proposition2 = () => (
-  <div className="rounded-2xl overflow-hidden border border-slate-200 mb-8">
+const Layout2 = () => (
+  <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300">
     {/* Header */}
-    <div className="bg-slate-900 px-6 py-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="px-3 py-1 bg-blue-500/20 rounded-full border border-blue-500/40">
-            <span className="text-blue-400 text-xs font-bold">PROPOSITION 2</span>
-          </div>
-          <div>
-            <h2 className="text-lg font-bold text-white">Bar Charts Animés</h2>
-            <p className="text-xs text-slate-400">Style dynamique, interactif avec hover effects</p>
-          </div>
+    <div className="bg-slate-800 px-6 py-4 flex items-center justify-between">
+      <div className="flex items-center gap-4">
+        <div className="px-3 py-1.5 bg-slate-600/50 rounded-full border border-slate-500/50">
+          <span className="text-slate-300 text-xs font-bold">LAYOUT 2</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-2 bg-[#8AFD81]/15 rounded-xl border border-[#8AFD81]/30">
-            <TrendingUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-bold text-[#8AFD81]">+38.5%</span>
-          </div>
+        <div>
+          <h2 className="text-lg font-bold text-white">Focus Centre - Prix Principal</h2>
+          <p className="text-xs text-slate-400">Price Action au centre (60%), panneaux latéraux (20% chacun)</p>
         </div>
       </div>
     </div>
     
-    {/* Body */}
+    {/* Body - Focus center */}
     <div className="bg-white p-6">
       <div className="grid grid-cols-12 gap-6">
-        
-        {/* LEFT - Vertical Bar Chart */}
-        <div className="col-span-12 lg:col-span-3">
-          <div className="flex items-center gap-2 mb-3">
-            <Wallet className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] to-[#4ade80]">
-              BTC Reserve
-            </span>
-          </div>
-          
-          <div className="flex items-end gap-2 mb-1">
-            <span className="text-3xl font-bold text-slate-900 tabular-nums">{mockStrategicReserve.totalBTC}</span>
-            <span className="text-lg text-slate-400 pb-0.5">BTC</span>
-          </div>
-          <div className="flex items-center gap-1 mb-4">
-            <ChevronUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-semibold text-[#8AFD81]">+4.2%</span>
-          </div>
-
-          {/* Animated Bar Chart */}
-          <div className="flex items-end gap-1 h-20 mb-4 p-2 bg-slate-50 rounded-xl">
-            {[35, 42, 38, 55, 48, 62, 58, 75, 68, 82, 78, 90].map((h, i) => (
-              <div 
-                key={i}
-                className="flex-1 bg-gradient-to-t from-[#8AFD81]/40 to-[#8AFD81] rounded-t hover:from-[#4ade80] hover:to-[#22c55e] transition-all duration-300 cursor-pointer hover:scale-y-110 origin-bottom"
-                style={{ height: `${h}%` }}
-                title={`Month ${i + 1}: ${(h / 10).toFixed(1)} BTC`}
-              />
-            ))}
-          </div>
-
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between"><span className="text-slate-500">Monthly</span><span className="font-semibold text-slate-900">+{mockStrategicReserve.monthlyAccumulation} BTC</span></div>
-            <div className="flex justify-between"><span className="text-slate-500">Target</span><span className="font-semibold text-slate-900">{formatNumber(mockStrategicReserve.projectedYearEnd)} BTC</span></div>
-            <div className="flex justify-between"><span className="text-slate-500">Avg Cost</span><span className="font-semibold text-slate-900">$42,850</span></div>
-          </div>
+        {/* Left - Accumulation (smaller) */}
+        <div className="col-span-12 lg:col-span-2">
+          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">BTC Reserve</h3>
+          <AccumulationChart 
+            data={accumulationData}
+            height={400}
+            showBars={false}
+            showMA={true}
+            maPeriods={[3]}
+            targetValue={300}
+            unit="BTC"
+            theme="light"
+          />
         </div>
 
-        {/* CENTER - Chart */}
-        <div className="col-span-12 lg:col-span-6">
-          <div className="rounded-xl border border-slate-200 overflow-hidden">
-            <CandlestickChart 
-              data={candlestickData}
-              height={280}
-              showVolume={true}
-              showMA={true}
-              maPeriods={[7, 20]}
-              breakevenPrice={38500}
-              unit="$"
-              theme="light"
-            />
-          </div>
+        {/* Center - Candlestick (large) */}
+        <div className="col-span-12 lg:col-span-8">
+          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Price Action</h3>
+          <CandlestickChart 
+            data={candlestickData}
+            height={400}
+            showVolume={true}
+            showMA={true}
+            maPeriods={[7, 20]}
+            breakevenPrice={38500}
+            unit="$"
+            theme="light"
+          />
         </div>
 
-        {/* RIGHT - Horizontal Bar Chart */}
-        <div className="col-span-12 lg:col-span-3">
-          <div className="flex items-center gap-2 mb-3">
-            <DollarSign className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] to-[#4ade80]">
-              Portfolio USD
-            </span>
-          </div>
-          
-          <div className="flex items-end gap-2 mb-1">
-            <span className="text-3xl font-bold text-slate-900 tabular-nums">${(mockStrategicReserve.currentValue / 1000000).toFixed(0)}</span>
-            <span className="text-lg text-slate-400 pb-0.5">M</span>
-          </div>
-          <div className="flex items-center gap-1 mb-4">
-            <ChevronUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-semibold text-[#8AFD81]">+4.2%</span>
-          </div>
-
-          {/* Horizontal Bars */}
-          <div className="space-y-3 mb-4">
-            <div>
-              <div className="flex justify-between text-xs mb-1">
-                <span className="text-slate-500">ROI</span>
-                <span className="font-bold text-[#8AFD81]">+85%</span>
-              </div>
-              <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-[#8AFD81] to-[#4ade80] rounded-full transition-all duration-500 hover:brightness-110" style={{ width: '85%' }} />
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between text-xs mb-1">
-                <span className="text-slate-500">Growth</span>
-                <span className="font-bold text-[#8AFD81]">+72%</span>
-              </div>
-              <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-[#8AFD81] to-[#4ade80] rounded-full transition-all duration-500 hover:brightness-110" style={{ width: '72%' }} />
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between text-xs mb-1">
-                <span className="text-slate-500">Target Progress</span>
-                <span className="font-bold text-slate-700">68%</span>
-              </div>
-              <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-slate-400 to-slate-500 rounded-full transition-all duration-500 hover:brightness-110" style={{ width: '68%' }} />
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-3 border-t border-slate-100">
-            <div className="flex justify-between text-sm"><span className="text-slate-500">Valuation</span><span className="font-semibold text-slate-900">$22M</span></div>
-          </div>
+        {/* Right - Portfolio (smaller) */}
+        <div className="col-span-12 lg:col-span-2">
+          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Portfolio USD</h3>
+          <PortfolioChart 
+            data={portfolioData}
+            height={400}
+            showBollinger={false}
+            showROI={false}
+            showInvested={true}
+            unit="$"
+            theme="light"
+          />
         </div>
-
       </div>
     </div>
   </div>
 );
 
 // ============================================================================
-// PROPOSITION 3 : Gauges Circulaires
+// LAYOUT 3 : Stack Vertical (2 lignes)
 // ============================================================================
-const Proposition3 = () => (
-  <div className="rounded-2xl overflow-hidden border border-slate-200 mb-8">
+const Layout3 = () => (
+  <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300">
     {/* Header */}
-    <div className="bg-slate-900 px-6 py-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="px-3 py-1 bg-purple-500/20 rounded-full border border-purple-500/40">
-            <span className="text-purple-400 text-xs font-bold">PROPOSITION 3</span>
-          </div>
-          <div>
-            <h2 className="text-lg font-bold text-white">Gauges Circulaires</h2>
-            <p className="text-xs text-slate-400">Style dashboard exécutif, KPI-focused</p>
-          </div>
+    <div className="bg-slate-800 px-6 py-4 flex items-center justify-between">
+      <div className="flex items-center gap-4">
+        <div className="px-3 py-1.5 bg-slate-600/50 rounded-full border border-slate-500/50">
+          <span className="text-slate-300 text-xs font-bold">LAYOUT 3</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-2 bg-[#8AFD81]/15 rounded-xl border border-[#8AFD81]/30">
-            <TrendingUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-bold text-[#8AFD81]">+38.5%</span>
-          </div>
+        <div>
+          <h2 className="text-lg font-bold text-white">Stack Vertical - 2 Lignes</h2>
+          <p className="text-xs text-slate-400">Price Action en haut, BTC & Portfolio en bas</p>
         </div>
       </div>
     </div>
     
-    {/* Body */}
-    <div className="bg-white p-6">
-      <div className="grid grid-cols-12 gap-6">
-        
-        {/* LEFT - Gauge BTC */}
-        <div className="col-span-12 lg:col-span-3">
-          <div className="flex items-center gap-2 mb-3">
-            <Target className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] to-[#4ade80]">
-              BTC Progress
-            </span>
-          </div>
+    {/* Body - Stacked */}
+    <div className="bg-white p-6 space-y-6">
+      {/* Top - Full width Candlestick */}
+      <div>
+        <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Price Action</h3>
+        <CandlestickChart 
+          data={candlestickData}
+          height={350}
+          showVolume={true}
+          showMA={true}
+          maPeriods={[7, 20]}
+          breakevenPrice={38500}
+          unit="$"
+          theme="light"
+        />
+      </div>
 
-          {/* Circular Gauge */}
-          <div className="relative w-32 h-32 mx-auto mb-4">
-            <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="40" fill="none" stroke="#e2e8f0" strokeWidth="8" />
-              <circle 
-                cx="50" cy="50" r="40" 
-                fill="none" 
-                stroke="url(#gaugeGradient1)" 
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeDasharray={`${(mockStrategicReserve.totalBTC / mockStrategicReserve.projectedYearEnd) * 251.2} 251.2`}
-              />
-              <defs>
-                <linearGradient id="gaugeGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#8AFD81" />
-                  <stop offset="100%" stopColor="#22c55e" />
-                </linearGradient>
-              </defs>
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-2xl font-bold text-slate-900">{mockStrategicReserve.totalBTC}</span>
-              <span className="text-xs text-slate-500">of {mockStrategicReserve.projectedYearEnd}</span>
-            </div>
-          </div>
-
-          <div className="text-center mb-4">
-            <span className="text-sm text-slate-500">Year-End Target Progress</span>
-            <div className="text-lg font-bold text-[#8AFD81]">{((mockStrategicReserve.totalBTC / mockStrategicReserve.projectedYearEnd) * 100).toFixed(1)}%</div>
-          </div>
-
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between"><span className="text-slate-500">Monthly</span><span className="font-semibold text-slate-900">+{mockStrategicReserve.monthlyAccumulation} BTC</span></div>
-            <div className="flex justify-between"><span className="text-slate-500">Avg Cost</span><span className="font-semibold text-slate-900">$42,850</span></div>
-          </div>
+      {/* Bottom - Two charts side by side */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">BTC Reserve</h3>
+          <AccumulationChart 
+            data={accumulationData}
+            height={280}
+            showBars={true}
+            showMA={true}
+            maPeriods={[3, 6]}
+            targetValue={300}
+            unit="BTC"
+            theme="light"
+          />
         </div>
-
-        {/* CENTER - Chart */}
-        <div className="col-span-12 lg:col-span-6">
-          <div className="rounded-xl border border-slate-200 overflow-hidden">
-            <CandlestickChart 
-              data={candlestickData}
-              height={280}
-              showVolume={true}
-              showMA={true}
-              maPeriods={[7, 20]}
-              breakevenPrice={38500}
-              unit="$"
-              theme="light"
-            />
-          </div>
+        <div>
+          <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Portfolio USD</h3>
+          <PortfolioChart 
+            data={portfolioData}
+            height={280}
+            showBollinger={true}
+            showROI={true}
+            showInvested={true}
+            bollingerPeriod={5}
+            unit="$"
+            theme="light"
+          />
         </div>
-
-        {/* RIGHT - Gauge ROI */}
-        <div className="col-span-12 lg:col-span-3">
-          <div className="flex items-center gap-2 mb-3">
-            <Zap className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] to-[#4ade80]">
-              ROI Performance
-            </span>
-          </div>
-
-          {/* Circular Gauge ROI */}
-          <div className="relative w-32 h-32 mx-auto mb-4">
-            <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="40" fill="none" stroke="#e2e8f0" strokeWidth="8" />
-              <circle 
-                cx="50" cy="50" r="40" 
-                fill="none" 
-                stroke="url(#gaugeGradient2)" 
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeDasharray={`${0.85 * 251.2} 251.2`}
-              />
-              <defs>
-                <linearGradient id="gaugeGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#8AFD81" />
-                  <stop offset="100%" stopColor="#4ade80" />
-                </linearGradient>
-              </defs>
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-2xl font-bold text-[#8AFD81]">+85%</span>
-              <span className="text-xs text-slate-500">ROI</span>
-            </div>
-          </div>
-
-          <div className="text-center mb-4">
-            <span className="text-sm text-slate-500">Portfolio Value</span>
-            <div className="text-lg font-bold text-slate-900">${(mockStrategicReserve.currentValue / 1000000).toFixed(0)}M</div>
-          </div>
-
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between"><span className="text-slate-500">Growth</span><span className="font-semibold text-[#8AFD81]">+72%</span></div>
-            <div className="flex justify-between"><span className="text-slate-500">Target</span><span className="font-semibold text-slate-900">68%</span></div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
 );
 
 // ============================================================================
-// PROPOSITION 4 : Area Charts Pro
+// LAYOUT 4 : Dashboard (grille asymétrique)
 // ============================================================================
-const Proposition4 = () => (
-  <div className="rounded-2xl overflow-hidden border border-slate-200 mb-8">
+const Layout4 = () => (
+  <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300">
     {/* Header */}
-    <div className="bg-slate-900 px-6 py-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="px-3 py-1 bg-teal-500/20 rounded-full border border-teal-500/40">
-            <span className="text-teal-400 text-xs font-bold">PROPOSITION 4</span>
-          </div>
-          <div>
-            <h2 className="text-lg font-bold text-white">Area Charts Pro</h2>
-            <p className="text-xs text-slate-400">Style analytique, data-driven avec grilles</p>
-          </div>
+    <div className="bg-slate-800 px-6 py-4 flex items-center justify-between">
+      <div className="flex items-center gap-4">
+        <div className="px-3 py-1.5 bg-slate-600/50 rounded-full border border-slate-500/50">
+          <span className="text-slate-300 text-xs font-bold">LAYOUT 4</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-2 bg-[#8AFD81]/15 rounded-xl border border-[#8AFD81]/30">
-            <TrendingUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-bold text-[#8AFD81]">+38.5%</span>
-          </div>
+        <div>
+          <h2 className="text-lg font-bold text-white">Dashboard - Grille Asymétrique</h2>
+          <p className="text-xs text-slate-400">Candlestick + Portfolio à gauche, BTC Reserve + Stats à droite</p>
         </div>
       </div>
     </div>
     
-    {/* Body */}
+    {/* Body - Asymmetric grid */}
     <div className="bg-white p-6">
       <div className="grid grid-cols-12 gap-6">
-        
-        {/* LEFT - Area Chart with Grid */}
-        <div className="col-span-12 lg:col-span-3">
-          <div className="flex items-center gap-2 mb-3">
-            <Wallet className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] to-[#4ade80]">
-              BTC Accumulation
-            </span>
-          </div>
-          
-          <div className="flex items-end gap-2 mb-1">
-            <span className="text-3xl font-bold text-slate-900 tabular-nums">{mockStrategicReserve.totalBTC}</span>
-            <span className="text-lg text-slate-400 pb-0.5">BTC</span>
-          </div>
-          <div className="flex items-center gap-1 mb-4">
-            <ChevronUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-semibold text-[#8AFD81]">+4.2%</span>
-          </div>
-
-          {/* Area Chart with Grid */}
-          <div className="h-24 mb-4 p-2 bg-slate-50 rounded-xl border border-slate-100 relative">
-            {/* Grid lines */}
-            <div className="absolute inset-2 flex flex-col justify-between pointer-events-none">
-              {[0, 1, 2, 3].map(i => (
-                <div key={i} className="border-t border-slate-200 border-dashed" />
-              ))}
-            </div>
-            <svg className="w-full h-full relative z-10" viewBox="0 0 200 80" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="area4a" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#8AFD81" stopOpacity="0.4" />
-                  <stop offset="100%" stopColor="#8AFD81" stopOpacity="0.05" />
-                </linearGradient>
-              </defs>
-              <path 
-                d="M0,70 L15,65 L30,60 L45,55 L60,58 L75,50 L90,45 L105,48 L120,40 L135,35 L150,38 L165,30 L180,25 L200,20 L200,80 L0,80 Z"
-                fill="url(#area4a)"
-              />
-              <path 
-                d="M0,70 L15,65 L30,60 L45,55 L60,58 L75,50 L90,45 L105,48 L120,40 L135,35 L150,38 L165,30 L180,25 L200,20"
-                fill="none"
-                stroke="#8AFD81"
-                strokeWidth="2"
-              />
-              {/* MA line */}
-              <path 
-                d="M0,68 L30,62 L60,55 L90,47 L120,42 L150,35 L180,28 L200,22"
-                fill="none"
-                stroke="#F97316"
-                strokeWidth="1.5"
-                strokeDasharray="4 2"
-              />
-            </svg>
-          </div>
-
-          <div className="flex items-center gap-4 text-[10px] mb-3">
-            <div className="flex items-center gap-1">
-              <div className="w-3 h-0.5 bg-[#8AFD81]" />
-              <span className="text-slate-500">Actual</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-3 h-0.5 bg-[#F97316]" style={{ borderStyle: 'dashed' }} />
-              <span className="text-slate-500">MA7</span>
-            </div>
-          </div>
-
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between"><span className="text-slate-500">Monthly</span><span className="font-semibold text-slate-900">+{mockStrategicReserve.monthlyAccumulation} BTC</span></div>
-            <div className="flex justify-between"><span className="text-slate-500">Target</span><span className="font-semibold text-slate-900">{formatNumber(mockStrategicReserve.projectedYearEnd)} BTC</span></div>
-          </div>
-        </div>
-
-        {/* CENTER - Chart */}
-        <div className="col-span-12 lg:col-span-6">
-          <div className="rounded-xl border border-slate-200 overflow-hidden">
+        {/* Left side - 8 cols */}
+        <div className="col-span-12 lg:col-span-8 space-y-6">
+          <div>
+            <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Price Action</h3>
             <CandlestickChart 
               data={candlestickData}
               height={280}
@@ -594,173 +323,169 @@ const Proposition4 = () => (
               theme="light"
             />
           </div>
+          <div>
+            <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Portfolio USD</h3>
+            <PortfolioChart 
+              data={portfolioData}
+              height={250}
+              showBollinger={true}
+              showROI={true}
+              showInvested={true}
+              bollingerPeriod={5}
+              unit="$"
+              theme="light"
+            />
+          </div>
         </div>
 
-        {/* RIGHT - Area Chart with Reference Zones */}
-        <div className="col-span-12 lg:col-span-3">
-          <div className="flex items-center gap-2 mb-3">
-            <DollarSign className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] to-[#4ade80]">
-              Portfolio Growth
-            </span>
+        {/* Right side - 4 cols */}
+        <div className="col-span-12 lg:col-span-4 space-y-6">
+          <div>
+            <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">BTC Reserve</h3>
+            <AccumulationChart 
+              data={accumulationData}
+              height={280}
+              showBars={true}
+              showMA={true}
+              maPeriods={[3, 6]}
+              targetValue={300}
+              unit="BTC"
+              theme="light"
+            />
           </div>
           
-          <div className="flex items-end gap-2 mb-1">
-            <span className="text-3xl font-bold text-slate-900 tabular-nums">${(mockStrategicReserve.currentValue / 1000000).toFixed(0)}</span>
-            <span className="text-lg text-slate-400 pb-0.5">M</span>
-          </div>
-          <div className="flex items-center gap-1 mb-4">
-            <ChevronUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-semibold text-[#8AFD81]">+4.2%</span>
-          </div>
-
-          {/* Area Chart with Reference Zone */}
-          <div className="h-24 mb-4 p-2 bg-slate-50 rounded-xl border border-slate-100 relative">
-            {/* Target zone */}
-            <div className="absolute top-2 left-2 right-2 h-6 bg-[#8AFD81]/10 border-t border-b border-[#8AFD81]/30 border-dashed" />
-            <svg className="w-full h-full relative z-10" viewBox="0 0 200 80" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="area4b" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#8AFD81" stopOpacity="0.5" />
-                  <stop offset="100%" stopColor="#8AFD81" stopOpacity="0.05" />
-                </linearGradient>
-              </defs>
-              <path 
-                d="M0,75 L20,70 L40,68 L60,60 L80,55 L100,50 L120,45 L140,40 L160,32 L180,28 L200,20 L200,80 L0,80 Z"
-                fill="url(#area4b)"
-              />
-              <path 
-                d="M0,75 L20,70 L40,68 L60,60 L80,55 L100,50 L120,45 L140,40 L160,32 L180,28 L200,20"
-                fill="none"
-                stroke="#8AFD81"
-                strokeWidth="2.5"
-              />
-            </svg>
-            <div className="absolute top-1 right-2 text-[9px] text-[#8AFD81] font-medium">Target Zone</div>
-          </div>
-
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between"><span className="text-slate-500">ROI</span><span className="font-semibold text-[#8AFD81]">+85%</span></div>
-            <div className="flex justify-between"><span className="text-slate-500">Growth</span><span className="font-semibold text-[#8AFD81]">+72%</span></div>
-            <div className="flex justify-between"><span className="text-slate-500">Target</span><span className="font-semibold text-slate-900">68%</span></div>
+          {/* Stats Panel */}
+          <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+            <h3 className="text-sm font-bold text-slate-700 mb-4 uppercase tracking-wider">Statistiques Clés</h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-slate-600">Total BTC</span>
+                <span className="text-lg font-bold text-[#8AFD81]">220.5 BTC</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-slate-600">Portfolio Value</span>
+                <span className="text-lg font-bold text-slate-900">$22M</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-slate-600">ROI Global</span>
+                <span className="text-lg font-bold text-[#8AFD81]">+83.3%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-slate-600">Avg Cost Basis</span>
+                <span className="text-lg font-bold text-slate-900">$42,850</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-slate-600">Current Price</span>
+                <span className="text-lg font-bold text-slate-900">$49,800</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-slate-600">Unrealized P&L</span>
+                <span className="text-lg font-bold text-[#8AFD81]">+$10M</span>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 );
 
 // ============================================================================
-// PROPOSITION 5 : Mixed Pro (Recommandé)
+// LAYOUT 5 : Terminal Pro (sidebar + main) - RECOMMANDÉ
 // ============================================================================
-const Proposition5 = () => (
-  <div className="rounded-2xl overflow-hidden border-2 border-[#8AFD81]/50 mb-8 shadow-lg shadow-[#8AFD81]/10">
+const Layout5 = () => (
+  <div className="rounded-2xl overflow-hidden border-2 border-[#8AFD81]/50 hover:shadow-xl hover:shadow-[#8AFD81]/10 transition-all duration-300">
     {/* Header */}
-    <div className="bg-slate-900 px-6 py-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="px-3 py-1 bg-[#8AFD81]/20 rounded-full border border-[#8AFD81]/40 flex items-center gap-2">
-            <span className="text-[#8AFD81] text-xs font-bold">PROPOSITION 5</span>
-            <span className="text-[8px] bg-[#8AFD81] text-slate-900 px-1.5 py-0.5 rounded font-bold">RECOMMANDÉ</span>
-          </div>
-          <div>
-            <h2 className="text-lg font-bold text-white">Mixed Pro - Bloomberg Style</h2>
-            <p className="text-xs text-slate-400">Trading terminal professionnel avec mini OHLC</p>
-          </div>
+    <div className="bg-slate-800 px-6 py-4 flex items-center justify-between">
+      <div className="flex items-center gap-4">
+        <div className="px-3 py-1.5 bg-[#8AFD81]/20 rounded-full border border-[#8AFD81]/40 flex items-center gap-2">
+          <span className="text-[#8AFD81] text-xs font-bold">LAYOUT 5</span>
+          <span className="text-[8px] bg-[#8AFD81] text-slate-900 px-1.5 py-0.5 rounded font-bold">RECOMMANDÉ</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-2 bg-[#8AFD81]/15 rounded-xl border border-[#8AFD81]/30">
-            <TrendingUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-bold text-[#8AFD81]">+38.5%</span>
-          </div>
+        <div>
+          <h2 className="text-lg font-bold text-white">Terminal Pro - Bloomberg Style</h2>
+          <p className="text-xs text-slate-400">Stats sidebar + Candlestick main + Portfolio bottom</p>
         </div>
       </div>
     </div>
     
-    {/* Body */}
+    {/* Body - Terminal layout */}
     <div className="bg-white p-6">
       <div className="grid grid-cols-12 gap-6">
-        
-        {/* LEFT - Mini OHLC */}
-        <div className="col-span-12 lg:col-span-3">
-          <div className="flex items-center gap-2 mb-3">
-            <BarChart3 className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] to-[#4ade80]">
-              BTC Reserve OHLC
-            </span>
-          </div>
-          
-          <div className="flex items-end gap-2 mb-1">
-            <span className="text-3xl font-bold text-slate-900 tabular-nums">{mockStrategicReserve.totalBTC}</span>
-            <span className="text-lg text-slate-400 pb-0.5">BTC</span>
-          </div>
-          <div className="flex items-center gap-1 mb-4">
-            <ChevronUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-semibold text-[#8AFD81]">+4.2%</span>
-          </div>
-
-          {/* Mini Candlestick */}
-          <div className="h-24 mb-4 p-2 bg-slate-900 rounded-xl relative">
-            <svg className="w-full h-full" viewBox="0 0 200 80" preserveAspectRatio="none">
-              {/* Grid */}
-              {[20, 40, 60].map(y => (
-                <line key={y} x1="0" y1={y} x2="200" y2={y} stroke="#334155" strokeWidth="0.5" />
-              ))}
-              {/* Mini candles */}
-              {[
-                { x: 10, o: 55, h: 50, l: 60, c: 52 },
-                { x: 25, o: 52, h: 45, l: 55, c: 48 },
-                { x: 40, o: 48, h: 42, l: 52, c: 50 },
-                { x: 55, o: 50, h: 44, l: 55, c: 45 },
-                { x: 70, o: 45, h: 38, l: 48, c: 40 },
-                { x: 85, o: 40, h: 35, l: 45, c: 42 },
-                { x: 100, o: 42, h: 36, l: 46, c: 38 },
-                { x: 115, o: 38, h: 32, l: 42, c: 34 },
-                { x: 130, o: 34, h: 28, l: 38, c: 30 },
-                { x: 145, o: 30, h: 25, l: 35, c: 32 },
-                { x: 160, o: 32, h: 26, l: 36, c: 28 },
-                { x: 175, o: 28, h: 22, l: 32, c: 24 },
-                { x: 190, o: 24, h: 18, l: 28, c: 20 },
-              ].map((c, i) => {
-                const bullish = c.c < c.o;
-                const color = bullish ? '#22C55E' : '#F43F5E';
-                return (
-                  <g key={i}>
-                    <line x1={c.x} y1={c.h} x2={c.x} y2={c.l} stroke={color} strokeWidth="1" />
-                    <rect x={c.x - 4} y={Math.min(c.o, c.c)} width="8" height={Math.abs(c.o - c.c) || 1} fill={color} />
-                  </g>
-                );
-              })}
-            </svg>
+        {/* Left sidebar - Stats + Mini charts */}
+        <div className="col-span-12 lg:col-span-3 space-y-4">
+          {/* Quick Stats */}
+          <div className="bg-slate-800 rounded-xl p-4">
+            <h3 className="text-xs font-bold text-[#8AFD81] mb-3 uppercase tracking-wider">Quick Stats</h3>
+            <div className="space-y-3">
+              <div>
+                <div className="flex justify-between text-xs">
+                  <span className="text-slate-400">BTC Holdings</span>
+                  <span className="font-bold text-white">220.5</span>
+                </div>
+                <div className="mt-1 h-1 bg-slate-700 rounded-full overflow-hidden">
+                  <div className="h-full bg-[#8AFD81] rounded-full" style={{ width: '73%' }} />
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between text-xs">
+                  <span className="text-slate-400">Portfolio</span>
+                  <span className="font-bold text-white">$22M</span>
+                </div>
+                <div className="mt-1 h-1 bg-slate-700 rounded-full overflow-hidden">
+                  <div className="h-full bg-slate-400 rounded-full" style={{ width: '88%' }} />
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between text-xs">
+                  <span className="text-slate-400">ROI</span>
+                  <span className="font-bold text-[#8AFD81]">+83.3%</span>
+                </div>
+                <div className="mt-1 h-1 bg-slate-700 rounded-full overflow-hidden">
+                  <div className="h-full bg-[#8AFD81] rounded-full" style={{ width: '83%' }} />
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <div className="bg-slate-50 rounded-lg p-2">
-              <div className="text-slate-500">Open</div>
-              <div className="font-bold text-slate-900">180.2</div>
-            </div>
-            <div className="bg-slate-50 rounded-lg p-2">
-              <div className="text-slate-500">Close</div>
-              <div className="font-bold text-[#8AFD81]">220.5</div>
-            </div>
-            <div className="bg-slate-50 rounded-lg p-2">
-              <div className="text-slate-500">High</div>
-              <div className="font-bold text-slate-900">225.8</div>
-            </div>
-            <div className="bg-slate-50 rounded-lg p-2">
-              <div className="text-slate-500">Low</div>
-              <div className="font-bold text-slate-900">175.3</div>
-            </div>
+          {/* BTC Reserve Chart */}
+          <div>
+            <h3 className="text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">BTC Accumulation</h3>
+            <AccumulationChart 
+              data={accumulationData}
+              height={200}
+              showBars={false}
+              showMA={true}
+              maPeriods={[3]}
+              targetValue={300}
+              unit="BTC"
+              theme="light"
+            />
+          </div>
+
+          {/* Portfolio Mini Chart */}
+          <div>
+            <h3 className="text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Portfolio Growth</h3>
+            <PortfolioChart 
+              data={portfolioData}
+              height={180}
+              showBollinger={false}
+              showROI={false}
+              showInvested={true}
+              unit="$"
+              theme="light"
+            />
           </div>
         </div>
 
-        {/* CENTER - Chart */}
-        <div className="col-span-12 lg:col-span-6">
-          <div className="rounded-xl border border-slate-200 overflow-hidden">
+        {/* Main area - Candlestick + Full Portfolio */}
+        <div className="col-span-12 lg:col-span-9 space-y-4">
+          {/* Main Candlestick */}
+          <div>
+            <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Bitcoin Price Action</h3>
             <CandlestickChart 
               data={candlestickData}
-              height={280}
+              height={380}
               showVolume={true}
               showMA={true}
               maPeriods={[7, 20]}
@@ -769,99 +494,22 @@ const Proposition5 = () => (
               theme="light"
             />
           </div>
-        </div>
 
-        {/* RIGHT - Bollinger Style */}
-        <div className="col-span-12 lg:col-span-3">
-          <div className="flex items-center gap-2 mb-3">
-            <Activity className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] to-[#4ade80]">
-              Portfolio Analysis
-            </span>
-          </div>
-          
-          <div className="flex items-end gap-2 mb-1">
-            <span className="text-3xl font-bold text-slate-900 tabular-nums">${(mockStrategicReserve.currentValue / 1000000).toFixed(0)}</span>
-            <span className="text-lg text-slate-400 pb-0.5">M</span>
-          </div>
-          <div className="flex items-center gap-1 mb-4">
-            <ChevronUp className="w-4 h-4 text-[#8AFD81]" />
-            <span className="text-sm font-semibold text-[#8AFD81]">+4.2%</span>
-          </div>
-
-          {/* Bollinger Style Chart */}
-          <div className="h-24 mb-4 p-2 bg-slate-900 rounded-xl relative">
-            <svg className="w-full h-full" viewBox="0 0 200 80" preserveAspectRatio="none">
-              {/* Bollinger bands */}
-              <path 
-                d="M0,25 Q50,20 100,22 T200,18"
-                fill="none"
-                stroke="#8AFD81"
-                strokeWidth="1"
-                strokeOpacity="0.3"
-              />
-              <path 
-                d="M0,55 Q50,60 100,58 T200,62"
-                fill="none"
-                stroke="#8AFD81"
-                strokeWidth="1"
-                strokeOpacity="0.3"
-              />
-              {/* Fill between */}
-              <path 
-                d="M0,25 Q50,20 100,22 T200,18 L200,62 Q150,58 100,58 T0,55 Z"
-                fill="#8AFD81"
-                fillOpacity="0.1"
-              />
-              {/* Center line */}
-              <path 
-                d="M0,40 L20,42 L40,38 L60,35 L80,38 L100,32 L120,35 L140,30 L160,28 L180,25 L200,22"
-                fill="none"
-                stroke="#8AFD81"
-                strokeWidth="2"
-              />
-              {/* SMA */}
-              <path 
-                d="M0,42 L40,40 L80,36 L120,33 L160,28 L200,24"
-                fill="none"
-                stroke="#F97316"
-                strokeWidth="1.5"
-                strokeDasharray="3 2"
-              />
-            </svg>
-          </div>
-
-          <div className="flex items-center gap-3 text-[10px] mb-3">
-            <div className="flex items-center gap-1">
-              <div className="w-3 h-0.5 bg-[#8AFD81]" />
-              <span className="text-slate-500">Price</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-3 h-2 bg-[#8AFD81]/20 border border-[#8AFD81]/30" />
-              <span className="text-slate-500">Band</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-3 h-0.5 bg-[#F97316]" />
-              <span className="text-slate-500">SMA</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-1 text-center">
-            <div className="bg-[#8AFD81]/10 rounded-lg p-2">
-              <div className="text-[10px] text-slate-500">ROI</div>
-              <div className="text-sm font-bold text-[#8AFD81]">+85%</div>
-            </div>
-            <div className="bg-[#8AFD81]/10 rounded-lg p-2">
-              <div className="text-[10px] text-slate-500">Vol</div>
-              <div className="text-sm font-bold text-slate-700">12.3%</div>
-            </div>
-            <div className="bg-[#8AFD81]/10 rounded-lg p-2">
-              <div className="text-[10px] text-slate-500">Sharpe</div>
-              <div className="text-sm font-bold text-slate-700">2.4</div>
-            </div>
+          {/* Bottom Portfolio */}
+          <div>
+            <h3 className="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Portfolio Performance</h3>
+            <PortfolioChart 
+              data={portfolioData}
+              height={280}
+              showBollinger={true}
+              showROI={true}
+              showInvested={true}
+              bollingerPeriod={5}
+              unit="$"
+              theme="light"
+            />
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -874,31 +522,162 @@ export default function BitcoinCommandCenter() {
   return (
     <>
       <Head>
-        <title>Bitcoin Command Center - 5 Propositions</title>
+        <title>Bitcoin Command Center - Hearst Qatar</title>
       </Head>
 
-      <div className="min-h-screen bg-slate-100 p-6 lg:p-8">
-        <div className="max-w-[1800px] mx-auto">
+      <div className="min-h-screen bg-slate-50 bg-grid-slate-100 p-6 lg:p-8">
+        <div className="max-w-[1600px] mx-auto">
           
-          {/* Back Link */}
-          <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-[#8AFD81] transition-colors mb-6">
-            <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm font-medium">Back to Dashboard</span>
-          </Link>
+          {/* BENTO GRID CONTAINER */}
+          <div className="grid grid-cols-12 gap-4">
+            
+            {/* 1. HERO HEADER - Full Width */}
+            <div className="col-span-12 relative h-[200px] rounded-2xl overflow-hidden bg-slate-900 animate-fade-in-up">
+              {/* Background gradient */}
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900" />
+              <div className="absolute inset-0 bg-[url('/Image%2012-12-2025%20a%CC%80%206.58%E2%80%AFPM.JPG')] bg-cover opacity-20" style={{ backgroundPosition: '30% center' }} />
 
-          {/* Page Title */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">Bitcoin Command Center</h1>
-            <p className="text-slate-600">5 propositions de design - Choisissez votre style préféré</p>
+              {/* Content */}
+              <div className="absolute inset-0 z-20">
+                {/* Top Left - Badges */}
+                <div className="absolute top-6 left-8 lg:left-10 flex items-center gap-3">
+                  <span className="px-3 py-1.5 bg-[#8AFD81] text-slate-900 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                    Command Center
+                  </span>
+                  <span className="px-3 py-1.5 bg-white/10 text-white/90 rounded-full text-[10px] font-medium backdrop-blur-md border border-white/10 uppercase tracking-widest">
+                    5 Layouts Pro
+                  </span>
+                </div>
+
+                {/* Bottom Left - Title */}
+                <div className="absolute bottom-6 left-8 lg:left-10">
+                  <h1 className="text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+                    Bitcoin <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">Command Center</span>
+                  </h1>
+                </div>
+
+                {/* Bottom Right - Back Link */}
+                <div className="absolute bottom-6 right-8 lg:right-10">
+                  <Link 
+                    href="/" 
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-all duration-300 border border-slate-600"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    <span className="text-sm font-medium">Dashboard</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Section Title - Layout 1 */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <LayoutGrid className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-2xl font-bold text-slate-900">Layout 1 - Classique</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
+            </div>
+
+            {/* Layout 1 */}
+            <div className="col-span-12 animate-fade-in-up delay-100">
+              <Layout1 />
+            </div>
+
+            {/* Section Title - Layout 2 */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <BarChart3 className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-2xl font-bold text-slate-900">Layout 2 - Focus Centre</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
+            </div>
+
+            {/* Layout 2 */}
+            <div className="col-span-12 animate-fade-in-up delay-100">
+              <Layout2 />
+            </div>
+
+            {/* Section Title - Layout 3 */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <Layers className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-2xl font-bold text-slate-900">Layout 3 - Stack Vertical</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
+            </div>
+
+            {/* Layout 3 */}
+            <div className="col-span-12 animate-fade-in-up delay-100">
+              <Layout3 />
+            </div>
+
+            {/* Section Title - Layout 4 */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <LineChart className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-2xl font-bold text-slate-900">Layout 4 - Dashboard</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
+            </div>
+
+            {/* Layout 4 */}
+            <div className="col-span-12 animate-fade-in-up delay-100">
+              <Layout4 />
+            </div>
+
+            {/* Section Title - Layout 5 */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <Activity className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-2xl font-bold text-slate-900">Layout 5 - Terminal Pro</h2>
+              <span className="px-2 py-1 bg-[#8AFD81]/20 text-[#8AFD81] text-xs font-bold rounded-full border border-[#8AFD81]/30">RECOMMANDÉ</span>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
+            </div>
+
+            {/* Layout 5 */}
+            <div className="col-span-12 animate-fade-in-up delay-100">
+              <Layout5 />
+            </div>
+
+            {/* Summary Stats */}
+            <div className="col-span-12 grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#8AFD81]/20 flex items-center justify-center">
+                    <Wallet className="w-5 h-5 text-[#8AFD81]" />
+                  </div>
+                </div>
+                <p className="text-sm text-slate-500 mb-1">Total BTC</p>
+                <p className="text-2xl font-bold text-slate-900">220.5 BTC</p>
+                <p className="text-xs mt-1 text-[#8AFD81] font-medium">73% of target</p>
+              </div>
+              
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-slate-600/20 flex items-center justify-center">
+                    <BarChart3 className="w-5 h-5 text-slate-600" />
+                  </div>
+                </div>
+                <p className="text-sm text-slate-500 mb-1">Portfolio Value</p>
+                <p className="text-2xl font-bold text-slate-900">$22M</p>
+                <p className="text-xs mt-1 text-slate-500">Current valuation</p>
+              </div>
+              
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#8AFD81]/20 flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-[#8AFD81]" />
+                  </div>
+                </div>
+                <p className="text-sm text-slate-500 mb-1">ROI Global</p>
+                <p className="text-2xl font-bold text-slate-900">+83.3%</p>
+                <p className="text-xs mt-1 text-[#8AFD81] font-medium">Since inception</p>
+              </div>
+              
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-slate-600/20 flex items-center justify-center">
+                    <Activity className="w-5 h-5 text-slate-600" />
+                  </div>
+                </div>
+                <p className="text-sm text-slate-500 mb-1">Unrealized P&L</p>
+                <p className="text-2xl font-bold text-slate-900">+$10M</p>
+                <p className="text-xs mt-1 text-slate-500">vs invested</p>
+              </div>
+            </div>
+
           </div>
-
-          {/* All 5 Propositions */}
-          <Proposition1 />
-          <Proposition2 />
-          <Proposition3 />
-          <Proposition4 />
-          <Proposition5 />
-
         </div>
       </div>
     </>

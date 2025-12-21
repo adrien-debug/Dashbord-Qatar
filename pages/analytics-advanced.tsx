@@ -1,6 +1,7 @@
 /**
  * Analytics Advanced Page - Data Science Visualizations
  * Hearst Qatar - Phase 2 Charts
+ * Style cohérent avec le dashboard principal
  */
 
 import Head from 'next/head';
@@ -24,6 +25,8 @@ import {
   Thermometer,
   Cpu,
   Server,
+  Target,
+  PieChart,
 } from 'lucide-react';
 
 // Mock data for WaterfallChart - Revenue Analysis
@@ -56,12 +59,12 @@ const treemapData = {
     {
       name: 'OPEX Annuel',
       value: 13000000,
-      color: '#3b82f6',
+      color: '#64748B',
       children: [
-        { name: 'Électricité', value: 8500000, color: '#60a5fa' },
-        { name: 'Maintenance', value: 2000000, color: '#3b82f6' },
-        { name: 'Personnel', value: 1500000, color: '#2563eb' },
-        { name: 'Autres', value: 1000000, color: '#1d4ed8' },
+        { name: 'Électricité', value: 8500000, color: '#94A3B8' },
+        { name: 'Maintenance', value: 2000000, color: '#64748B' },
+        { name: 'Personnel', value: 1500000, color: '#475569' },
+        { name: 'Autres', value: 1000000, color: '#334155' },
       ],
     },
   ],
@@ -142,7 +145,7 @@ const boxPlotData = [
     max: 44,
     mean: 37.2,
     outliers: [48],
-    color: '#3b82f6',
+    color: '#64748B',
   },
   {
     label: 'Container B1',
@@ -152,7 +155,7 @@ const boxPlotData = [
     q3: 37,
     max: 41,
     mean: 34.1,
-    color: '#f59e0b',
+    color: '#94A3B8',
   },
   {
     label: 'Container B2',
@@ -163,7 +166,7 @@ const boxPlotData = [
     max: 43,
     mean: 36.0,
     outliers: [25, 47, 49],
-    color: '#06b6d4',
+    color: '#475569',
   },
   {
     label: 'Container C1',
@@ -173,7 +176,7 @@ const boxPlotData = [
     q3: 36,
     max: 40,
     mean: 33.2,
-    color: '#8b5cf6',
+    color: '#8AFD81',
   },
   {
     label: 'Container C2',
@@ -184,7 +187,7 @@ const boxPlotData = [
     max: 45,
     mean: 38.1,
     outliers: [50],
-    color: '#ec4899',
+    color: '#64748B',
   },
 ];
 
@@ -264,230 +267,329 @@ export default function AnalyticsAdvanced() {
         <title>Analytics Avancées | Hearst Qatar</title>
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 p-8">
-        {/* Header */}
-        <div className="mb-10">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-xl shadow-lg shadow-emerald-500/20">
-              <BarChart3 className="w-6 h-6 text-white" />
-            </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 bg-clip-text text-transparent">
-              Analytics Avancées
-            </h1>
-          </div>
-          <p className="text-slate-500 ml-14">
-            Visualisations Data Science - Phase 2
-          </p>
-        </div>
-
-        {/* Charts Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+      <div className="min-h-screen bg-slate-50 bg-grid-slate-100 p-6 lg:p-8">
+        <div className="max-w-[1600px] mx-auto">
           
-          {/* WaterfallChart - Revenue Analysis */}
-          <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg">
-                <TrendingDown className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-slate-900">Analyse des Revenus</h2>
-                <p className="text-sm text-slate-500">Décomposition Waterfall - Du brut au net</p>
-              </div>
-            </div>
-            <WaterfallChart 
-              data={waterfallData}
-              height={380}
-              showConnectors={true}
-              showLabels={true}
-              showValues={true}
-              unit="$"
-            />
-          </div>
+          {/* BENTO GRID CONTAINER */}
+          <div className="grid grid-cols-12 gap-4">
+            
+            {/* 1. HERO HEADER - Full Width */}
+            <div className="col-span-12 relative h-[200px] rounded-2xl overflow-hidden bg-slate-900 animate-fade-in-up">
+              {/* Background gradient */}
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900" />
+              <div className="absolute inset-0 bg-[url('/Image%2012-12-2025%20a%CC%80%206.58%E2%80%AFPM.JPG')] bg-cover opacity-20" style={{ backgroundPosition: '30% center' }} />
 
-          {/* TreemapChart - Budget Distribution */}
-          <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-lg">
-                <Layers className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-slate-900">Distribution Budget</h2>
-                <p className="text-sm text-slate-500">CAPEX vs OPEX - Treemap Hiérarchique</p>
-              </div>
-            </div>
-            <TreemapChart 
-              data={treemapData}
-              height={400}
-              showLabels={true}
-              showValues={true}
-              unit="$"
-            />
-          </div>
-
-          {/* FunnelChart - Ramp-Up Pipeline */}
-          <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg">
-                <GitBranch className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-slate-900">Pipeline Ramp-Up</h2>
-                <p className="text-sm text-slate-500">Progression 10 → 100 MW</p>
-              </div>
-            </div>
-            <FunnelChart 
-              data={funnelData}
-              height={450}
-              showLabels={true}
-              showValues={true}
-              showPercentage={true}
-              unit="MW"
-            />
-          </div>
-
-          {/* GaugeClusterChart - Real-time KPIs */}
-          <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-lg">
-                <Activity className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-slate-900">KPIs Temps Réel</h2>
-                <p className="text-sm text-slate-500">Cluster de Jauges - Monitoring Live</p>
-              </div>
-            </div>
-            <GaugeClusterChart 
-              data={gaugeData}
-              layout="grid"
-              size="md"
-              showLabels={true}
-              showValues={true}
-              showTarget={true}
-              animated={true}
-            />
-          </div>
-
-          {/* CandlestickChart - BTC Price - Optimisé Data Science */}
-          <div className="bg-slate-900 rounded-2xl shadow-xl shadow-slate-900/30 border border-slate-800 p-6 xl:col-span-2">
-            {/* Header Hiérarchisé */}
-            <div className="flex items-start justify-between mb-6">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 rounded-xl shadow-lg shadow-amber-500/30">
-                  <DollarSign className="w-6 h-6 text-white" />
+              {/* Content */}
+              <div className="absolute inset-0 z-20">
+                {/* Top Left - Badges */}
+                <div className="absolute top-6 left-8 lg:left-10 flex items-center gap-3">
+                  <span className="px-3 py-1.5 bg-[#8AFD81] text-slate-900 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                    Data Science
+                  </span>
+                  <span className="px-3 py-1.5 bg-white/10 text-white/90 rounded-full text-[10px] font-medium backdrop-blur-md border border-white/10 uppercase tracking-widest">
+                    Phase 2 Charts
+                  </span>
                 </div>
-                <div>
-                  <h2 className="text-xl font-bold text-white tracking-tight">
-                    Bitcoin Price Action
-                    <span className="text-amber-400 ml-2">OHLC</span>
-                  </h2>
-                  <p className="text-sm text-slate-400 mt-1">
-                    Chandelier japonais • Volume • Moyennes Mobiles (7, 20, 50)
-                  </p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Période: Jan - Août 2024
-                  </p>
+
+                {/* Bottom Left - Title */}
+                <div className="absolute bottom-6 left-8 lg:left-10">
+                  <h1 className="text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+                    Analytics <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80]">Avancées</span>
+                  </h1>
+                </div>
+
+                {/* Bottom Right - Stats */}
+                <div className="absolute bottom-6 right-8 lg:right-10 flex items-center gap-6">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white tabular-nums">6</div>
+                    <div className="text-xs text-slate-400 uppercase tracking-wider">Graphiques</div>
+                  </div>
+                  <div className="w-px h-10 bg-slate-700" />
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-[#8AFD81] tabular-nums">Live</div>
+                    <div className="text-xs text-slate-400 uppercase tracking-wider">Status</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Section Title - Revenue Analysis */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <TrendingDown className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-2xl font-bold text-slate-900">Analyse des Revenus</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
+            </div>
+
+            {/* WaterfallChart - Revenue Analysis */}
+            <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-100">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <TrendingDown className="w-5 h-5 text-white" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-white text-base font-semibold">
+                      Décomposition Waterfall
+                    </div>
+                    <div className="text-slate-400 text-sm">Du brut au net - Analyse des coûts</div>
+                  </div>
                 </div>
               </div>
               
-              {/* Badges Informatifs - Palette Lucid */}
-              <div className="flex items-center gap-2">
-                {/* Variation sur période - Lucid Green */}
-                <div className="flex items-center gap-1.5 px-3 py-2 bg-green-500/15 rounded-xl border border-green-500/30">
-                  <TrendingUp className="w-4 h-4 text-green-400" />
-                  <span className="text-sm font-bold text-green-400">+38.5%</span>
-                </div>
-                
-                {/* Seuil de Rentabilité - Lucid Teal */}
-                <div className="flex items-center gap-1.5 px-3 py-2 bg-teal-500/15 rounded-xl border border-teal-500/30">
-                  <Activity className="w-4 h-4 text-teal-400" />
-                  <span className="text-xs font-semibold text-teal-400">Seuil Mining</span>
-                  <span className="text-sm font-bold text-teal-300">$38,500</span>
-                </div>
-                
-                {/* Période - Lucid Purple */}
-                <span className="text-xs px-3 py-2 bg-purple-500/15 text-purple-300 rounded-xl font-medium border border-purple-500/30">
-                  40 jours
-                </span>
+              {/* Body - White */}
+              <div className="bg-white p-6">
+                <WaterfallChart 
+                  data={waterfallData}
+                  height={380}
+                  showConnectors={true}
+                  showLabels={true}
+                  showValues={true}
+                  unit="$"
+                />
               </div>
             </div>
 
-            <CandlestickChart 
-              data={candlestickData}
-              height={420}
-              showVolume={true}
-              showMA={true}
-              maPeriods={[7, 20, 50]}
-              breakevenPrice={38500}
-              unit="$"
-              theme="dark"
-            />
-          </div>
-
-          {/* BoxPlotChart - Temperature Distribution */}
-          <div className="bg-slate-900 rounded-2xl shadow-xl shadow-slate-900/30 border border-slate-800 p-6 xl:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2.5 bg-gradient-to-br from-rose-400 to-rose-600 rounded-xl shadow-lg shadow-rose-500/20">
-                <Thermometer className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-white">Distribution Températures</h2>
-                <p className="text-sm text-slate-400">Box Plot par Container - Analyse Statistique</p>
-              </div>
-              <div className="ml-auto flex items-center gap-4">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-6 h-0.5 bg-slate-500" style={{ borderStyle: 'dashed' }} />
-                  <span className="text-[10px] text-slate-400 font-medium">Whiskers</span>
+            {/* TreemapChart - Budget Distribution */}
+            <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-100">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <Layers className="w-5 h-5 text-white" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-white text-base font-semibold">
+                      Distribution Budget
+                    </div>
+                    <div className="text-slate-400 text-sm">CAPEX vs OPEX - Treemap Hiérarchique</div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-4 h-4 border-2 border-[#8AFD81] bg-[#8AFD81]/20 rounded" />
-                  <span className="text-[10px] text-slate-400 font-medium">IQR</span>
-                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6">
+                <TreemapChart 
+                  data={treemapData}
+                  height={400}
+                  showLabels={true}
+                  showValues={true}
+                  unit="$"
+                />
               </div>
             </div>
-            <BoxPlotChart 
-              data={boxPlotData}
-              height={360}
-              showMean={true}
-              showOutliers={true}
-              showLabels={true}
-              showValues={true}
-              unit="°C"
-              theme="dark"
-            />
-          </div>
-        </div>
 
-        {/* Summary Stats */}
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl p-4 text-white">
-            <p className="text-sm opacity-80">Profit Net Mensuel</p>
-            <p className="text-2xl font-bold">$2.47M</p>
-            <p className="text-xs mt-1 opacity-70">+12.3% vs prev</p>
-          </div>
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-4 text-white">
-            <p className="text-sm opacity-80">Capacité Actuelle</p>
-            <p className="text-2xl font-bold">42 MW</p>
-            <p className="text-xs mt-1 opacity-70">84% de Phase 3</p>
-          </div>
-          <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-4 text-white">
-            <p className="text-sm opacity-80">Uptime Global</p>
-            <p className="text-2xl font-bold">99.2%</p>
-            <p className="text-xs mt-1 opacity-70">Objectif: 99%</p>
-          </div>
-          <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-4 text-white">
-            <p className="text-sm opacity-80">BTC Miné (MTD)</p>
-            <p className="text-2xl font-bold">18.4 BTC</p>
-            <p className="text-xs mt-1 opacity-70">≈ $784,000</p>
-          </div>
-        </div>
+            {/* Section Title - Pipeline & KPIs */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <Target className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-2xl font-bold text-slate-900">Pipeline & KPIs Temps Réel</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
+            </div>
 
-        {/* Footer */}
-        <div className="mt-8 text-center text-sm text-slate-400">
-          <p>Hearst Qatar Mining Operations - Data Science Dashboard</p>
-          <p className="text-xs mt-1">6 nouveaux graphiques • Phase 2 Complete</p>
+            {/* FunnelChart - Ramp-Up Pipeline */}
+            <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-200">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <GitBranch className="w-5 h-5 text-white" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-white text-base font-semibold">
+                      Pipeline Ramp-Up
+                    </div>
+                    <div className="text-slate-400 text-sm">Progression 10 → 100 MW</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6">
+                <FunnelChart 
+                  data={funnelData}
+                  height={450}
+                  showLabels={true}
+                  showValues={true}
+                  showPercentage={true}
+                  unit="MW"
+                />
+              </div>
+            </div>
+
+            {/* GaugeClusterChart - Real-time KPIs */}
+            <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-200">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-white text-base font-semibold">
+                      KPIs Temps Réel
+                    </div>
+                    <div className="text-slate-400 text-sm">Cluster de Jauges - Monitoring Live</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6">
+                <GaugeClusterChart 
+                  data={gaugeData}
+                  layout="grid"
+                  size="md"
+                  showLabels={true}
+                  showValues={true}
+                  showTarget={true}
+                  animated={true}
+                />
+              </div>
+            </div>
+
+            {/* Section Title - Bitcoin Price Action */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <DollarSign className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-2xl font-bold text-slate-900">Bitcoin Price Action</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
+            </div>
+
+            {/* CandlestickChart - BTC Price - Full Width */}
+            <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <DollarSign className="w-5 h-5 text-white" strokeWidth={1.5} />
+                    <div>
+                      <div className="text-white text-base font-semibold">
+                        Bitcoin OHLC
+                      </div>
+                      <div className="text-slate-400 text-sm">Chandelier japonais • Volume • Moyennes Mobiles</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#8AFD81]/20 rounded-lg border border-[#8AFD81]/30">
+                      <TrendingUp className="w-4 h-4 text-[#8AFD81]" />
+                      <span className="text-sm font-bold text-[#8AFD81]">+38.5%</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 rounded-lg">
+                      <span className="text-xs font-semibold text-slate-300">Seuil Mining</span>
+                      <span className="text-sm font-bold text-white">$38,500</span>
+                    </div>
+                    <span className="text-xs px-3 py-1.5 bg-slate-700 text-slate-300 rounded-lg font-medium">
+                      40 jours
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6">
+                <CandlestickChart 
+                  data={candlestickData}
+                  height={420}
+                  showVolume={true}
+                  showMA={true}
+                  maPeriods={[7, 20, 50]}
+                  breakevenPrice={38500}
+                  unit="$"
+                  theme="light"
+                />
+              </div>
+            </div>
+
+            {/* Section Title - Temperature Analysis */}
+            <div className="col-span-12 flex items-center gap-4 mt-6 mb-2">
+              <Thermometer className="w-6 h-6 text-[#8AFD81]" strokeWidth={1.5} />
+              <h2 className="text-2xl font-bold text-slate-900">Distribution Températures</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent" />
+            </div>
+
+            {/* BoxPlotChart - Temperature Distribution - Full Width */}
+            <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+              {/* Header - Dark */}
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Thermometer className="w-5 h-5 text-white" strokeWidth={1.5} />
+                    <div>
+                      <div className="text-white text-base font-semibold">
+                        Box Plot par Container
+                      </div>
+                      <div className="text-slate-400 text-sm">Analyse statistique des températures</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-6 h-0.5 bg-slate-500" style={{ borderStyle: 'dashed' }} />
+                      <span className="text-[10px] text-slate-300 font-medium">Whiskers</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-4 h-4 border-2 border-[#8AFD81] bg-[#8AFD81]/20 rounded" />
+                      <span className="text-[10px] text-slate-300 font-medium">IQR</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Body - White */}
+              <div className="bg-white p-6">
+                <BoxPlotChart 
+                  data={boxPlotData}
+                  height={360}
+                  showMean={true}
+                  showOutliers={true}
+                  showLabels={true}
+                  showValues={true}
+                  unit="°C"
+                  theme="light"
+                />
+              </div>
+            </div>
+
+            {/* Summary Cards - 4 colonnes */}
+            <div className="col-span-12 grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#8AFD81]/20 flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-[#8AFD81]" />
+                  </div>
+                </div>
+                <p className="text-sm text-slate-500 mb-1">Profit Net Mensuel</p>
+                <p className="text-2xl font-bold text-slate-900">$2.47M</p>
+                <p className="text-xs mt-1 text-[#8AFD81] font-medium">+12.3% vs prev</p>
+              </div>
+              
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-slate-600/20 flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-slate-600" />
+                  </div>
+                </div>
+                <p className="text-sm text-slate-500 mb-1">Capacité Actuelle</p>
+                <p className="text-2xl font-bold text-slate-900">42 MW</p>
+                <p className="text-xs mt-1 text-slate-500">84% de Phase 3</p>
+              </div>
+              
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#8AFD81]/20 flex items-center justify-center">
+                    <Activity className="w-5 h-5 text-[#8AFD81]" />
+                  </div>
+                </div>
+                <p className="text-sm text-slate-500 mb-1">Uptime Global</p>
+                <p className="text-2xl font-bold text-slate-900">99.2%</p>
+                <p className="text-xs mt-1 text-[#8AFD81] font-medium">Objectif: 99%</p>
+              </div>
+              
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#8AFD81]/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#8AFD81]/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-slate-600/20 flex items-center justify-center">
+                    <PieChart className="w-5 h-5 text-slate-600" />
+                  </div>
+                </div>
+                <p className="text-sm text-slate-500 mb-1">BTC Miné (MTD)</p>
+                <p className="text-2xl font-bold text-slate-900">18.4 BTC</p>
+                <p className="text-xs mt-1 text-slate-500">≈ $784,000</p>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </>
   );
 }
-
