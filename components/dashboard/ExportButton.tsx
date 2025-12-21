@@ -62,42 +62,30 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
     if (onExport) {
       onExport(format, saveLocal);
     } else {
-      // Default behavior
-      console.log(`Exporting as ${format}...`, { saveLocal });
-      
       if (format === 'print') {
         window.print();
-      } else if (format === 'unreal-4k') {
-        // Logique pour export Unreal Engine 4K
-        console.log('Exporting to Unreal Engine 4K format...');
-        if (saveLocal) {
-          // Sauvegarder localement
-          const data = JSON.stringify({ format: 'unreal-4k', timestamp: new Date().toISOString() });
-          const blob = new Blob([data], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `unreal-export-4k-${Date.now()}.json`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }
-      } else if (format === 'blender') {
-        // Logique pour export Blender
-        console.log('Exporting to Blender format...');
-        if (saveLocal) {
-          const data = JSON.stringify({ format: 'blender', timestamp: new Date().toISOString() });
-          const blob = new Blob([data], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `blender-export-${Date.now()}.json`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }
+      } else if (format === 'unreal-4k' && saveLocal) {
+        const data = JSON.stringify({ format: 'unreal-4k', timestamp: new Date().toISOString() });
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `unreal-export-4k-${Date.now()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } else if (format === 'blender' && saveLocal) {
+        const data = JSON.stringify({ format: 'blender', timestamp: new Date().toISOString() });
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `blender-export-${Date.now()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
       }
     }
     setIsOpen(false);
@@ -120,12 +108,6 @@ export const ExportButton: React.FC<ExportButtonProps> = ({
 
       {isOpen && (
         <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 z-10"
-            onClick={() => setIsOpen(false)}
-          />
-
           {/* Dropdown */}
           <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-slate-200 py-3 z-20 overflow-hidden">
             {/* Checkbox pour sauvegarde locale */}

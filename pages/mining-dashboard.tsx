@@ -316,93 +316,120 @@ export default function MiningDashboard() {
               <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent"></div>
             </div>
 
-            {/* 5. HASHRATE EVOLUTION - 8 cols */}
-            <div className="col-span-12 lg:col-span-8 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+            {/* 5. HASHRATE EVOLUTION - Full Width */}
+            <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-4 py-3">
+              <div className="bg-slate-800 px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
-                      <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                      <div className="text-white text-base font-semibold">
                         Hashrate Evolution
                       </div>
-                      <div className="text-slate-400 text-xs">Network performance analysis</div>
+                      <div className="text-slate-400 text-sm">Network performance analysis over time</div>
                     </div>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#8AFD81] animate-pulse" />
-                    Live
-                  </span>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <div className="text-xs text-slate-400 uppercase tracking-wider">Current</div>
+                      <div className="text-lg font-bold text-white tabular-nums">
+                        {formatNumber(mockBitcoinKPIs.totalHashrate)} PH/s
+                      </div>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">
+                      <span className="w-2 h-2 rounded-full bg-[#8AFD81]" />
+                      Live
+                    </span>
+                  </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-3">
+              <div className="bg-white p-6">
                 <AdvancedLineChart
                   data={hashrateChartData}
                   lines={[
-                    { dataKey: 'total', name: 'Total Hashrate', color: '#8AFD81', strokeWidth: 3 },
+                    { dataKey: 'total', name: 'Total Hashrate', color: '#8AFD81', strokeWidth: 2 },
                   ]}
                   xAxisKey="date"
-                  height={300}
+                  height={380}
                   showGrid={true}
                   showLegend={false}
+                  showArea={true}
                   yAxisLabel="PH/s"
+                  unit="PH/s"
                 />
               </div>
             </div>
 
-            {/* 6. ACCUMULATION & OUTPUT - 4 cols */}
-            <div className="col-span-12 lg:col-span-4 flex flex-col gap-4 animate-fade-in-up delay-300">
-              {/* Accumulation */}
-              <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex-1">
-                <div className="bg-slate-800 px-4 py-3">
+            {/* 6. ACCUMULATION - 6 cols */}
+            <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <TrendingUp className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
-                      <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
-                        Accumulation
+                      <div className="text-white text-base font-semibold">
+                        BTC Accumulation
                       </div>
-                      <div className="text-slate-400 text-xs">Reserve Growth</div>
+                      <div className="text-slate-400 text-sm">Strategic reserve growth (90 days)</div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs text-slate-400 uppercase tracking-wider">Total</div>
+                    <div className="text-lg font-bold text-white tabular-nums">
+                      {reserveChartData[reserveChartData.length - 1]?.btc.toFixed(0)} BTC
                     </div>
                   </div>
                 </div>
-                <div className="bg-white p-3">
-                  <AdvancedAreaChart
-                    data={reserveChartData}
-                    areas={[{ dataKey: 'btc', name: 'BTC', color: '#8AFD81' }]}
-                    xAxisKey="date"
-                    height={150}
-                    showGrid={true}
-                    showLegend={false}
-                  />
-                </div>
               </div>
+              <div className="bg-white p-6">
+                <AdvancedAreaChart
+                  data={reserveChartData}
+                  areas={[{ dataKey: 'btc', name: 'BTC Reserve', color: '#8AFD81' }]}
+                  xAxisKey="date"
+                  height={320}
+                  showGrid={true}
+                  showLegend={false}
+                  showReferenceLine={true}
+                  unit="BTC"
+                />
+              </div>
+            </div>
 
-              {/* Daily Output */}
-              <div className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex-1">
-                <div className="bg-slate-800 px-4 py-3">
+            {/* 7. DAILY OUTPUT - 6 cols */}
+            <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <BarChart3 className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
-                      <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
-                        Daily Output
+                      <div className="text-white text-base font-semibold">
+                        Daily Production
                       </div>
-                      <div className="text-slate-400 text-xs">BTC Mined</div>
+                      <div className="text-slate-400 text-sm">BTC mined per day</div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs text-slate-400 uppercase tracking-wider">Average</div>
+                    <div className="text-lg font-bold text-white tabular-nums">
+                      {(productionChartData.reduce((sum, d) => sum + d.btc, 0) / productionChartData.length).toFixed(3)} BTC
                     </div>
                   </div>
                 </div>
-                <div className="bg-white p-3">
-                  <AdvancedAreaChart
-                    data={productionChartData}
-                    areas={[{ dataKey: 'btc', name: 'BTC', color: '#8AFD81' }]}
-                    xAxisKey="date"
-                    height={150}
-                    showGrid={true}
-                    showLegend={false}
-                  />
-                </div>
+              </div>
+              <div className="bg-white p-6">
+                <AdvancedAreaChart
+                  data={productionChartData}
+                  areas={[{ dataKey: 'btc', name: 'Daily BTC', color: '#8AFD81' }]}
+                  xAxisKey="date"
+                  height={320}
+                  showGrid={true}
+                  showLegend={false}
+                  showReferenceLine={true}
+                  unit="BTC"
+                />
               </div>
             </div>
 
@@ -454,7 +481,7 @@ export default function MiningDashboard() {
                         cols={4}
                         cellSize={40}
                         showLabels={true}
-                        onCellClick={(cell) => console.log('Container:', cell)}
+                        onCellClick={() => {}}
                       />
                     </div>
                   ))}

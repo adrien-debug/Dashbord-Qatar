@@ -433,3 +433,5 @@ export function getCategories(): Array<{ id: EquipmentCategory; label: string; c
     count: UNIFIED_MODEL_CATALOG.filter(model => model.category === cat.id).length,
   }));
 }
+
+

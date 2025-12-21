@@ -9,8 +9,6 @@ import {
   RampUpStep,
   ProjectKPIs,
   Blocker,
-  ProjectDoc,
-  Comment,
   ActivityLog,
 } from '../types/project';
 
@@ -1700,4 +1698,7 @@ export const mockTickets = {
   resolved7d: 45,
   avgResolutionHours: 4.2,
 };
+
+
+
 

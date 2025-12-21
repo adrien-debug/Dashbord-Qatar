@@ -1,8 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useState } from 'react';
-import { TimeFilter, TimeRange, ExportButton } from '../components/dashboard';
-import { AdvancedAreaChart } from '../components/charts';
+import { AdvancedAreaChart, CandlestickChart } from '../components/charts';
 import { formatNumber } from '../utils/formatNumber';
 import {
   mockBitcoinKPIs,
@@ -13,17 +11,59 @@ import {
   Wallet,
   DollarSign,
   Zap,
-  Pickaxe,
-  Leaf,
   Activity,
   Server,
   BarChart3,
   ChevronUp,
   ArrowRight,
+  TrendingUp,
 } from 'lucide-react';
 
+// Data for Bitcoin Price Action OHLC Chart
+const candlestickData = [
+  { date: '1 Jan', open: 42000, high: 43250, low: 41500, close: 42800, volume: 45000 },
+  { date: '2 Jan', open: 42800, high: 44100, low: 42200, close: 43500, volume: 52000 },
+  { date: '3 Jan', open: 43500, high: 44800, low: 43000, close: 44200, volume: 48000 },
+  { date: '4 Jan', open: 44200, high: 45500, low: 43800, close: 44800, volume: 55000 },
+  { date: '5 Jan', open: 44800, high: 45200, low: 43500, close: 43800, volume: 42000 },
+  { date: '6 Fév', open: 43800, high: 44500, low: 43200, close: 44100, volume: 38000 },
+  { date: '7 Fév', open: 44100, high: 45800, low: 43900, close: 45500, volume: 61000 },
+  { date: '8 Fév', open: 45500, high: 46200, low: 44800, close: 45200, volume: 47000 },
+  { date: '9 Fév', open: 45200, high: 46500, low: 44500, close: 46000, volume: 53000 },
+  { date: '10 Fév', open: 46000, high: 47200, low: 45200, close: 46800, volume: 58000 },
+  { date: '11 Mar', open: 46800, high: 48000, low: 46000, close: 47500, volume: 62000 },
+  { date: '12 Mar', open: 47500, high: 48500, low: 46800, close: 47200, volume: 45000 },
+  { date: '13 Mar', open: 47200, high: 47800, low: 45500, close: 46000, volume: 51000 },
+  { date: '14 Mar', open: 46000, high: 46800, low: 44800, close: 45200, volume: 44000 },
+  { date: '15 Mar', open: 45200, high: 46500, low: 44500, close: 46200, volume: 49000 },
+  { date: '16 Avr', open: 46200, high: 47800, low: 45800, close: 47500, volume: 56000 },
+  { date: '17 Avr', open: 47500, high: 49000, low: 47000, close: 48500, volume: 63000 },
+  { date: '18 Avr', open: 48500, high: 50200, low: 48000, close: 49800, volume: 71000 },
+  { date: '19 Avr', open: 49800, high: 51500, low: 49200, close: 50800, volume: 68000 },
+  { date: '20 Avr', open: 50800, high: 52000, low: 49500, close: 49800, volume: 55000 },
+  { date: '21 Mai', open: 49800, high: 51200, low: 48800, close: 50500, volume: 48000 },
+  { date: '22 Mai', open: 50500, high: 52500, low: 50000, close: 52000, volume: 64000 },
+  { date: '23 Mai', open: 52000, high: 53500, low: 51200, close: 52800, volume: 59000 },
+  { date: '24 Mai', open: 52800, high: 54000, low: 51500, close: 51800, volume: 52000 },
+  { date: '25 Mai', open: 51800, high: 53200, low: 50800, close: 52500, volume: 47000 },
+  { date: '26 Jun', open: 52500, high: 54500, low: 52000, close: 54000, volume: 61000 },
+  { date: '27 Jun', open: 54000, high: 55800, low: 53200, close: 55200, volume: 72000 },
+  { date: '28 Jun', open: 55200, high: 56500, low: 54000, close: 54500, volume: 54000 },
+  { date: '29 Jun', open: 54500, high: 55500, low: 53000, close: 53500, volume: 49000 },
+  { date: '30 Jun', open: 53500, high: 55000, low: 52800, close: 54800, volume: 58000 },
+  { date: '1 Jul', open: 54800, high: 56200, low: 54000, close: 55500, volume: 51000 },
+  { date: '2 Jul', open: 55500, high: 57500, low: 55000, close: 57000, volume: 67000 },
+  { date: '3 Jul', open: 57000, high: 58500, low: 56200, close: 58000, volume: 73000 },
+  { date: '4 Jul', open: 58000, high: 59200, low: 56500, close: 57200, volume: 62000 },
+  { date: '5 Jul', open: 57200, high: 58500, low: 56000, close: 58200, volume: 55000 },
+  { date: '6 Aoû', open: 58200, high: 60000, low: 57500, close: 59500, volume: 69000 },
+  { date: '7 Aoû', open: 59500, high: 61200, low: 58800, close: 60500, volume: 74000 },
+  { date: '8 Aoû', open: 60500, high: 62000, low: 59500, close: 59800, volume: 58000 },
+  { date: '9 Aoû', open: 59800, high: 61500, low: 58500, close: 61000, volume: 63000 },
+  { date: '10 Aoû', open: 61000, high: 63000, low: 60200, close: 62500, volume: 71000 },
+];
+
 export default function Dashboard() {
-  const [timeRange, setTimeRange] = useState<TimeRange>('30d');
 
   const productionData = mockProductionHistory.slice(-30).map(d => ({
     date: new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
@@ -85,6 +125,67 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* 1.5 BITCOIN PRICE ACTION - Full Width - TOP POSITION */}
+            <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-amber-500/30 transition-all duration-300 animate-fade-in-up delay-100">
+              {/* Header - Dark */}
+              <div className="bg-slate-900 px-6 py-4">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 rounded-xl shadow-lg shadow-amber-500/30">
+                      <DollarSign className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-bold text-white tracking-tight">
+                        Bitcoin Price Action
+                        <span className="text-amber-400 ml-2">OHLC</span>
+                      </h2>
+                      <p className="text-sm text-slate-400 mt-1">
+                        Chandelier japonais • Volume • Moyennes Mobiles (7, 20, 50)
+                      </p>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Période: Jan - Août 2024
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Badges Informatifs - Palette Lucid */}
+                  <div className="flex items-center gap-2">
+                    {/* Variation sur période - Lucid Green */}
+                    <div className="flex items-center gap-1.5 px-3 py-2 bg-green-500/15 rounded-xl border border-green-500/30">
+                      <TrendingUp className="w-4 h-4 text-green-400" />
+                      <span className="text-sm font-bold text-green-400">+38.5%</span>
+                    </div>
+                    
+                    {/* Seuil de Rentabilité - Lucid Teal */}
+                    <div className="flex items-center gap-1.5 px-3 py-2 bg-teal-500/15 rounded-xl border border-teal-500/30">
+                      <Activity className="w-4 h-4 text-teal-400" />
+                      <span className="text-xs font-semibold text-teal-400">Seuil Mining</span>
+                      <span className="text-sm font-bold text-teal-300">$38,500</span>
+                    </div>
+                    
+                    {/* Période - Lucid Purple */}
+                    <span className="text-xs px-3 py-2 bg-purple-500/15 text-purple-300 rounded-xl font-medium border border-purple-500/30">
+                      40 jours
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Body - Chart */}
+              <div className="bg-slate-900 px-6 pb-6">
+                <CandlestickChart 
+                  data={candlestickData}
+                  height={380}
+                  showVolume={true}
+                  showMA={true}
+                  maPeriods={[7, 20, 50]}
+                  breakevenPrice={38500}
+                  unit="$"
+                  theme="dark"
+                />
               </div>
             </div>
 
@@ -311,147 +412,136 @@ export default function Dashboard() {
               <div className="flex-1 h-px bg-gradient-to-r from-slate-300 to-transparent"></div>
             </div>
 
-            {/* 5. PRODUCTION CHART - 8 cols */}
-            <div className="col-span-12 lg:col-span-8 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
+            {/* 5. PRODUCTION CHART - Full Width */}
+            <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-4 py-3">
+              <div className="bg-slate-800 px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <BarChart3 className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
-                      <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                      <div className="text-white text-base font-semibold">
                         Production Trend
                       </div>
-                      <div className="text-slate-400 text-xs">Daily BTC accumulation over the last 30 days</div>
+                      <div className="text-slate-400 text-sm">Daily BTC accumulation over the last 30 days</div>
                     </div>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#8AFD81] animate-pulse" />
-                    Live
-                  </span>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <div className="text-xs text-slate-400 uppercase tracking-wider">Total Period</div>
+                      <div className="text-lg font-bold text-white tabular-nums">
+                        {productionData.reduce((sum, d) => sum + d.btc, 0).toFixed(2)} BTC
+                      </div>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">
+                      <span className="w-2 h-2 rounded-full bg-[#8AFD81]" />
+                      Live Data
+                    </span>
+                  </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-3">
-                <div className="h-[300px] w-full">
+              <div className="bg-white p-6">
+                <div className="h-[420px] w-full">
                   <AdvancedAreaChart
                     data={productionData}
                     areas={[
                       { dataKey: 'btc', name: 'BTC Production', color: '#8AFD81' },
                     ]}
                     xAxisKey="date"
-                    height={300}
+                    height={420}
                     showGrid={true}
                     showLegend={false}
                     showReferenceLine={true}
+                    unit="BTC"
                   />
                 </div>
               </div>
             </div>
 
-            {/* 6. SYSTEM HEALTH - 4 cols */}
-            <div className="col-span-12 lg:col-span-4 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex flex-col animate-fade-in-up delay-300">
+            {/* 6. SYSTEM HEALTH - 6 cols */}
+            <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 flex flex-col animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-4 py-3">
-                <div className="flex items-center gap-3">
-                  <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
-                  <div>
-                    <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
-                      System Health
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
+                    <div>
+                      <div className="text-white text-base font-semibold">
+                        System Health
+                      </div>
+                      <div className="text-slate-400 text-sm">Efficiency & uptime metrics</div>
                     </div>
-                    <div className="text-slate-400 text-xs">Efficiency & uptime metrics</div>
                   </div>
+                  <span className="text-sm text-slate-400">Last 30 days</span>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-3 flex-1 flex flex-col justify-center gap-6">
+              <div className="bg-white p-6 flex-1 flex flex-col justify-center gap-8">
                 {/* Energy Efficiency */}
                 <div className="w-full">
-                  <div className="flex justify-between items-baseline mb-3">
+                  <div className="flex justify-between items-baseline mb-4">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#8AFD81] animate-pulse" />
-                      <span className="text-sm font-bold text-slate-700 uppercase tracking-wide">Energy Efficiency</span>
+                      <Zap className="w-4 h-4 text-slate-400" />
+                      <span className="text-sm font-semibold text-slate-700">Energy Efficiency</span>
                     </div>
-                    <span className="text-xl font-bold tabular-nums bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] bg-clip-text text-transparent">{mockBitcoinKPIs.efficiency} <span className="text-lg">J/TH</span></span>
+                    <span className="text-2xl font-bold tabular-nums text-slate-900">{mockBitcoinKPIs.efficiency} <span className="text-base text-slate-500 font-medium">J/TH</span></span>
                   </div>
                   
                   {/* Progress bar */}
-                  <div className="relative w-full h-5 rounded-full overflow-hidden">
-                    <div className="absolute inset-0 bg-slate-200/80 rounded-full" />
+                  <div className="relative w-full h-3 rounded-full overflow-hidden bg-slate-100">
                     <div 
-                      className="absolute inset-y-0 left-0 bg-[#8AFD81]/20 rounded-full blur-sm transition-all duration-1000 ease-out" 
+                      className="absolute inset-y-0 left-0 bg-[#8AFD81] rounded-full transition-all duration-500 ease-out" 
                       style={{ width: `${((30 - mockBitcoinKPIs.efficiency) / 10) * 100}%` }}
                     />
-                    <div 
-                      className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] rounded-full transition-all duration-1000 ease-out shadow-lg" 
-                      style={{ 
-                        width: `${((30 - mockBitcoinKPIs.efficiency) / 10) * 100}%`,
-                        boxShadow: '0 0 20px rgba(138, 253, 129, 0.4)'
-                      }}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-black/10 rounded-full" />
-                      <div className="absolute inset-0 overflow-hidden rounded-full">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-shimmer" />
-                      </div>
-                    </div>
                   </div>
                   
-                  <div className="flex justify-between items-center mt-2.5">
-                    <span className="text-[10px] text-slate-400 font-medium">30 J/TH</span>
-                    <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#8AFD81]/10 border border-[#8AFD81]/30">
-                      <span className="text-[9px] font-bold uppercase tracking-wide text-[#8AFD81]">Optimal</span>
-                    </div>
-                    <span className="text-[10px] text-slate-400 font-medium">20 J/TH</span>
+                  <div className="flex justify-between items-center mt-2">
+                    <span className="text-xs text-slate-400">30 J/TH</span>
+                    <span className="text-xs font-medium text-[#8AFD81]">Optimal Range</span>
+                    <span className="text-xs text-slate-400">20 J/TH</span>
                   </div>
                 </div>
                  
                 {/* Uptime */}
                 <div className="w-full">
-                  <div className="flex justify-between items-baseline mb-3">
+                  <div className="flex justify-between items-baseline mb-4">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#8AFD81] animate-pulse" />
-                      <span className="text-sm font-bold text-slate-700 uppercase tracking-wide">Uptime</span>
+                      <Activity className="w-4 h-4 text-slate-400" />
+                      <span className="text-sm font-semibold text-slate-700">System Uptime</span>
                     </div>
-                    <span className="text-xl font-bold tabular-nums bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] bg-clip-text text-transparent">{mockBitcoinKPIs.uptime}%</span>
+                    <span className="text-2xl font-bold tabular-nums text-slate-900">{mockBitcoinKPIs.uptime}<span className="text-base text-slate-500 font-medium">%</span></span>
                   </div>
                   
-                  {/* Enhanced progress bar with matching gradient */}
-                  <div className="relative w-full h-5 rounded-full overflow-hidden">
-                    {/* Track background */}
-                    <div className="absolute inset-0 bg-slate-200/80 rounded-full" />
-                    
-                    {/* Glow effect behind the bar */}
+                  <div className="relative w-full h-3 rounded-full overflow-hidden bg-slate-100">
                     <div 
-                      className="absolute inset-y-0 left-0 bg-[#8AFD81]/20 rounded-full blur-sm transition-all duration-1000 ease-out" 
+                      className="absolute inset-y-0 left-0 bg-[#8AFD81] rounded-full transition-all duration-500 ease-out" 
                       style={{ width: `${mockBitcoinKPIs.uptime}%` }}
                     />
-                    
-                    {/* Progress bar with gradient */}
-                    <div 
-                      className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] rounded-full transition-all duration-1000 ease-out shadow-lg" 
-                      style={{ 
-                        width: `${mockBitcoinKPIs.uptime}%`,
-                        boxShadow: '0 0 20px rgba(138, 253, 129, 0.4)'
-                      }}
-                    >
-                      {/* Shine effect */}
-                      <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-black/10 rounded-full" />
-                      
-                      {/* Animated shine */}
-                      <div className="absolute inset-0 overflow-hidden rounded-full">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-shimmer" />
-                      </div>
-                    </div>
                   </div>
                   
-                  <div className="flex justify-between items-center mt-2.5">
-                    <span className="text-[10px] text-slate-400 font-medium">0%</span>
-                    <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#8AFD81]/10 border border-[#8AFD81]/30">
-                      <span className="text-[9px] font-bold uppercase tracking-wide text-[#8AFD81]">30 days average</span>
-                    </div>
-                    <span className="text-[10px] text-slate-400 font-medium">100%</span>
+                  <div className="flex justify-between items-center mt-2">
+                    <span className="text-xs text-slate-400">0%</span>
+                    <span className="text-xs font-medium text-slate-500">30-day average</span>
+                    <span className="text-xs text-slate-400">100%</span>
+                  </div>
+                </div>
+
+                {/* Additional Stats */}
+                <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-100">
+                  <div className="text-center">
+                    <div className="text-xs text-slate-500 mb-1">Downtime</div>
+                    <div className="text-lg font-bold text-slate-900 tabular-nums">2.4h</div>
+                  </div>
+                  <div className="text-center border-x border-slate-100">
+                    <div className="text-xs text-slate-500 mb-1">Incidents</div>
+                    <div className="text-lg font-bold text-slate-900 tabular-nums">3</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-xs text-slate-500 mb-1">MTBF</div>
+                    <div className="text-lg font-bold text-slate-900 tabular-nums">720h</div>
                   </div>
                 </div>
               </div>

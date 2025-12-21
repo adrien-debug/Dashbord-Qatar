@@ -6,20 +6,20 @@
 
 **Adresse principale :**
 ```
-http://192.168.1.65:1111
+http://3.3.3.3:1111
 ```
 
 **Adresses alternatives :**
 - Local (sur cet ordinateur) : `http://localhost:1111`
-- Réseau : `http://192.168.1.65:1111`
+- Réseau : `http://3.3.3.3:1111`
 
 ---
 
 ## 🔧 Configuration Actuelle
 
 - **Port** : 1111
-- **Adresse IP locale** : 192.168.1.65
-- **Réseau** : 192.168.1.0/24
+- **Adresse IP locale** : 3.3.3.3
+- **Réseau** : 3.3.3.0/24
 - **Serveur** : Next.js 14.2.35
 - **Mode** : Développement (Hot Reload activé)
 
@@ -36,7 +36,7 @@ http://192.168.1.65:1111
 
 3. **Entrez l'adresse suivante dans la barre d'URL :**
    ```
-   http://192.168.1.65:1111
+   http://3.3.3.3:1111
    ```
 
 4. **Appuyez sur Entrée**
@@ -48,7 +48,7 @@ http://192.168.1.65:1111
 
 1. Connectez votre téléphone/tablette au **même réseau WiFi**
 2. Ouvrez Safari (iOS) ou Chrome (Android)
-3. Entrez : `http://192.168.1.65:1111`
+3. Entrez : `http://3.3.3.3:1111`
 4. Le dashboard s'affichera en version responsive
 
 ---
@@ -111,9 +111,9 @@ npm run dev
 
 Une fois connecté, vous pouvez accéder à :
 
-- **Vue d'ensemble** : `http://192.168.1.65:1111/`
-- **Mining Dashboard** : `http://192.168.1.65:1111/mining-dashboard`
-- **Infrastructure** : `http://192.168.1.65:1111/infrastructure`
+- **Vue d'ensemble** : `http://3.3.3.3:1111/`
+- **Mining Dashboard** : `http://3.3.3.3:1111/mining-dashboard`
+- **Infrastructure** : `http://3.3.3.3:1111/infrastructure`
 
 ---
 

@@ -5,7 +5,7 @@
 Le serveur fonctionne correctement :
 - ✓ Serveur démarré sur le port 1111
 - ✓ Répond en local (http://localhost:1111)
-- ✓ Répond via IP réseau (http://192.168.1.65:1111)
+- ✓ Répond via IP réseau (http://3.3.3.3:1111)
 - ✓ Configuration Next.js correcte (0.0.0.0)
 
 ---
@@ -73,10 +73,10 @@ Sur l'autre ordinateur (Windows/Mac/Linux), ouvrez un terminal :
 
 ```bash
 # Sur Windows (CMD)
-ping 192.168.1.65
+ping 3.3.3.3
 
 # Sur Mac/Linux
-ping -c 4 192.168.1.65
+ping -c 4 3.3.3.3
 ```
 
 **Résultat attendu :** Réponses positives
@@ -90,10 +90,10 @@ Sur l'autre ordinateur :
 
 ```bash
 # Sur Mac/Linux
-telnet 192.168.1.65 1111
+telnet 3.3.3.3 1111
 
 # Sur Windows (PowerShell)
-Test-NetConnection -ComputerName 192.168.1.65 -Port 1111
+Test-NetConnection -ComputerName 3.3.3.3 -Port 1111
 ```
 
 **Résultat attendu :** Connexion établie
@@ -106,7 +106,7 @@ Test-NetConnection -ComputerName 192.168.1.65 -Port 1111
 Testez depuis votre propre Mac avec l'IP réseau :
 
 ```bash
-curl http://192.168.1.65:1111
+curl http://3.3.3.3:1111
 ```
 
 **Résultat attendu :** Code HTML du dashboard
@@ -119,7 +119,7 @@ curl http://192.168.1.65:1111
 1. Connectez votre téléphone au **même WiFi**
 2. Ouvrez Safari (iOS) ou Chrome (Android)
 3. Désactivez les **données mobiles** (pour être sûr d'utiliser le WiFi)
-4. Tapez : `http://192.168.1.65:1111`
+4. Tapez : `http://3.3.3.3:1111`
 
 **Si ça ne marche pas sur le téléphone non plus :**
 → C'est probablement le pare-feu de votre Mac
@@ -153,7 +153,7 @@ ifconfig | grep "inet " | grep -v 127.0.0.1
 curl -I http://localhost:1111
 
 # Tester via IP réseau
-curl -I http://192.168.1.65:1111
+curl -I http://3.3.3.3:1111
 ```
 
 ---
@@ -164,7 +164,7 @@ curl -I http://192.168.1.65:1111
 - [ ] Même réseau WiFi sur les deux appareils
 - [ ] Pare-feu macOS configuré (applications autorisées)
 - [ ] Pas de VPN actif
-- [ ] L'adresse IP est correcte (192.168.1.65)
+- [ ] L'adresse IP est correcte (3.3.3.3)
 - [ ] Le port 1111 n'est pas bloqué
 - [ ] Le navigateur de l'autre appareil fonctionne
 
@@ -179,7 +179,7 @@ Modifiez `package.json` :
 "dev": "next dev -p 3000 -H 0.0.0.0"
 ```
 
-Puis utilisez : `http://192.168.1.65:3000`
+Puis utilisez : `http://3.3.3.3:3000`
 
 ### Option 2 : Partage d'écran
 

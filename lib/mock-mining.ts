@@ -39,9 +39,16 @@ export const mockHardwareStatus: HardwareStatus = {
 // HISTORICAL DATA - 90 DAYS
 // ============================================================================
 
-// Helper function to generate realistic variations
-const generateVariation = (base: number, variance: number, trend: number = 0) => {
-  return base + (Math.random() * variance * 2 - variance) + trend;
+// Seeded random for consistent values between server and client
+const seededRandom = (seed: number): number => {
+  const x = Math.sin(seed * 9999) * 10000;
+  return x - Math.floor(x);
+};
+
+// Helper function to generate realistic variations (deterministic)
+const generateVariation = (base: number, variance: number, seed: number): number => {
+  const random = seededRandom(seed);
+  return base + (random * variance * 2 - variance);
 };
 
 // Hashrate History - 90 days with realistic patterns
@@ -57,11 +64,11 @@ export const mockHashrateHistory = Array.from({ length: 90 }, (_, i) => {
   
   return {
     date: date.toISOString().split('T')[0],
-    hashrate: generateVariation(1000 + trend, 25, 0) + maintenanceDip,
-    pb1: generateVariation(250, 10, 0),
-    pb2: generateVariation(255, 10, 0),
-    pb3: generateVariation(245, 12, 0),
-    pb4: generateVariation(250, 10, 0),
+    hashrate: generateVariation(1000 + trend, 25, i * 100 + 1) + maintenanceDip,
+    pb1: generateVariation(250, 10, i * 100 + 2),
+    pb2: generateVariation(255, 10, i * 100 + 3),
+    pb3: generateVariation(245, 12, i * 100 + 4),
+    pb4: generateVariation(250, 10, i * 100 + 5),
   };
 });
 
@@ -76,8 +83,8 @@ export const mockProductionHistory = Array.from({ length: 90 }, (_, i) => {
   
   return {
     date: date.toISOString().split('T')[0],
-    btc: generateVariation(2.3 + trend, 0.15, 0) + maintenanceDip,
-    usd: generateVariation(230000 + trend * 100000, 15000, 0),
+    btc: generateVariation(2.3 + trend, 0.15, i * 200 + 1) + maintenanceDip,
+    usd: generateVariation(230000 + trend * 100000, 15000, i * 200 + 2),
   };
 });
 
@@ -93,8 +100,8 @@ export const mockRevenueHistory = Array.from({ length: 12 }, (_, i) => {
   
   return {
     month: date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' }),
-    revenue: generateVariation(baseRevenue + trend, 500000, 0),
-    costs: generateVariation(3500000, 200000, 0),
+    revenue: generateVariation(baseRevenue + trend, 500000, i * 300 + 1),
+    costs: generateVariation(3500000, 200000, i * 300 + 2),
     profit: 0, // Will be calculated
   };
 }).map(entry => ({
@@ -112,7 +119,7 @@ export const mockEfficiencyHistory = Array.from({ length: 90 }, (_, i) => {
   
   return {
     date: date.toISOString().split('T')[0],
-    efficiency: generateVariation(23.8 + trend, 0.3, 0),
+    efficiency: generateVariation(23.8 + trend, 0.3, i * 400 + 1),
     target: 23.5,
     industryAvg: 27.5,
   };
@@ -128,7 +135,7 @@ export const mockUptimeHistory = Array.from({ length: 90 }, (_, i) => {
   
   return {
     date: date.toISOString().split('T')[0],
-    uptime: Math.min(100, generateVariation(99.5, 0.5, 0) + maintenanceDip),
+    uptime: Math.min(100, generateVariation(99.5, 0.5, i * 500 + 1) + maintenanceDip),
   };
 });
 
@@ -152,15 +159,14 @@ export const mockReserveHistory = Array.from({ length: 90 }, (_, i) => {
 export const mockPowerConsumptionHourly = Array.from({ length: 24 }, (_, i) => {
   return {
     hour: `${i.toString().padStart(2, '0')}:00`,
-    consumption: generateVariation(96.5, 2, 0),
-    cost: generateVariation(4825, 100, 0), // $0.05 per kWh
+    consumption: generateVariation(96.5, 2, i * 600 + 1),
+    cost: generateVariation(4825, 100, i * 600 + 2), // $0.05 per kWh
   };
 });
 
 // Container Performance - All 48 containers
 export const mockContainerPerformance = Array.from({ length: 48 }, (_, i) => {
   const powerBlock = Math.floor(i / 12) + 1;
-  const containerNum = (i % 12) + 1;
   
   // Power Block 3 has slightly lower performance
   const performanceBase = powerBlock === 3 ? 95 : 98;
@@ -172,8 +178,8 @@ export const mockContainerPerformance = Array.from({ length: 48 }, (_, i) => {
   
   const performance = status === 'offline' ? 0 :
                      status === 'maintenance' ? 0 :
-                     status === 'warning' ? generateVariation(85, 5, 0) :
-                     generateVariation(performanceBase, 3, 0);
+                     status === 'warning' ? generateVariation(85, 5, i * 700 + 1) :
+                     generateVariation(performanceBase, 3, i * 700 + 2);
   
   return {
     id: `HD5-${(i + 1).toString().padStart(2, '0')}`,
@@ -183,7 +189,7 @@ export const mockContainerPerformance = Array.from({ length: 48 }, (_, i) => {
     activeMiners: status === 'offline' ? 0 :
                   status === 'maintenance' ? 0 :
                   status === 'warning' ? 108 : 120,
-    temperature: generateVariation(42, 5, 0),
+    temperature: generateVariation(42, 5, i * 700 + 3),
     performance: performance,
     status: status,
   };

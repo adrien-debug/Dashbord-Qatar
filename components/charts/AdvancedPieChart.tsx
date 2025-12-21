@@ -24,29 +24,31 @@ interface AdvancedPieChartProps {
   showPercentage?: boolean;
   colors?: string[];
   tooltipFormatter?: (value: number) => string;
+  unit?: string;
 }
 
 const DEFAULT_COLORS = [
   '#8AFD81',
   '#3B82F6',
-  '#F59E0B',
-  '#EF4444',
-  '#6bcc64',
-  '#8B5CF6',
-  '#EC4899',
-  '#14B8A6',
+  '#64748b',
+  '#f59e0b',
+  '#6366f1',
+  '#ec4899',
+  '#14b8a6',
+  '#f43f5e',
 ];
 
 export const AdvancedPieChart: React.FC<AdvancedPieChartProps> = ({
   data,
-  height = 350,
+  height = 400,
   showLegend = true,
-  innerRadius = 0,
-  outerRadius = 100,
+  innerRadius = 60,
+  outerRadius = 120,
   showLabels = true,
   showPercentage = true,
   colors = DEFAULT_COLORS,
   tooltipFormatter,
+  unit = '',
 }) => {
   const total = data.reduce((sum, entry) => sum + entry.value, 0);
 
@@ -55,34 +57,37 @@ export const AdvancedPieChart: React.FC<AdvancedPieChartProps> = ({
       const entry = payload[0];
       const percentage = ((entry.value / total) * 100).toFixed(1);
       const formattedValue = typeof entry.value === 'number' ? 
-        entry.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : 
+        entry.value.toLocaleString('fr-FR') : 
         entry.value;
+      
+      // Calculate rank
+      const sortedData = [...data].sort((a, b) => b.value - a.value);
+      const rank = sortedData.findIndex(d => d.name === entry.name) + 1;
+      
       return (
-        <div className="relative">
-          {/* Ultra premium glassmorphism tooltip */}
-          <div className="bg-black/80 backdrop-blur-2xl border border-[#8AFD81]/30 rounded-2xl shadow-[0_8px_32px_rgba(138,253,129,0.15)] p-5 min-w-[160px]">
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#8AFD81]/10 via-transparent to-transparent pointer-events-none" />
-            
-            <div className="relative">
-              <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[#8AFD81]/20">
-                <div
-                  className="w-4 h-4 rounded-full shadow-lg"
-                  style={{ backgroundColor: entry.payload.fill, boxShadow: `0 0 12px ${entry.payload.fill}` }}
-                />
-                <span className="text-sm font-bold text-white tracking-wide">{entry.name}</span>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-400 font-medium">Value</span>
-                  <span className="text-lg font-bold text-white tabular-nums">
-                    {tooltipFormatter ? tooltipFormatter(entry.value) : formattedValue}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-400 font-medium">Share</span>
-                  <span className="text-lg font-bold text-[#8AFD81] tabular-nums">{percentage}%</span>
-                </div>
-              </div>
+        <div className="bg-white border border-slate-200 rounded-lg shadow-lg p-4 min-w-[200px]">
+          <div className="flex items-center gap-3 mb-3 pb-2 border-b border-slate-100">
+            <div
+              className="w-4 h-4 rounded"
+              style={{ backgroundColor: entry.payload.fill }}
+            />
+            <span className="text-sm font-semibold text-slate-900">{entry.name}</span>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-600">Valeur</span>
+              <span className="text-sm font-bold text-slate-900 tabular-nums">
+                {tooltipFormatter ? tooltipFormatter(entry.value) : formattedValue}
+                {unit && <span className="text-xs text-slate-500 ml-1">{unit}</span>}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-600">Part</span>
+              <span className="text-sm font-bold text-slate-900 tabular-nums">{percentage}%</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-600">Classement</span>
+              <span className="text-sm font-bold text-slate-900">#{rank} sur {data.length}</span>
             </div>
           </div>
         </div>
@@ -91,16 +96,34 @@ export const AdvancedPieChart: React.FC<AdvancedPieChartProps> = ({
     return null;
   };
 
-  const renderLabel = (entry: any) => {
-    if (!showLabels) return null;
-    const percentage = ((entry.value / total) * 100).toFixed(1);
-    return showPercentage ? `${percentage}%` : entry.name;
-  };
-
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, name }: any) => {
-    if (!showLabels) return null;
-    const radius = innerRadius + (outerRadius - innerRadius) * 1.3;
+    if (!showLabels || percent < 0.05) return null; // Don't show labels for small slices
+    
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text 
+        x={x} 
+        y={y} 
+        fill="#fff" 
+        textAnchor="middle" 
+        dominantBaseline="central"
+        className="text-xs font-semibold"
+        style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
+      >
+        {showPercentage ? `${(percent * 100).toFixed(0)}%` : name}
+      </text>
+    );
+  };
+
+  // External labels for segment names
+  const renderOuterLabel = ({ cx, cy, midAngle, outerRadius, name, percent }: any) => {
+    if (percent < 0.05) return null;
+    
+    const radius = outerRadius + 25;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -111,9 +134,9 @@ export const AdvancedPieChart: React.FC<AdvancedPieChartProps> = ({
         fill="#64748b" 
         textAnchor={x > cx ? 'start' : 'end'} 
         dominantBaseline="central"
-        className="text-xs font-semibold"
+        className="text-xs font-medium"
       >
-        {showPercentage ? `${(percent * 100).toFixed(0)}%` : name}
+        {name}
       </text>
     );
   };
@@ -121,58 +144,78 @@ export const AdvancedPieChart: React.FC<AdvancedPieChartProps> = ({
   return (
     <ResponsiveContainer width="100%" height={height}>
       <PieChart>
-        <defs>
-          {data.map((entry, index) => {
-            const baseColor = entry.color || colors[index % colors.length];
-            return (
-              <React.Fragment key={`defs-${index}`}>
-                <linearGradient id={`pie-gradient-${index}`} x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor={baseColor} stopOpacity={1} />
-                  <stop offset="100%" stopColor={baseColor} stopOpacity={0.7} />
-                </linearGradient>
-                <filter id={`pie-shadow-${index}`} x="-50%" y="-50%" width="200%" height="200%">
-                  <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor={baseColor} floodOpacity="0.3"/>
-                </filter>
-              </React.Fragment>
-            );
-          })}
-        </defs>
         <Pie
           data={data}
           cx="50%"
           cy="50%"
-          labelLine={showLabels ? { stroke: '#94a3b8', strokeWidth: 1 } : false}
-          label={renderCustomizedLabel}
+          labelLine={showLabels ? { stroke: '#cbd5e1', strokeWidth: 1 } : false}
+          label={renderOuterLabel}
           outerRadius={outerRadius}
           innerRadius={innerRadius}
           fill="#8884d8"
           dataKey="value"
-          animationDuration={1500}
+          animationDuration={800}
           animationEasing="ease-out"
-          paddingAngle={2}
-          stroke="rgba(255,255,255,0.2)"
+          paddingAngle={1}
+          stroke="#fff"
           strokeWidth={2}
         >
           {data.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
-              fill={`url(#pie-gradient-${index})`}
-              style={{ filter: `url(#pie-shadow-${index})` }}
+              fill={entry.color || colors[index % colors.length]}
             />
           ))}
         </Pie>
+        
+        {/* Inner percentage labels */}
+        <Pie
+          data={data}
+          cx="50%"
+          cy="50%"
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={outerRadius}
+          innerRadius={innerRadius}
+          fill="transparent"
+          dataKey="value"
+          animationDuration={0}
+          paddingAngle={1}
+          stroke="none"
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-inner-${index}`} fill="transparent" />
+          ))}
+        </Pie>
+        
+        {/* Center label for donut charts */}
+        {innerRadius > 0 && (
+          <text 
+            x="50%" 
+            y="50%" 
+            textAnchor="middle" 
+            dominantBaseline="middle"
+            className="text-2xl font-bold fill-slate-900"
+          >
+            {total.toLocaleString('fr-FR')}
+            {unit && <tspan className="text-sm font-medium fill-slate-500"> {unit}</tspan>}
+          </text>
+        )}
+        
         <Tooltip content={<CustomTooltip />} />
+        
         {showLegend && (
           <Legend
             verticalAlign="bottom"
-            height={40}
+            height={60}
             iconType="circle"
-            iconSize={12}
+            iconSize={10}
+            wrapperStyle={{ paddingTop: '20px' }}
             formatter={(value, entry: any) => {
               const percentage = ((entry.payload.value / total) * 100).toFixed(1);
               return (
-                <span className="text-sm font-semibold text-slate-600 ml-2">
-                  {value} <span className="text-[#8AFD81]">({percentage}%)</span>
+                <span className="text-sm text-slate-700 ml-2">
+                  {value} <span className="text-slate-500 font-medium">({percentage}%)</span>
                 </span>
               );
             }}

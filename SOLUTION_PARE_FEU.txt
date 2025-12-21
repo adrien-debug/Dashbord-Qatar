@@ -24,7 +24,7 @@ Le problème vient probablement du PARE-FEU de votre Mac.
 
 7. Cliquez sur "OK"
 
-8. Testez depuis l'autre appareil : http://192.168.1.65:1111
+8. Testez depuis l'autre appareil : http://3.3.3.3:1111
 
 
 ═══════════════════════════════════════════════════════════
@@ -34,7 +34,7 @@ Le problème vient probablement du PARE-FEU de votre Mac.
 Depuis l'autre ordinateur/téléphone (même WiFi) :
 
 1. Ouvrez un navigateur
-2. Tapez : http://192.168.1.65:1111/test.html
+2. Tapez : http://3.3.3.3:1111/test.html
 3. Vous devriez voir "✅ Connexion Réussie !"
 
 
@@ -63,7 +63,7 @@ Option 3 - Consulter le guide complet :
 • Port 1111 actif : ✓ OUI
 • Configuration OK : ✓ OUI (0.0.0.0)
 • Répond localement : ✓ OUI (http://localhost:1111)
-• Répond via IP : ✓ OUI (http://192.168.1.65:1111)
+• Répond via IP : ✓ OUI (http://3.3.3.3:1111)
 
 → Le problème est donc le PARE-FEU ou le RÉSEAU
 

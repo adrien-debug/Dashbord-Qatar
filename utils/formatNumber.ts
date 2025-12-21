@@ -22,7 +22,9 @@ export function formatNumber(value: number): string {
  * Ex: 5760.50 → "5 760.50"
  */
 export function formatNumberWithDecimals(value: number, decimals: number = 2): string {
-  return value.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const parts = value.toFixed(decimals).split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return parts.join('.');
 }
 
 /**

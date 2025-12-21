@@ -4,12 +4,13 @@
   "description": "Dashboard institutionnel pour le Gouvernement du Qatar - Hearst Corporation",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 1111 -H 0.0.0.0",
+    "dev": "next dev -p 1116 -H 0.0.0.0",
     "build": "next build",
-    "start": "next start -p 1111",
+    "start": "next start -p 1116",
     "lint": "next lint"
   },
   "dependencies": {
+    "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",
     "next": "^14.0.0",
     "react": "^18.2.0",
@@ -17,11 +18,13 @@
     "recharts": "^2.10.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
     "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "autoprefixer": "^10.4.16",
-    "eslint": "^9.39.2",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.35",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.2.2"

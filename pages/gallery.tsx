@@ -144,7 +144,7 @@ export default function GalleryPage() {
               Galerie de Modèles 3D
             </h1>
             <p className="mt-2 text-slate-400 text-sm">
-              Bibliothèque d'assets ultra-réalistes 4K pour l'infrastructure mining
+              Bibliothèque d&apos;assets ultra-réalistes 4K pour l&apos;infrastructure mining
             </p>
           </div>
         </div>
@@ -406,4 +406,3 @@ function ModelListItem({ model }: { model: UnifiedModel }) {
     </div>
   );
 }
-

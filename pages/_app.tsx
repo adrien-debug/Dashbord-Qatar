@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isFullscreen = fullscreenPages.includes(router.pathname);
 
-  // Page 3D viewer = pas de sidebar, expérience plein écran
+  // Page 3D viewer ou Project = pas de sidebar, expérience plein écran
   if (isFullscreen) {
     return <Component {...pageProps} />;
   }

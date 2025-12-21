@@ -265,36 +265,44 @@ export default function Infrastructure() {
             {/* 6. POWER LOAD CHART - Full Width */}
             <div className="col-span-12 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-4 py-3">
+              <div className="bg-slate-800 px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <Zap className="w-5 h-5 text-white" strokeWidth={1.5} />
                     <div>
-                      <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
+                      <div className="text-white text-base font-semibold">
                         Power Load Monitoring
                       </div>
-                      <div className="text-slate-400 text-xs">Real-time power consumption across facility</div>
+                      <div className="text-slate-400 text-sm">Real-time power consumption across facility</div>
                     </div>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#8AFD81]/20 text-[#8AFD81] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#8AFD81]/30">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#8AFD81] animate-pulse" />
-                    Live
-                  </span>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <div className="text-xs text-slate-400 uppercase tracking-wider">Current Load</div>
+                      <div className="text-lg font-bold text-white tabular-nums">{totalLoad.toFixed(1)} MW</div>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">
+                      <span className="w-2 h-2 rounded-full bg-[#8AFD81]" />
+                      Live
+                    </span>
+                  </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-3">
+              <div className="bg-white p-6">
                 <AdvancedAreaChart
                   data={powerData}
                   areas={[
-                    { dataKey: 'total', name: 'Total Load (MW)', color: '#8AFD81' },
+                    { dataKey: 'total', name: 'Total Load', color: '#8AFD81' },
                   ]}
                   xAxisKey="time"
-                  height={280}
+                  height={380}
                   showGrid={true}
                   showLegend={false}
+                  showReferenceLine={true}
                   yAxisLabel="MW"
+                  unit="MW"
                 />
               </div>
             </div>
@@ -302,30 +310,38 @@ export default function Infrastructure() {
             {/* 7. UPTIME CHART - 6 cols */}
             <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-4 py-3">
-                <div className="flex items-center gap-3">
-                  <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
-                  <div>
-                    <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
-                      System Uptime
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Activity className="w-5 h-5 text-white" strokeWidth={1.5} />
+                    <div>
+                      <div className="text-white text-base font-semibold">
+                        System Uptime
+                      </div>
+                      <div className="text-slate-400 text-sm">Reliability trend (30 days)</div>
                     </div>
-                    <div className="text-slate-400 text-xs">Reliability trend (30 days)</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs text-slate-400">Average</div>
+                    <div className="text-lg font-bold text-white">{systemUptime}%</div>
                   </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-3">
+              <div className="bg-white p-6">
                 <AdvancedLineChart
                   data={uptimeData}
                   lines={[
-                    { dataKey: 'overall', name: 'Uptime', color: '#8AFD81', strokeWidth: 3 },
+                    { dataKey: 'overall', name: 'Uptime', color: '#8AFD81', strokeWidth: 2 },
                   ]}
                   xAxisKey="date"
-                  height={240}
+                  height={320}
                   showGrid={true}
                   showLegend={false}
+                  showArea={true}
                   yAxisLabel="%"
+                  unit="%"
                 />
               </div>
             </div>
@@ -333,30 +349,38 @@ export default function Infrastructure() {
             {/* 8. EFFICIENCY CHART - 6 cols */}
             <div className="col-span-12 lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 animate-fade-in-up delay-300">
               {/* Header - Dark */}
-              <div className="bg-slate-800 px-4 py-3">
-                <div className="flex items-center gap-3">
-                  <Gauge className="w-5 h-5 text-white" strokeWidth={1.5} />
-                  <div>
-                    <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#8AFD81] via-[#b6ffb0] to-[#4ade80] text-sm font-bold uppercase tracking-wider">
-                      Operational Efficiency
+              <div className="bg-slate-800 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Gauge className="w-5 h-5 text-white" strokeWidth={1.5} />
+                    <div>
+                      <div className="text-white text-base font-semibold">
+                        Operational Efficiency
+                      </div>
+                      <div className="text-slate-400 text-sm">Performance trend (30 days)</div>
                     </div>
-                    <div className="text-slate-400 text-xs">Performance trend (30 days)</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs text-slate-400">Average</div>
+                    <div className="text-lg font-bold text-white">{avgEfficiency}%</div>
                   </div>
                 </div>
               </div>
               
               {/* Body - White */}
-              <div className="bg-white p-3">
+              <div className="bg-white p-6">
                 <AdvancedLineChart
                   data={efficiencyData}
                   lines={[
-                    { dataKey: 'avg', name: 'Efficiency', color: '#8AFD81', strokeWidth: 3 },
+                    { dataKey: 'avg', name: 'Efficiency', color: '#8AFD81', strokeWidth: 2 },
                   ]}
                   xAxisKey="date"
-                  height={240}
+                  height={320}
                   showGrid={true}
                   showLegend={false}
+                  showArea={true}
                   yAxisLabel="%"
+                  unit="%"
                 />
               </div>
             </div>

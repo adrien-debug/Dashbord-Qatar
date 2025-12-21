@@ -4,7 +4,7 @@
 
 📍 ADRESSE DE CONNEXION :
 
-    http://192.168.1.65:1111
+    http://3.3.3.3:1111
 
 
 📱 INSTRUCTIONS RAPIDES :
@@ -31,7 +31,7 @@ Exécutez ce script pour mettre à jour automatiquement :
 
 Le serveur est accessible depuis :
 • Cet ordinateur : http://localhost:1111
-• Réseau local    : http://192.168.1.65:1111
+• Réseau local    : http://3.3.3.3:1111
 
 
 ═══════════════════════════════════════════════════════════

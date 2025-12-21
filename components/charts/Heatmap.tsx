@@ -22,11 +22,8 @@ export const Heatmap: React.FC<HeatmapProps> = ({
   data,
   rows,
   cols,
-  cellSize = 60,
   showLabels = false,
-  showValues = false,
   onCellClick,
-  colorScale = { min: '#8AFD81', mid: '#f59e0b', max: '#94a3b8' },
 }) => {
   const getStatusColor = (status?: string): string => {
     switch (status) {
@@ -43,8 +40,6 @@ export const Heatmap: React.FC<HeatmapProps> = ({
     }
   };
 
-  const maxValue = Math.max(...data.map((cell) => cell.value));
-
   return (
     <div className="inline-block">
       <div
@@ -54,7 +49,7 @@ export const Heatmap: React.FC<HeatmapProps> = ({
           gridTemplateRows: `repeat(${rows}, 1fr)`,
         }}
       >
-        {data.map((cell, index) => {
+        {data.map((cell) => {
           const color = getStatusColor(cell.status);
           const isOffline = cell.status === 'offline';
 
@@ -99,25 +94,6 @@ export const Heatmap: React.FC<HeatmapProps> = ({
         })}
       </div>
       
-      {/* Legend - Updated styling */}
-      <div className="flex flex-wrap items-center justify-center gap-6 mt-6 pt-6 border-t border-slate-100">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-[#8AFD81] shadow-sm" />
-          <span className="text-xs font-semibold text-slate-600">Optimal</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-[#f59e0b] shadow-sm" />
-          <span className="text-xs font-semibold text-slate-600">Warning</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-[#ef4444] shadow-sm" />
-          <span className="text-xs font-semibold text-slate-600">Critical</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-slate-300 border border-slate-200" />
-          <span className="text-xs font-semibold text-slate-400">Offline</span>
-        </div>
-      </div>
     </div>
   );
 };

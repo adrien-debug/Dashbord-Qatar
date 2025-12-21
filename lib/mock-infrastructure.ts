@@ -6,9 +6,16 @@
 
 import { PowerSystem, CoolingSystem, Alert, NetworkStatus, SecurityStatus } from '../types/infrastructure';
 
-// Helper function
-const generateVariation = (base: number, variance: number) => {
-  return base + (Math.random() * variance * 2 - variance);
+// Seeded random for consistent values between server and client
+const seededRandom = (seed: number): number => {
+  const x = Math.sin(seed * 9999) * 10000;
+  return x - Math.floor(x);
+};
+
+// Helper function (deterministic)
+const generateVariation = (base: number, variance: number, seed: number = 0): number => {
+  const random = seededRandom(seed);
+  return base + (random * variance * 2 - variance);
 };
 
 export const mockPowerSystems: PowerSystem[] = [
@@ -160,10 +167,10 @@ export const mockPowerHistory = Array.from({ length: 24 }, (_, i) => {
   return {
     hour: `${hour.toString().padStart(2, '0')}:00`,
     timestamp: new Date(Date.now() - i * 60 * 60 * 1000),
-    pb1: generateVariation(24.2, 0.8),
-    pb2: generateVariation(24.8, 0.8),
-    pb3: generateVariation(23.1, 1.2),
-    pb4: generateVariation(24.5, 0.8),
+    pb1: generateVariation(24.2, 0.8, i * 1000 + 1),
+    pb2: generateVariation(24.8, 0.8, i * 1000 + 2),
+    pb3: generateVariation(23.1, 1.2, i * 1000 + 3),
+    pb4: generateVariation(24.5, 0.8, i * 1000 + 4),
     total: 0, // Will be calculated
   };
 }).reverse().map(entry => ({
@@ -178,10 +185,10 @@ export const mockPowerHistory7Days = Array.from({ length: 7 }, (_, i) => {
   
   return {
     date: date.toISOString().split('T')[0],
-    pb1: generateVariation(24.2, 1),
-    pb2: generateVariation(24.8, 1),
-    pb3: generateVariation(23.1, 1.5),
-    pb4: generateVariation(24.5, 1),
+    pb1: generateVariation(24.2, 1, i * 1100 + 1),
+    pb2: generateVariation(24.8, 1, i * 1100 + 2),
+    pb3: generateVariation(23.1, 1.5, i * 1100 + 3),
+    pb4: generateVariation(24.5, 1, i * 1100 + 4),
     total: 0,
   };
 }).map(entry => ({
@@ -196,10 +203,10 @@ export const mockPowerHistory30Days = Array.from({ length: 30 }, (_, i) => {
   
   return {
     date: date.toISOString().split('T')[0],
-    pb1: generateVariation(24.2, 1.2),
-    pb2: generateVariation(24.8, 1.2),
-    pb3: generateVariation(23.1, 1.8),
-    pb4: generateVariation(24.5, 1.2),
+    pb1: generateVariation(24.2, 1.2, i * 1200 + 1),
+    pb2: generateVariation(24.8, 1.2, i * 1200 + 2),
+    pb3: generateVariation(23.1, 1.8, i * 1200 + 3),
+    pb4: generateVariation(24.5, 1.2, i * 1200 + 4),
     total: 0,
   };
 }).map(entry => ({
@@ -213,10 +220,10 @@ export const mockTemperatureHistory = Array.from({ length: 24 }, (_, i) => {
   return {
     hour: `${hour.toString().padStart(2, '0')}:00`,
     timestamp: new Date(Date.now() - i * 60 * 60 * 1000),
-    pb1: generateVariation(42, 3),
-    pb2: generateVariation(44, 3),
-    pb3: generateVariation(48, 4),
-    pb4: generateVariation(41, 3),
+    pb1: generateVariation(42, 3, i * 1300 + 1),
+    pb2: generateVariation(44, 3, i * 1300 + 2),
+    pb3: generateVariation(48, 4, i * 1300 + 3),
+    pb4: generateVariation(41, 3, i * 1300 + 4),
   };
 }).reverse();
 
@@ -227,10 +234,10 @@ export const mockTemperatureHistory7Days = Array.from({ length: 7 }, (_, i) => {
   
   return {
     date: date.toISOString().split('T')[0],
-    pb1: generateVariation(42, 4),
-    pb2: generateVariation(44, 4),
-    pb3: generateVariation(48, 5),
-    pb4: generateVariation(41, 4),
+    pb1: generateVariation(42, 4, i * 1400 + 1),
+    pb2: generateVariation(44, 4, i * 1400 + 2),
+    pb3: generateVariation(48, 5, i * 1400 + 3),
+    pb4: generateVariation(41, 4, i * 1400 + 4),
   };
 });
 
@@ -241,28 +248,28 @@ export const mockCoolingHistory = Array.from({ length: 24 }, (_, i) => {
     hour: `${hour.toString().padStart(2, '0')}:00`,
     timestamp: new Date(Date.now() - i * 60 * 60 * 1000),
     north: {
-      flowRate: generateVariation(1200, 50),
-      tempIn: generateVariation(35, 2),
-      tempOut: generateVariation(28, 2),
-      efficiency: generateVariation(94.5, 2),
+      flowRate: generateVariation(1200, 50, i * 1500 + 1),
+      tempIn: generateVariation(35, 2, i * 1500 + 2),
+      tempOut: generateVariation(28, 2, i * 1500 + 3),
+      efficiency: generateVariation(94.5, 2, i * 1500 + 4),
     },
     south: {
-      flowRate: generateVariation(1180, 50),
-      tempIn: generateVariation(36, 2),
-      tempOut: generateVariation(29, 2),
-      efficiency: generateVariation(93.8, 2),
+      flowRate: generateVariation(1180, 50, i * 1500 + 5),
+      tempIn: generateVariation(36, 2, i * 1500 + 6),
+      tempOut: generateVariation(29, 2, i * 1500 + 7),
+      efficiency: generateVariation(93.8, 2, i * 1500 + 8),
     },
     east: {
-      flowRate: generateVariation(1050, 60),
-      tempIn: generateVariation(38, 3),
-      tempOut: generateVariation(31, 2),
-      efficiency: generateVariation(89.2, 3),
+      flowRate: generateVariation(1050, 60, i * 1500 + 9),
+      tempIn: generateVariation(38, 3, i * 1500 + 10),
+      tempOut: generateVariation(31, 2, i * 1500 + 11),
+      efficiency: generateVariation(89.2, 3, i * 1500 + 12),
     },
     west: {
-      flowRate: generateVariation(1220, 50),
-      tempIn: generateVariation(34, 2),
-      tempOut: generateVariation(27, 2),
-      efficiency: generateVariation(95.1, 2),
+      flowRate: generateVariation(1220, 50, i * 1500 + 13),
+      tempIn: generateVariation(34, 2, i * 1500 + 14),
+      tempOut: generateVariation(27, 2, i * 1500 + 15),
+      efficiency: generateVariation(95.1, 2, i * 1500 + 16),
     },
   };
 }).reverse();
@@ -274,11 +281,11 @@ export const mockEfficiencyHistory = Array.from({ length: 30 }, (_, i) => {
   
   return {
     date: date.toISOString().split('T')[0],
-    pb1: generateVariation(96.8, 1.5),
-    pb2: generateVariation(97.2, 1.5),
-    pb3: generateVariation(95.2, 2),
-    pb4: generateVariation(98.0, 1.2),
-    cooling: generateVariation(93.2, 2),
+    pb1: generateVariation(96.8, 1.5, i * 1600 + 1),
+    pb2: generateVariation(97.2, 1.5, i * 1600 + 2),
+    pb3: generateVariation(95.2, 2, i * 1600 + 3),
+    pb4: generateVariation(98.0, 1.2, i * 1600 + 4),
+    cooling: generateVariation(93.2, 2, i * 1600 + 5),
   };
 });
 
@@ -289,9 +296,9 @@ export const mockAlertTimeline = Array.from({ length: 7 }, (_, i) => {
   
   return {
     date: date.toISOString().split('T')[0],
-    critical: Math.floor(Math.random() * 2),
-    warning: Math.floor(Math.random() * 4) + 1,
-    info: Math.floor(Math.random() * 6) + 2,
+    critical: Math.floor(seededRandom(i * 1700 + 1) * 2),
+    warning: Math.floor(seededRandom(i * 1700 + 2) * 4) + 1,
+    info: Math.floor(seededRandom(i * 1700 + 3) * 6) + 2,
   };
 });
 
@@ -321,7 +328,7 @@ export const mockMTTRHistory = Array.from({ length: 30 }, (_, i) => {
   
   return {
     date: date.toISOString().split('T')[0],
-    mttr: Math.max(20, generateVariation(50 + trend, 10)),
+    mttr: Math.max(20, generateVariation(50 + trend, 10, i * 1800 + 1)),
     target: 45,
   };
 });
@@ -333,9 +340,9 @@ export const mockSystemUptime = Array.from({ length: 30 }, (_, i) => {
   
   return {
     date: date.toISOString().split('T')[0],
-    power: Math.min(100, generateVariation(99.5, 0.5)),
-    cooling: Math.min(100, generateVariation(99.2, 0.8)),
-    network: Math.min(100, generateVariation(99.8, 0.3)),
+    power: Math.min(100, generateVariation(99.5, 0.5, i * 1900 + 1)),
+    cooling: Math.min(100, generateVariation(99.2, 0.8, i * 1900 + 2)),
+    network: Math.min(100, generateVariation(99.8, 0.3, i * 1900 + 3)),
     overall: 0, // Will be calculated
   };
 }).map(entry => ({
@@ -356,10 +363,10 @@ export const mockVoltageHistory = Array.from({ length: 24 }, (_, i) => {
   const hour = 23 - i;
   return {
     hour: `${hour.toString().padStart(2, '0')}:00`,
-    pb1: generateVariation(11, 0.2),
-    pb2: generateVariation(11, 0.2),
-    pb3: generateVariation(10.8, 0.3),
-    pb4: generateVariation(11.2, 0.2),
+    pb1: generateVariation(11, 0.2, i * 2000 + 1),
+    pb2: generateVariation(11, 0.2, i * 2000 + 2),
+    pb3: generateVariation(10.8, 0.3, i * 2000 + 3),
+    pb4: generateVariation(11.2, 0.2, i * 2000 + 4),
     target: 11,
   };
 }).reverse();
@@ -369,10 +376,10 @@ export const mockCoolingDeltaT = Array.from({ length: 24 }, (_, i) => {
   const hour = 23 - i;
   return {
     hour: `${hour.toString().padStart(2, '0')}:00`,
-    north: generateVariation(7, 1),
-    south: generateVariation(7, 1),
-    east: generateVariation(7, 1.5),
-    west: generateVariation(7, 1),
+    north: generateVariation(7, 1, i * 2100 + 1),
+    south: generateVariation(7, 1, i * 2100 + 2),
+    east: generateVariation(7, 1.5, i * 2100 + 3),
+    west: generateVariation(7, 1, i * 2100 + 4),
     optimal: 7,
   };
 }).reverse();
@@ -382,9 +389,9 @@ export const mockNetworkHistory = Array.from({ length: 24 }, (_, i) => {
   const hour = 23 - i;
   return {
     hour: `${hour.toString().padStart(2, '0')}:00`,
-    latency: generateVariation(12, 3),
-    bandwidth: generateVariation(950, 50),
-    packetLoss: generateVariation(0.05, 0.03),
+    latency: generateVariation(12, 3, i * 2200 + 1),
+    bandwidth: generateVariation(950, 50, i * 2200 + 2),
+    packetLoss: generateVariation(0.05, 0.03, i * 2200 + 3),
   };
 }).reverse();
 

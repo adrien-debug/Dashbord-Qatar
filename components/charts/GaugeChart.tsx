@@ -20,7 +20,6 @@ export const GaugeChart: React.FC<GaugeChartProps> = ({
   unit = '%',
   size = 200,
   showValue = true,
-  color,
 }) => {
   const [mounted, setMounted] = useState(false);
   const [containerSize, setContainerSize] = useState<number | null>(null);
